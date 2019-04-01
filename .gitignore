@@ -21,4 +21,5 @@ typings
 .idea
 *.zip
 npm-debug.log
-typings.json       
+typings.json      
+server.js 
