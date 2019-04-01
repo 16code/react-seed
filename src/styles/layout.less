@@ -1,0 +1,14 @@
+.app {
+    &-root,
+    &-layout {
+        height: 100%;
+        overflow: hidden;
+    }
+    &-main {
+        padding-top: var(--header-height);
+    }
+    &-content {
+        overflow: auto;
+        height: calc(100vh - var(--header-height));
+    }
+}
