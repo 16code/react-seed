@@ -37,9 +37,9 @@
     "babel-plugin-import": "^1.11.0",
     "babel-plugin-transform-react-pure-class-to-function": "^1.0.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "core-js": "3.0.0",
     "cache-loader": "^2.0.1",
     "clean-webpack-plugin": "^2.0.1",
+    "core-js": "3.0.0",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
     "cssnano": "^4.1.10",
@@ -57,6 +57,7 @@
     "gulp-concat": "^2.6.1",
     "html-webpack-include-assets-plugin": "^1.0.7",
     "html-webpack-plugin": "^3.2.0",
+    "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "lint-staged": "^8.1.5",
     "mini-css-extract-plugin": "^0.5.0",
@@ -81,6 +82,7 @@
   },
   "dependencies": {
     "@hot-loader/react-dom": "^16.8.6",
+    "antd": "^3.15.2",
     "classnames": "^2.2.6",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
@@ -96,10 +98,21 @@
   },
   "lint-staged": {
     "linters": {
-      "src/**/*.{js,jsx}": ["node_modules/.bin/eslint --fix", "git add"],
-      "src/**/*.{less,css}": ["node_modules/.bin/stylelint --syntax less --fix", "git add"]
+      "src/**/*.{js,jsx}": [
+        "node_modules/.bin/eslint --fix",
+        "git add"
+      ],
+      "src/**/*.{less,css}": [
+        "node_modules/.bin/stylelint --syntax less --fix",
+        "git add"
+      ]
     },
     "relative": true,
-    "ignore": ["**/dist/**", "**/doc/**", "**/test/**", "**/libs/**"]
+    "ignore": [
+      "**/dist/**",
+      "**/doc/**",
+      "**/test/**",
+      "**/libs/**"
+    ]
   }
 }

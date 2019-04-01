@@ -13,6 +13,10 @@ const vendorFileAlias = [
         prod: 'moment.min.js'
     },
     {
+        path: 'moment/locale',
+        prod: 'zh-cn.js'
+    },
+    {
         path: 'redux/dist',
         dev: 'redux.js',
         prod: 'redux.min.js'
