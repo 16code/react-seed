@@ -1,0 +1,4 @@
+**/*.svg
+dist/*
+test/*
+libs/*

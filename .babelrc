@@ -1,0 +1,37 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "modules": false,
+                "targets": {
+                    "chrome": "69",
+                    "safari": "10"
+                },
+                "corejs": "3",
+                "useBuiltIns": "usage"
+            }
+        ],
+        "@babel/preset-react"
+    ],
+    "plugins": [
+        "react-hot-loader/babel",
+        "@babel/plugin-syntax-dynamic-import",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-transform-runtime",
+        ["@babel/plugin-proposal-decorators", { "legacy": true }],
+        ["@babel/plugin-proposal-class-properties", { "loose": true }],
+        ["babel-plugin-import", { "libraryName": "antd", "style": true }]
+    ],
+    "env": {
+        "production": {
+            "plugins": [
+                "@babel/transform-react-constant-elements",
+                "@babel/transform-react-inline-elements",
+                "transform-react-remove-prop-types",
+                "transform-react-pure-class-to-function"
+            ]
+        }
+    },
+    "ignore": ["node_modules", "dist"]
+}
