@@ -67,7 +67,7 @@ if (isDev) {
         new webpack.NamedModulesPlugin(),
         new StyleLintPlugin({
             configFile: path.join(__dirname, '.stylelintrc'),
-            files: '**/*.l?(e|c)ss'
+            files: '**/*.(le|c)ss'
         })
     ]);
 } else {
@@ -105,7 +105,7 @@ module.exports = function config() {
         },
         resolve: {
             symlinks: false,
-            extensions: ['.js', '.jsx', '.less'],
+            extensions: ['.js', '.jsx', '.less', '.css'],
             modules: ['node_modules', srcPath],
             alias: {
                 'react-dom': '@hot-loader/react-dom',
@@ -115,6 +115,7 @@ module.exports = function config() {
                 '@components': path.join(__dirname, 'src/components'),
                 '@views': path.join(__dirname, 'src/views'),
                 '@helper': path.join(__dirname, 'src/helper'),
+                '@context': path.join(__dirname, 'src/context'),
                 '@styles': path.join(__dirname, 'src/styles')
             }
         },
