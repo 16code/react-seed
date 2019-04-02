@@ -1,10 +1,6 @@
 export const themes = {
-    light: {
-        background: 'red'
-    },
-    dark: {
-        background: 'yellow'
-    },
+    light: 'light',
+    dark: 'dark',
     siderVisible: false
 };
 

@@ -2,11 +2,9 @@ import { ThemeContext } from '@context/theme';
 function ThemeTogglerButton() {
     return (
         <ThemeContext.Consumer>
-            {({ theme, toggleTheme, onToggleAside }) => (
+            {({ toggleTheme, onToggleAside }) => (
                 <>
-                    <button onClick={toggleTheme} style={{ color: theme.background }}>
-                        Toggle Theme
-                    </button>
+                    <button onClick={toggleTheme}>Toggle Theme</button>
                     <button onClick={onToggleAside}>Toggle Menu</button>
                 </>
             )}
