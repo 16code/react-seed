@@ -13,6 +13,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const TerserPlugin = require('terser-webpack-plugin');
 
+const AntDesignThemePlugin = require('antd-theme-webpack-plugin');
+
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const srcPath = path.join(__dirname, 'src');
@@ -20,7 +22,14 @@ const distPath = path.join(__dirname, 'dist');
 const cachePath = path.join(__dirname, '.cache');
 const isDev = process.env.NODE_ENV === 'development';
 const port = process.env.PORT || 8181;
-
+const options = {
+    antDir: path.join(__dirname, './node_modules/antd'),
+    stylesDir: path.join(__dirname, './src/styles'),
+    varFile: path.join(__dirname, './src/styles/variables.less'),
+    mainLessFile: path.join(__dirname, './src/styles/index.less'),
+    themeVariables: ['@primary-color'],
+    indexFileName: 'index.html'
+};
 const filesNameMapper = {
     filename: isDev ? '[name].js' : 'assets/js/[name].[chunkhash:5].js',
     chunkFilename: isDev ? '[name].chunk.js' : 'assets/js/[name].[chunkhash:5].chunk.js',
@@ -32,6 +41,7 @@ const filesNameMapper = {
 const isString = s => typeof s === 'string';
 
 const plugins = [
+    new AntDesignThemePlugin(options),
     new HtmlWebpackPlugin({
         template: 'public/index.html',
         filename: 'index.html',
@@ -40,14 +50,15 @@ const plugins = [
         minify: {
             minifyJS: true,
             minifyCSS: true,
-            removeComments: true,
+            removeComments: false,
             collapseWhitespace: false,
             removeAttributeQuotes: false
         }
     }),
     new HtmlWebpackIncludeAssetsPlugin({
         assets: vendorFiles,
-        append: false
+        append: false,
+        cssExtensions: ['.css', '.less']
     }),
     new webpack.HashedModuleIdsPlugin(),
     new webpack.ProvidePlugin({
@@ -93,7 +104,7 @@ module.exports = function config() {
         },
         devServer: {
             port,
-            open: true,
+            open: !true,
             publicPath: '/',
             contentBase: path.join(__dirname, 'dist'),
             historyApiFallback: true,
@@ -247,13 +258,12 @@ function styleLoaderConfig(options = {}) {
             loader: 'postcss-loader',
             options: {
                 config: {
-                    path: path.join(__dirname, '.postcssrc.js'),
+                    path: './',
                     ctx: {
                         autoprefixer: {
                             browsers: ['Safari >= 10', 'last 1 firefox version', 'Chrome >= 66', 'Explorer >= 10']
                         },
-                        cssnano: { preset: 'default' },
-                        cssVariables: {}
+                        cssnano: { preset: 'default' }
                     }
                 }
             }

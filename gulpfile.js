@@ -2,12 +2,20 @@ const path = require('path');
 const { task, src, series, dest } = require('gulp');
 const clean = require('gulp-clean');
 const concat = require('gulp-concat');
+const inject = require('gulp-inject');
+const jsmin = require('gulp-jsmin');
+const gulpif = require('gulp-if');
+
 const isDev = process.env.NODE_ENV === 'development';
 const distPath = path.join(__dirname, 'dist');
 const vendors = 'assets/vendors/';
 const vendorPath = path.join(distPath, vendors);
 
 const vendorFileAlias = [
+    {
+        path: 'less/dist',
+        prod: 'less.min.js'
+    },
     {
         path: 'moment/min',
         prod: 'moment.min.js'
@@ -49,6 +57,7 @@ const vendorFileAlias = [
 ];
 const fileName = {
     moment: 'moment.min.js',
+    less: 'less.min.js',
     redux: isDev ? 'redux-all.development.js' : 'redux-all.production.js',
     react: isDev ? 'react-all.development.js' : 'react-all.production.js'
 };
@@ -58,30 +67,52 @@ const copyVendorFiles = vendorFileAlias.map(f => {
     return path.join(__dirname, 'node_modules', filePath);
 });
 
+const getFileByName = name => copyVendorFiles.filter(f => new RegExp(name, 'g').test(f));
+
 task('clean:vendors', function() {
     return src(vendorPath, { allowEmpty: true }).pipe(clean({ force: true }));
 });
 
 task('concat:react', function() {
-    return src(copyVendorFiles.filter(f => /react/g.test(f)), { allowEmpty: true })
+    return src(getFileByName('react'), { allowEmpty: true })
         .pipe(concat(fileName.react))
         .pipe(dest(vendorPath));
 });
 task('concat:redux', function() {
-    return src(copyVendorFiles.filter(f => /redux/g.test(f) && !f.includes('react')), { allowEmpty: true })
+    return src(getFileByName('/redux'), { allowEmpty: true })
         .pipe(concat(fileName.redux))
         .pipe(dest(vendorPath));
 });
 
 task('concat:moment', function() {
-    return src(copyVendorFiles.filter(f => /moment/g.test(f)), { allowEmpty: true })
+    return src(getFileByName('moment'), { allowEmpty: true })
         .pipe(concat(fileName.moment))
+        .pipe(gulpif(!isDev, jsmin()))
         .pipe(dest(vendorPath));
 });
 
+task('concat:lessJS', function() {
+    return src(getFileByName('less'), { allowEmpty: true })
+        .pipe(concat(fileName.less))
+        .pipe(dest(vendorPath));
+});
+
+task('inject:moment', function() {
+    return src('./dist/index.html', { allowEmpty: true })
+        .pipe(
+            inject(src(`${vendorPath}/${fileName.moment}`, { read: true }), {
+                starttag: '<!-- inject:moment:js -->',
+                removeTags: true,
+                transform: (filePath, file) =>
+                    `<script type="text/javascript">${file.contents.toString('utf8')}</script>`
+            })
+        )
+        .pipe(dest('./dist/'));
+});
+
 task('clean', series('clean:vendors'));
-task('copy', series('clean', 'concat:moment', 'concat:redux', 'concat:react'));
+task('copy:dev', series('clean', 'concat:lessJS', 'concat:moment', 'concat:redux', 'concat:react'));
+task('copy:prod', series('copy:dev', 'inject:moment'));
 
 const vendorFiles = Object.keys(fileName).map(k => `${vendors}${fileName[k]}`);
-
-exports.vendorFiles = vendorFiles;
+exports.vendorFiles = isDev ? vendorFiles : vendorFiles.filter(f => !(f.includes && f.includes('moment')));
