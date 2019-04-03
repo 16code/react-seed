@@ -1,5 +1,5 @@
 import { Icon, Tooltip, Dropdown, Menu, Avatar } from 'antd';
-import { ThemeContext } from '@context/theme';
+import { UiContext } from '@context/ui';
 import Logo from '@components/Logo';
 import styles from './styles.less';
 
@@ -34,9 +34,9 @@ function HeaderMenu(props) {
 }
 export default function GlobalHeader() {
     return (
-        <ThemeContext.Consumer>
-            {({ isMobile, siderVisible, onToggleAside, onToggleTheme }) => {
-                const icon = siderVisible || isMobile ? 'menu-unfold' : 'menu-fold';
+        <UiContext.Consumer>
+            {({ isMobile, collapsed, onToggleAside, onToggleTheme }) => {
+                const icon = collapsed || isMobile ? 'menu-unfold' : 'menu-fold';
                 return (
                     <>
                         {isMobile && <Logo width="32" className={styles['global-header-logo']} />}
@@ -53,15 +53,11 @@ export default function GlobalHeader() {
                                     <Icon type="question-circle-o" />
                                 </a>
                             </Tooltip>
-                            <HeaderMenu
-                                onMenuClick={() => {
-                                    onToggleTheme();
-                                }}
-                            />
+                            <HeaderMenu onMenuClick={onToggleTheme} />
                         </div>
                     </>
                 );
             }}
-        </ThemeContext.Consumer>
+        </UiContext.Consumer>
     );
 }

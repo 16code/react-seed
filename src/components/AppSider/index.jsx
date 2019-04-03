@@ -1,5 +1,5 @@
 import { Drawer, Layout } from 'antd';
-import { ThemeContext } from '@context/theme';
+import { UiContext } from '@context/ui';
 import Logo from '@components/Logo';
 
 import Menu from './Menu';
@@ -7,14 +7,14 @@ const drawerStyle = { padding: 0, height: '100vh' };
 const siderWidth = 256;
 
 export default class AppSider extends React.PureComponent {
-    static contextType = ThemeContext;
+    static contextType = UiContext;
     get asideRender() {
-        const { siderVisible, theme, isMobile } = this.context;
+        const { collapsed, theme, isMobile } = this.context;
         return (
             <Layout.Sider
                 className="app-aside"
                 breakpoint="lg"
-                collapsed={!isMobile && siderVisible}
+                collapsed={!isMobile && collapsed}
                 theme={theme}
                 trigger={null}
                 width={siderWidth}
@@ -28,12 +28,12 @@ export default class AppSider extends React.PureComponent {
         );
     }
     get drawerRender() {
-        const { onToggleAside, siderVisible } = this.context;
+        const { onToggleAside, collapsed } = this.context;
         return (
             <Drawer
                 style={drawerStyle}
                 onClose={onToggleAside}
-                visible={siderVisible}
+                visible={collapsed}
                 placement="left"
                 closable={false}
                 width={siderWidth}
