@@ -1,0 +1,51 @@
+@import '~antd/lib/style/themes/default.less';
+
+.global-header-logo,
+.trigger,
+.action {
+    padding: 0 12px;
+    height: var(--header-height);
+    display: inline-block;
+}
+.action {
+    cursor: pointer;
+    &:hover {
+        background: rgba(0, 0, 0, 0.025);
+    }
+}
+.global-header-logo img {
+    vertical-align: middle;
+}
+.trigger {
+    font-size: 20px;
+    padding: 0 24px;
+    vertical-align: middle;
+}
+
+.actions {
+    float: right;
+    overflow: hidden;
+    .action > i {
+        color: var(--text-color);
+        vertical-align: middle;
+    }
+}
+.avatar {
+    margin-right: 8px;
+}
+.action-dropdown {
+    min-width: 160px;
+}
+@media only screen and (max-width: @screen-xs) {
+    .action-dropdown {
+        min-width: 100%;
+    }
+}
+@media only screen and (max-width: @screen-md) {
+    .avatar {
+        margin-right: 0;
+    }
+    .name {
+        display: none;
+    }
+}

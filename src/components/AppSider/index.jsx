@@ -1,22 +1,10 @@
 import { Drawer, Layout } from 'antd';
 import { ThemeContext } from '@context/theme';
+import Logo from '@components/Logo';
+
 import Menu from './Menu';
 const drawerStyle = { padding: 0, height: '100vh' };
 const siderWidth = 256;
-
-class AppLogo extends React.PureComponent {
-    render() {
-        const { src, title } = this.props;
-        return (
-            <div className={classNames('app-logo')}>
-                <a href="javascipt:;">
-                    <img src={src} alt={title} />
-                    <h1>{title}</h1>
-                </a>
-            </div>
-        );
-    }
-}
 
 export default class AppSider extends React.PureComponent {
     static contextType = ThemeContext;
@@ -32,7 +20,9 @@ export default class AppSider extends React.PureComponent {
                 width={siderWidth}
                 collapsible
             >
-                <AppLogo theme={theme} src={require('@/asstes/logo.svg')} title="Demo Admin" />
+                <div className="app-logo">
+                    <Logo theme={theme} title="Demo Admin" />
+                </div>
                 <Menu theme={theme} />
             </Layout.Sider>
         );

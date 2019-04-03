@@ -132,7 +132,9 @@ template,
 [hidden] {
     display: none;
 }
-
+[role='button'] {
+    cursor: pointer;
+}
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
