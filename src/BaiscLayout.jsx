@@ -1,4 +1,4 @@
-import { Layout } from 'antd';
+import { Layout, Button } from 'antd';
 import AppSider from '@components/AppSider';
 import GlobalHeader from '@components/GlobalHeader';
 import ContainerQuery from '@components/ContainerQuery';
@@ -38,34 +38,25 @@ export default class BasicLayout extends React.PureComponent {
             onToggleAside: this.handleToggleAside
         };
         return (
-            <Layout className={classNames('app-layout')}>
-                <UiContext.Provider value={contextValue}>
-                    <AppSider />
-                    <Layout>
-                        <Header className="app-header">
-                            <GlobalHeader />
-                        </Header>
-                        <Content className="app-content">
-                            <input
-                                type="color"
-                                onChange={event => {
-                                    window.less.modifyVars({
-                                        '@primary-color': event.target.value
-                                    });
-                                }}
-                            />
-                            <a href="">1313131</a>
-                        </Content>
-                    </Layout>
-                </UiContext.Provider>
-            </Layout>
+            <ContainerQuery>
+                <Layout className={classNames('app-layout', `theme-${theme}`)}>
+                    <UiContext.Provider value={contextValue}>
+                        <AppSider />
+                        <Layout>
+                            <Header className="app-header">
+                                <GlobalHeader />
+                            </Header>
+                            <Content className="app-content">
+                                <span>hello react</span>
+                                <Button type="primary">13131</Button>
+                            </Content>
+                        </Layout>
+                    </UiContext.Provider>
+                </Layout>
+            </ContainerQuery>
         );
     };
     render() {
-        return (
-            <ContainerQuery>
-                <MediaQuery>{this.layoutRender}</MediaQuery>
-            </ContainerQuery>
-        );
+        return <MediaQuery>{this.layoutRender}</MediaQuery>;
     }
 }

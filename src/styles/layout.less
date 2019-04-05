@@ -19,34 +19,34 @@
         height: calc(100vh - @header-height);
         padding: @box-padding-base;
     }
-    &-logo {
-        position: relative;
-        height: @header-height;
-        line-height: @header-height;
-        padding-left: @box-padding-base;
-        background: #002140;
-        overflow: hidden;
-        img {
-            display: inline-block;
-            vertical-align: middle;
-            height: 32px;
-        }
-        h1 {
-            color: #fff;
-            display: inline-block;
-            vertical-align: middle;
-            font-size: 20px;
-            margin: 0 0 0 12px;
-            font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-            font-weight: 400;
-        }
+}
+.aside-logo {
+    position: relative;
+    height: @header-height;
+    line-height: @header-height;
+    padding-left: @box-padding-base;
+    background-color: @sider-logo-background;
+    overflow: hidden;
+    img {
+        display: inline-block;
+        vertical-align: middle;
+        height: 32px;
+    }
+    h1 {
+        color: #fff;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 20px;
+        margin: 0 0 0 12px;
+        font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        font-weight: 400;
     }
 }
 .ant-layout-sider-light {
     background-color: #fff;
     box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
-    .app-logo {
-        background: #fff;
+    .aside-logo {
+        background-color: #fff;
         box-shadow: 1px 1px 0 0 #e8e8e8;
         h1 {
             color: @primary-color;

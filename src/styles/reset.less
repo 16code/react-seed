@@ -18,9 +18,12 @@
     transition: none !important;
 }
 .ant-layout-sider {
+    background-color: @layout-sider-background;
     transition: width 0.2s, min-width 0.2s, max-width 0.2s !important;
 }
 
-.ant-menu {
+.ant-menu,
+.ant-menu.ant-menu-dark .ant-menu-item-selected,
+.ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
     background: transparent !important;
 }

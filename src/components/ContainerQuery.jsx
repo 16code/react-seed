@@ -28,7 +28,7 @@ export default function ContainerQuery({ children }) {
                     child =>
                         React.isValidElement(child) &&
                         React.cloneElement(child, {
-                            className: classNames(child.props.className, params)
+                            className: classNames(params, child.props.className)
                         })
                 )
             }

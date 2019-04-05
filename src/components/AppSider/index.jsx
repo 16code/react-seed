@@ -20,7 +20,7 @@ export default class AppSider extends React.PureComponent {
                 width={siderWidth}
                 collapsible
             >
-                <div className="app-logo">
+                <div className="aside-logo">
                     <Logo theme={theme} title="Demo Admin" />
                 </div>
                 <Menu theme={theme} />

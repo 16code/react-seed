@@ -243,25 +243,27 @@ function styleLoaderConfig(options = {}) {
                 localIdentName: '[local]--[hash:base64:4]'
             }
         },
-        // {
-        //     loader: 'postcss-loader',
-        //     options: {
-        //         config: {
-        //             path: './',
-        //             ctx: {
-        //                 autoprefixer: {
-        //                     browsers: ['Safari >= 10', 'last 1 firefox version', 'Chrome >= 66', 'Explorer >= 10']
-        //                 },
-        //                 cssnano: { preset: 'default' }
-        //             }
-        //         }
-        //     }
-        // },
+        {
+            loader: 'postcss-loader',
+            options: {
+                config: {
+                    path: path.join(__dirname, '.postcssrc.js'),
+                    ctx: {
+                        autoprefixer: {
+                            browsers: ['Safari >= 10', 'last 1 firefox version', 'Chrome >= 66', 'Explorer >= 10']
+                        },
+                        cssnano: { preset: 'default' }
+                    }
+                }
+            }
+        },
         {
             loader: 'less-loader',
             options: {
                 javascriptEnabled: true,
-                modifyVars: {}
+                modifyVars: {
+                    '@primary-color': '#6777ef'
+                }
             }
         },
         {
