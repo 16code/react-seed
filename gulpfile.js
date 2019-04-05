@@ -13,10 +13,6 @@ const vendorPath = path.join(distPath, vendors);
 
 const vendorFileAlias = [
     {
-        path: 'less/dist',
-        prod: 'less.min.js'
-    },
-    {
         path: 'moment/min',
         prod: 'moment.min.js'
     },
@@ -57,7 +53,6 @@ const vendorFileAlias = [
 ];
 const fileName = {
     moment: 'moment.min.js',
-    less: 'less.min.js',
     redux: isDev ? 'redux-all.development.js' : 'redux-all.production.js',
     react: isDev ? 'react-all.development.js' : 'react-all.production.js'
 };
@@ -91,12 +86,6 @@ task('concat:moment', function() {
         .pipe(dest(vendorPath));
 });
 
-task('concat:lessJS', function() {
-    return src(getFileByName('less'), { allowEmpty: true })
-        .pipe(concat(fileName.less))
-        .pipe(dest(vendorPath));
-});
-
 task('inject:moment', function() {
     return src('./dist/index.html', { allowEmpty: true })
         .pipe(
@@ -111,7 +100,7 @@ task('inject:moment', function() {
 });
 
 task('clean', series('clean:vendors'));
-task('copy:dev', series('clean', 'concat:lessJS', 'concat:moment', 'concat:redux', 'concat:react'));
+task('copy:dev', series('clean', 'concat:moment', 'concat:redux', 'concat:react'));
 task('copy:prod', series('copy:dev', 'inject:moment'));
 
 const vendorFiles = Object.keys(fileName).map(k => `${vendors}${fileName[k]}`);

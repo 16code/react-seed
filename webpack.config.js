@@ -13,8 +13,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const TerserPlugin = require('terser-webpack-plugin');
 
-const AntDesignThemePlugin = require('antd-theme-webpack-plugin');
-
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const srcPath = path.join(__dirname, 'src');
@@ -22,14 +20,6 @@ const distPath = path.join(__dirname, 'dist');
 const cachePath = path.join(__dirname, '.cache');
 const isDev = process.env.NODE_ENV === 'development';
 const port = process.env.PORT || 8181;
-const options = {
-    antDir: path.join(__dirname, './node_modules/antd'),
-    stylesDir: path.join(__dirname, './src/styles'),
-    varFile: path.join(__dirname, './src/styles/variables.less'),
-    mainLessFile: path.join(__dirname, './src/styles/index.less'),
-    themeVariables: ['@primary-color'],
-    indexFileName: 'index.html'
-};
 const filesNameMapper = {
     filename: isDev ? '[name].js' : 'assets/js/[name].[chunkhash:5].js',
     chunkFilename: isDev ? '[name].chunk.js' : 'assets/js/[name].[chunkhash:5].chunk.js',
@@ -41,7 +31,6 @@ const filesNameMapper = {
 const isString = s => typeof s === 'string';
 
 const plugins = [
-    new AntDesignThemePlugin(options),
     new HtmlWebpackPlugin({
         template: 'public/index.html',
         filename: 'index.html',
