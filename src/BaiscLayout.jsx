@@ -43,7 +43,7 @@ export default class BasicLayout extends React.PureComponent {
                     <UiContext.Provider value={contextValue}>
                         <AppSider />
                         <Layout>
-                            <Header className="app-header">
+                            <Header style={{ padding: 0 }}>
                                 <GlobalHeader />
                             </Header>
                             <Content className="app-content">

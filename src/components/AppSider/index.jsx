@@ -4,7 +4,7 @@ import Logo from '@components/Logo';
 
 import Menu from './Menu';
 const drawerStyle = { padding: 0, height: '100vh' };
-const siderWidth = 256;
+const siderWidth = 242;
 
 export default class AppSider extends React.PureComponent {
     static contextType = UiContext;

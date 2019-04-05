@@ -38,7 +38,7 @@ export default function GlobalHeader() {
             {({ isMobile, collapsed, onToggleAside, onToggleTheme }) => {
                 const icon = collapsed || isMobile ? 'menu-unfold' : 'menu-fold';
                 return (
-                    <>
+                    <div className="app-header">
                         {isMobile && <Logo width="32" className={styles['global-header-logo']} />}
                         <span
                             className={classNames(styles.action, styles.trigger)}
@@ -55,7 +55,7 @@ export default function GlobalHeader() {
                             </Tooltip>
                             <HeaderMenu onMenuClick={onToggleTheme} />
                         </div>
-                    </>
+                    </div>
                 );
             }}
         </UiContext.Consumer>
