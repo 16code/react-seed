@@ -34,6 +34,7 @@ const plugins = [
     new HtmlWebpackPlugin({
         template: 'public/index.html',
         filename: 'index.html',
+        favicon: 'public/favicon.ico',
         title: 'React Seed',
         inject: 'body',
         minify: {
