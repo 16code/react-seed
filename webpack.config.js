@@ -101,6 +101,7 @@ module.exports = function config() {
             inline: true,
             disableHostCheck: true,
             https: false,
+            overlay: true,
             stats: 'errors-only',
             clientLogLevel: 'error'
         },

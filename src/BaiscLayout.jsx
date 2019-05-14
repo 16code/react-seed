@@ -4,7 +4,7 @@ import GlobalHeader from '@components/GlobalHeader';
 import ContainerQuery from '@components/ContainerQuery';
 import MediaQuery from '@components/MediaQuery';
 import { UiContext, themes } from '@context/ui';
-
+import Views from '@views';
 const { Header, Content } = Layout;
 export default class BasicLayout extends React.PureComponent {
     static contextType = UiContext;
@@ -15,6 +15,7 @@ export default class BasicLayout extends React.PureComponent {
             theme: context.theme
         };
     }
+
     handleToggleAside = () => {
         this.setState(
             prev => ({ collapsed: !prev.collapsed }),
@@ -47,8 +48,9 @@ export default class BasicLayout extends React.PureComponent {
                                 <GlobalHeader />
                             </Header>
                             <Content className="app-content">
-                                <span>hello react</span>
-                                <Button type="primary">13131</Button>
+                                <span>Hello React</span>
+                                <Button type="primary">111</Button>
+                                <Views />
                             </Content>
                         </Layout>
                     </UiContext.Provider>
