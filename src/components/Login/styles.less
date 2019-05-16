@@ -1,55 +1,85 @@
-.login {
-    height: 100vh;
-    background: linear-gradient(#202122, #3737a7);
+.flex-box {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 0;
-        background: url('./world.svg') center no-repeat;
-        background-size: cover;
-        opacity: 0.05;
-    }
-    .title {
-        font-size: 0.48rem;
-        text-align: center;
-        color: @primary-color;
-        margin-bottom: 0.44rem;
-        line-height: 1;
-    }
-    .submit {
-        height: 44px;
-    }
-    .form {
-        position: relative;
-        z-index: 2;
-    }
-    .form-item {
-        padding-bottom: 0.06rem;
-    }
 }
 .middle-box {
-    width: 4.4rem;
-    padding: 0.32rem;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.92);
+    width: 8.8rem;
 }
-@media only screen and (max-width: @screen-xs) {
-    .login {
-        align-items: flex-start;
+.illustration {
+    flex: 58% 0 0;
+    background: url('./custom.png') center no-repeat;
+    background-size: 80%;
+    height: 100%;
+    border-right: 1px solid rgba(0, 0, 0, 0.18);
+}
+.page-title {
+    font-size: 0.48rem;
+    text-align: center;
+    color: white;
+    margin-bottom: 0.44rem;
+    line-height: 1;
+}
+.submit-button {
+    height: 46px;
+}
+.form-wrapper {
+    height: 5.2rem;
+    background: white;
+    box-shadow: 0 0 1px 4px rgba(0, 0, 0, 0.18);
+    border-radius: 5px;
+    flex-direction: row;
+    align-items: center;
+    .flex-box;
+}
+.login-form {
+    flex: 1;
+    height: 100%;
+    padding-left: 0.38rem;
+    padding-right: 0.38rem;
+    flex-direction: column;
+    justify-content: center;
+    .flex-box;
+}
+.login {
+    height: 100vh;
+    background: url('./bg.svg') center bottom no-repeat;
+    background-size: cover;
+    background-color: #fff;
+    align-items: center;
+    justify-content: center;
+    .flex-box;
+    .form-item {
+        padding-bottom: 0.08rem;
     }
-    .remember {
-        color: #fff;
+    .ant-form-item-last {
+        margin-bottom: 0;
+    }
+    .auth-bind {
+        float: right;
+    }
+}
+
+@media screen and (max-width: @screen-md) {
+    .form-wrapper {
+        height: auto;
+        display: block;
+        padding: 0.32rem 0.32rem 0.6rem;
+    }
+    .illustration {
+        width: 100%;
+        height: 3rem;
+        border-width: 0;
+    }
+    .login {
+        display: block;
+    }
+    .login-form {
+        padding: 0 0.32rem;
+        height: auto;
     }
     .middle-box {
-        margin-top: 1.5rem;
         width: 92%;
+        padding-top: 0.8rem;
         background: transparent;
+        margin: 0 auto;
     }
 }
