@@ -1,0 +1,83 @@
+.auth-binding-drawer {
+    .steper-wrapper,
+    :global(.ant-drawer-wrapper-body),
+    :global(.ant-drawer-body) {
+        height: 100%;
+    }
+    &:global(.ant-drawer.ant-drawer-open),
+    &:global(.ant-drawer) {
+        position: absolute !important;
+    }
+    :global(.ant-drawer-content-wrapper) {
+        position: unset;
+    }
+    :global(.ant-form-item-children) {
+        display: block;
+    }
+}
+.steper-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0.22rem;
+    padding-bottom: 0.22rem;
+}
+.steper-action,
+.steper-header {
+    position: relative;
+}
+.steper-body {
+    flex: 1;
+    img {
+        max-width: 100%;
+        display: block;
+    }
+    .step-one,
+    .step-two,
+    .step-three {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+    }
+    .step-one {
+        :global(.anticon) {
+            font-size: 0.2rem;
+        }
+        :global(.ant-tabs) {
+            min-width: 1.8rem;
+            max-width: 2.2rem;
+        }
+        :global(.ant-tabs) + span {
+            line-height: 0.32rem;
+        }
+    }
+    .step-two {
+        :global {
+            .auth-qrcode {
+                width: 2rem;
+            }
+            .secret-key {
+                display: inline-block;
+                margin-top: 0.2rem;
+                margin-bottom: 0.2rem;
+            }
+        }
+    }
+    .step-three {
+        > i {
+            color: rgb(73, 188, 25);
+            font-size: 0.8rem;
+        }
+        h2 {
+            margin: 0.2rem 0 0.1rem;
+        }
+    }
+}
+.steper-action {
+    button {
+        margin-left: 0.1rem;
+        margin-right: 0.1rem;
+    }
+}

@@ -47,7 +47,7 @@ export default class LoginForm extends React.PureComponent {
         });
     }
     render() {
-        const { authBind, className, form } = this.props;
+        const { authBind, className, fetchBindData, form } = this.props;
         const { getFieldDecorator } = form;
         return (
             <Form className={className} onSubmit={event => this.handleSubmit(event, 'SUBMIT')} autoComplete="off">
@@ -62,6 +62,7 @@ export default class LoginForm extends React.PureComponent {
                             <a
                                 href="javacript:;"
                                 style={{ float: 'right' }}
+                                disabled={fetchBindData}
                                 onClick={event => this.handleSubmit(event, 'AUTH_BIND')}
                             >
                                 绑定Google二次认证

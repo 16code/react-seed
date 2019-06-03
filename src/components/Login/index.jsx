@@ -6,7 +6,7 @@ import styles from './styles.less';
 
 const IconPrefix = ({ type }) => <Icon type={type} style={{ color: 'rgba(0,0,0,.25)' }} />;
 
-export default class UserLogin extends React.PureComponent {
+class UserLogin extends React.PureComponent {
     static propTypes = {
         authBind: PropTypes.bool,
         onCheckAccount: PropTypes.func,
@@ -36,7 +36,7 @@ export default class UserLogin extends React.PureComponent {
         });
     };
     render() {
-        const { onCheckAccount, onSubmit, onBindAuth, authBind } = this.props;
+        const { onCheckAccount, onSubmit, onBindAuth, authBind, fetchBindData } = this.props;
         const { accountChecking, lockIsRequired, hasAccount } = this.state;
         let pl = '入动态口令';
         if (hasAccount && !lockIsRequired) {
@@ -105,7 +105,7 @@ export default class UserLogin extends React.PureComponent {
             <div className={classNames(styles['login-page'], 'unselect')}>
                 <h1 className={styles['page-title']}>React Seed</h1>
                 <div className={styles['middle-box']}>
-                    <section className={styles['form-wrapper']}>
+                    <section className={styles['form-wrapper']} ref={this.props.forwardedRef}>
                         <span className={styles.illustration} />
                         <LoginForm
                             ref={this.userLoginForm}
@@ -115,6 +115,7 @@ export default class UserLogin extends React.PureComponent {
                             onSubmit={onSubmit}
                             onBindAuth={onBindAuth}
                             authBind={authBind}
+                            fetchBindData={fetchBindData}
                         />
                     </section>
                 </div>
@@ -122,3 +123,4 @@ export default class UserLogin extends React.PureComponent {
         );
     }
 }
+export default React.forwardRef((props, ref) => <UserLogin {...props} forwardedRef={ref} />);
