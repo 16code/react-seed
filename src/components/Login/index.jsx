@@ -1,105 +1,122 @@
-import { Button, Form, Input, Checkbox, Icon } from 'antd';
+import { Icon } from 'antd';
+import PropTypes from 'prop-types';
+import debounce from 'lodash/debounce';
+import LoginForm from './LoginForm';
 import styles from './styles.less';
 
-const FormItem = Form.Item;
+const IconPrefix = ({ type }) => <Icon type={type} style={{ color: 'rgba(0,0,0,.25)' }} />;
 
-@Form.create()
-export default class Login extends React.PureComponent {
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values);
+export default class UserLogin extends React.PureComponent {
+    static propTypes = {
+        authBind: PropTypes.bool,
+        onCheckAccount: PropTypes.func,
+        onBindAuth: PropTypes.func,
+        onSubmit: PropTypes.func.isRequired
+    };
+    userLoginForm = React.createRef();
+    constructor() {
+        super();
+        this.state = { lockIsRequired: false };
+        this.callAccountChecker = debounce(this.callAccountChecker, 300);
+    }
+    accountChecker = ({ target }) => {
+        if (target.value && target.value !== '') this.callAccountChecker(target.value);
+    };
+    callAccountChecker = async value => {
+        const { onCheckAccount } = this.props;
+        this.setState({ accountChecking: true, hasAccount: value && value !== '' });
+        const isRequired = await onCheckAccount(value).finally(() => {
+            this.setState({ accountChecking: false });
+        });
+        this.setState({ lockIsRequired: isRequired }, () => {
+            if (!isRequired) {
+                const { resetFields } = this.userLoginForm.current;
+                resetFields(['verifycode']);
             }
         });
     };
     render() {
-        const { getFieldDecorator } = this.props.form;
+        const { onCheckAccount, onSubmit, onBindAuth, authBind } = this.props;
+        const { accountChecking, lockIsRequired, hasAccount } = this.state;
+        let pl = '入动态口令';
+        if (hasAccount && !lockIsRequired) {
+            pl = '此帐号无需输入口令';
+        }
+        const fieldsConfig = {
+            account: {
+                inputProps: {
+                    onBlur: onCheckAccount ? this.accountChecker : () => {},
+                    prefix: <IconPrefix type={'user'} />,
+                    suffix: onCheckAccount && accountChecking && <IconPrefix type={'loading'} spin />,
+                    size: 'large',
+                    placeholder: '用户名',
+                    autoComplete: 'off'
+                },
+                fieldOption: {
+                    rules: [
+                        {
+                            whitespace: true,
+                            required: true,
+                            message: '请输入用户名!'
+                        }
+                    ]
+                }
+            },
+            password: {
+                inputProps: {
+                    prefix: <IconPrefix type={'lock'} />,
+                    size: 'large',
+                    placeholder: '密码',
+                    autoComplete: 'off'
+                },
+                fieldOption: {
+                    rules: [
+                        {
+                            required: true,
+                            message: '请输入密码!'
+                        }
+                    ]
+                }
+            },
+            verifycode: {
+                inputProps: {
+                    prefix: <IconPrefix type={'safety'} />,
+                    size: 'large',
+                    autoComplete: 'off',
+                    type: 'tel',
+                    disabled: pl === '此帐号无需输入口令',
+                    placeholder: pl
+                },
+                fieldOption: {
+                    rules: [
+                        {
+                            required: lockIsRequired,
+                            message: '请输入动态口令'
+                        },
+                        {
+                            pattern: /^\d{6}$/,
+                            message: '请输入6位数字验证码'
+                        }
+                    ]
+                }
+            }
+        };
         return (
-            <div className={styles.login}>
+            <div className={classNames(styles['login-page'], 'unselect')}>
+                <h1 className={styles['page-title']}>React Seed</h1>
                 <div className={styles['middle-box']}>
-                    <h1 className={styles['page-title']}>React Seed</h1>
-                    <div className={styles['form-wrapper']}>
-                        <div className={styles.illustration} />
-                        <Form className={styles['login-form']} onSubmit={this.handleSubmit} autoComplete="off">
-                            <div className={styles['form-item']}>
-                                <FormItem>
-                                    {getFieldDecorator('username', {
-                                        rules: [
-                                            {
-                                                required: true,
-                                                message: 'Please input your username!'
-                                            }
-                                        ]
-                                    })(
-                                        <Input
-                                            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                            size="large"
-                                            placeholder="Username"
-                                            autoComplete="off"
-                                        />
-                                    )}
-                                </FormItem>
-                            </div>
-                            <div className={styles['form-item']}>
-                                <FormItem>
-                                    {getFieldDecorator('password', {
-                                        rules: [
-                                            {
-                                                required: true,
-                                                message: 'Please input your Password!'
-                                            }
-                                        ]
-                                    })(
-                                        <Input
-                                            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                            size="large"
-                                            type="password"
-                                            placeholder="Password"
-                                            autoComplete="new-password"
-                                        />
-                                    )}
-                                </FormItem>
-                            </div>
-                            <FormItem>
-                                {getFieldDecorator('code', {
-                                    rules: [
-                                        {
-                                            message: '请输入动态口令, 首次登陆请先绑定二次认证!'
-                                        },
-                                        {
-                                            len: 6,
-                                            message: '请输入6位数字验证码'
-                                        }
-                                    ]
-                                })(
-                                    <Input
-                                        size="large"
-                                        placeholder="请输入口令"
-                                        prefix={<Icon type="safety" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    />
-                                )}
-                            </FormItem>
-                            <FormItem className={styles['ant-form-item-last']}>
-                                {getFieldDecorator('remember', {
-                                    valuePropName: 'checked',
-                                    initialValue: true
-                                })(<Checkbox className={styles.remember}>记住用户名</Checkbox>)}
-                                <a href="#" className={styles['auth-bind']}>
-                                    绑定Google二次认证
-                                </a>
-                                <Button
-                                    htmlType="submit"
-                                    type="primary"
-                                    className={styles['submit-button']}
-                                    size="large"
-                                    block
-                                >
-                                    用户登陆
-                                </Button>
-                            </FormItem>
-                        </Form>
-                    </div>
+                    <section className={styles['form-wrapper']}>
+                        <span className={styles.illustration} />
+                        <LoginForm
+                            ref={this.userLoginForm}
+                            className={styles['login-form']}
+                            styles={styles}
+                            config={{ ...fieldsConfig }}
+                            onSubmit={onSubmit}
+                            onBindAuth={onBindAuth}
+                            authBind={authBind}
+                        />
+                    </section>
                 </div>
             </div>
         );

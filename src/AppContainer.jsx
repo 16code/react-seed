@@ -1,6 +1,6 @@
 import '@styles';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Login from '@components/Login';
+import Login from '@views/LoginView';
 import AppProvider from './AppProvider';
 import BaiscLayout from './BaiscLayout';
 
