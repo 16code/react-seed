@@ -30,3 +30,12 @@
 .ant-layout-header {
     line-height: unset !important;
 }
+
+.ant-btn-primary[disabled] {
+    color: #fff !important;
+    background-color: @primary-color !important;
+    border-color: @primary-color !important;
+    &::before {
+        display: block;
+    }
+}
