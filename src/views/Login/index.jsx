@@ -11,7 +11,7 @@ export default class LoginPage extends React.PureComponent {
         this.state = { verifyCodeIsRequired: false, hasUserName: false };
     }
     async componentDidMount() {
-        const userData = await handleGetBindData({ account: 'admin1', password: '1313313313aaa' }).catch(e => {
+        const userData = await callBindData({ account: 'admin1', password: '1313313313aaa' }).catch(e => {
             console.log(e);
         });
         if (userData) {
@@ -31,8 +31,29 @@ export default class LoginPage extends React.PureComponent {
     handleAuthBind = data => {
         console.log(data);
     };
+    handleCancelBind = () => {
+        console.log('handleCancelBind');
+    };
+    handleBindDone = () => {
+        console.log('handleBindDone');
+    };
+    handleTwoStepOnNext = async ({ current, data }) => {
+        if (current === 2 && data) {
+            try {
+                this.setState({ bindState: 'waiting' });
+                await delay(3000);
+                await callBindResult(data).catch(() => {
+                    this.setState({ bindState: 'filed' });
+                    return Promise.reject('auth bind filed');
+                });
+                this.setState({ bindState: 'succeed' });
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
     render() {
-        const { userData, hasUserName, userChecking, verifyCodeIsRequired } = this.state;
+        const { userData, hasUserName, userChecking, verifyCodeIsRequired, bindState } = this.state;
         const verifyCodeRequired = hasUserName && !verifyCodeIsRequired;
 
         const fieldsConfig = {
@@ -119,12 +140,18 @@ export default class LoginPage extends React.PureComponent {
                         </section>
                     </div>
                 </div>
-                <TwoStepVerify userData={userData} />
+                <TwoStepVerify
+                    userData={userData}
+                    onNext={this.handleTwoStepOnNext}
+                    onCancel={this.handleCancelBind}
+                    onDone={this.handleBindDone}
+                    state={bindState}
+                />
             </div>
         );
     }
 }
-function handleGetBindData({ account, password }) {
+function callBindData({ account, password }) {
     const { data } = require('@views/auth-mock.json');
     return new Promise((resolve, reject) => {
         const delay = parseInt(Math.random() * 100, 10);
@@ -140,5 +167,13 @@ function callUserCheck(account) {
         setTimeout(() => {
             resolve(account !== 'admin');
         }, 300);
+    });
+}
+function callBindResult() {
+    return new Promise((resolve, reject) => {
+        const delay = parseInt(Math.random() * 100, 10);
+        setTimeout(() => {
+            Math.random() < 0.5 ? reject() : resolve();
+        }, delay);
     });
 }

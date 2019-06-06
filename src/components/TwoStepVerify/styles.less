@@ -1,0 +1,69 @@
+.two-step-verify {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 9;
+    .wrapper {
+        padding: 0.24rem;
+        height: 100%;
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+    :global(.auth-bind) {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        img {
+            width: 3.2rem;
+            height: 3.2rem;
+        }
+    }
+    .donwload-point {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        > :global(.ant-tabs) {
+            width: 2.8rem;
+            max-width: 100%;
+        }
+        img {
+            max-width: 96%;
+        }
+    }
+    .steps-content {
+        display: block;
+        width: 100%;
+    }
+    .steps-action {
+        display: grid;
+        grid-auto-flow: column;
+        grid-gap: 0.15rem;
+    }
+    .result {
+        text-align: center;
+        :global(.icon) {
+            font-size: 0.8rem;
+        }
+        :global(.icon-succeed) {
+            color: #49bc19;
+        }
+        :global(.icon-filed) {
+            color: #f5222d;
+        }
+        :global(.icon-loading) {
+            color: @primary-color;
+        }
+        h2 {
+            margin: 0.2rem 0 0.1rem;
+        }
+    }
+    :global(.ant-form-explain) {
+        text-align: center;
+    }
+}

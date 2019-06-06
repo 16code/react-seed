@@ -17,6 +17,7 @@
         "moment": true,
         "console": true,
         "connect": true,
+        "delay": true,
         "PropTypes": true
     },
     "env": {

@@ -55,7 +55,8 @@ const plugins = [
         React: 'react',
         ReactDOM: 'react-dom',
         classNames: 'classnames',
-        PropTypes: 'prop-types'
+        PropTypes: 'prop-types',
+        delay: ['@helper', 'delay']
     }),
     new MiniCssExtractPlugin({
         filename: filesNameMapper.cssFilename,
