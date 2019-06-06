@@ -1,5 +1,4 @@
 import { Button, Input, Checkbox, Form } from 'antd';
-import PropTypes from 'prop-types';
 
 const FormItem = Form.Item;
 

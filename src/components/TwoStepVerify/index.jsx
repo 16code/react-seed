@@ -1,5 +1,4 @@
 import { Steps, Button, Form } from 'antd';
-import PropTypes from 'prop-types';
 import AppDownload from './AppDownload';
 import SecretBind from './SecretBind';
 import Result from './Result';

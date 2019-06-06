@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import styles from './styles.less';
 function SecurityCodeInput({ len = 6, onChange }, ref) {
     const inputsRef = React.useRef(ref);
