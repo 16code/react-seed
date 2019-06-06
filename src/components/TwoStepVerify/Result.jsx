@@ -5,7 +5,7 @@ export default function Result({ className, state = 'waiting' }) {
             className: 'icon icon-loading',
             type: 'loading',
             spin: true,
-            stuff: '正在等待绑定结果, 请稍后...',
+            stuff: '正在等待结果, 请稍后...',
             tips: '感谢您使用二次绑定, 二次绑定能有效放置帐号被盗风险!'
         },
         succeed: {

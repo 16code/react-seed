@@ -62,11 +62,11 @@ export default class LoginForm extends React.PureComponent {
                         {showAuthBind && (
                             <a
                                 href="javacript:;"
-                                disabled={disableAuthBind}
+                                disabled={loading || disableAuthBind}
                                 style={{ float: 'right' }}
                                 onClick={this.handleAuthBind}
                             >
-                                绑定Google二次认证
+                                {disableAuthBind ? '正在请求绑定数据...' : '绑定Google二次认证'}
                             </a>
                         )}
                     </div>

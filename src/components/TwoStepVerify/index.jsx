@@ -1,7 +1,7 @@
 import { Steps, Button, Form } from 'antd';
 import PropTypes from 'prop-types';
 import AppDownload from './AppDownload';
-import AuthBind from './AuthBind';
+import SecretBind from './SecretBind';
 import Result from './Result';
 import styles from './styles.less';
 const Step = Steps.Step;
@@ -31,7 +31,7 @@ const ACTION_ENUM = {
         filed: {
             label: '重新绑定',
             btnType: 'danger',
-            behavior: 'onPrev'
+            behavior: 'onRebind'
         }
     },
     cancel: {
@@ -48,6 +48,8 @@ const ACTIONS = {
 @Form.create()
 export default class TwoStepVerify extends React.PureComponent {
     static propTypes = {
+        visible: PropTypes.bool,
+        loading: PropTypes.bool,
         state: PropTypes.string,
         onPrev: PropTypes.func,
         onCancel: PropTypes.func,
@@ -58,6 +60,16 @@ export default class TwoStepVerify extends React.PureComponent {
             secretKey: PropTypes.string
         })
     };
+    static defaultProps = {
+        visible: false,
+        loading: false
+    };
+    static getDerivedStateFromProps(nextProps, state) {
+        if (nextProps.visible !== state.visible) {
+            return { current: 0, visible: nextProps.visible };
+        }
+        return null;
+    }
     constructor() {
         super();
         this.state = { current: 0 };
@@ -84,6 +96,11 @@ export default class TwoStepVerify extends React.PureComponent {
         this.setState({ current: nextCurrent });
         this.props.onPrev && this.props.onPrev({ current: nextCurrent });
     };
+    onRebind = () => {
+        const nextCurrent = this.state.current - 1;
+        this.setState({ current: nextCurrent });
+        this.props.onRebind && this.props.onRebind({ current: nextCurrent, data: this.props.userData });
+    };
     triggerNext = (nextCurrent, data) => {
         const { onNext } = this.props;
         this.setState({ current: nextCurrent }, () => {
@@ -92,14 +109,14 @@ export default class TwoStepVerify extends React.PureComponent {
     };
     get stepContentRender() {
         const { current } = this.state;
-        const { userData, form, state } = this.props;
+        const { userData, form, state, loading } = this.props;
         let content;
         switch (current) {
             case 0:
                 content = <AppDownload className={styles['donwload-point']} />;
                 break;
             case 1:
-                content = <AuthBind userData={userData} form={form} />;
+                content = <SecretBind loading={loading} userData={userData} form={form} />;
                 break;
             case 2:
                 content = <Result state={state} className={styles.result} />;
@@ -132,8 +149,15 @@ export default class TwoStepVerify extends React.PureComponent {
         });
     }
     render() {
+        const { visible } = this.props;
+
         return (
-            <div className={styles['two-step-verify']}>
+            <div
+                tabIndex="-1"
+                className={classNames(styles['two-step-verify'], 'unselect', {
+                    [styles.visible]: visible
+                })}
+            >
                 <div className={styles.wrapper}>
                     {this.stepsRender}
                     <div className={styles['steps-content']}>{this.stepContentRender}</div>

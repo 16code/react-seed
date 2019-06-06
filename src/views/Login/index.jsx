@@ -8,15 +8,7 @@ const IconPrefix = ({ type }) => <Icon type={type} style={{ color: 'rgba(0,0,0,.
 export default class LoginPage extends React.PureComponent {
     constructor() {
         super();
-        this.state = { verifyCodeIsRequired: false, hasUserName: false };
-    }
-    async componentDidMount() {
-        const userData = await callBindData({ account: 'admin1', password: '1313313313aaa' }).catch(e => {
-            console.log(e);
-        });
-        if (userData) {
-            this.setState({ userData });
-        }
+        this.state = { verifyCodeIsRequired: false, hasUserName: false, secretFetching: false };
     }
     onUserNameChanged = async ({ target }) => {
         if (target.value && target.value !== '') {
@@ -25,23 +17,42 @@ export default class LoginPage extends React.PureComponent {
             this.setState({ verifyCodeIsRequired, hasUserName: true, userChecking: false });
         }
     };
+    getSecretData = async data => {
+        this.setState({ secretFetching: true });
+        await delay(3000);
+        const response = await callBindData(data)
+            .catch(error => {
+                console.log(error);
+            })
+            .finally(() => {
+                this.setState({ secretFetching: false });
+            });
+        if (response) {
+            this.setState({ userData: response, visible: true });
+        }
+    };
     handleSubmit = data => {
         console.log(data);
     };
-    handleAuthBind = data => {
-        console.log(data);
+    handleOpenAuthModal = data => {
+        this.getSecretData(data);
+    };
+    handleRebindAuth = ({ data }) => {
+        this.getSecretData(data);
     };
     handleCancelBind = () => {
         console.log('handleCancelBind');
+        this.setState({ visible: false });
     };
     handleBindDone = () => {
         console.log('handleBindDone');
+        this.setState({ visible: false });
     };
     handleTwoStepOnNext = async ({ current, data }) => {
         if (current === 2 && data) {
             try {
                 this.setState({ bindState: 'waiting' });
-                await delay(3000);
+                await delay(1500);
                 await callBindResult(data).catch(() => {
                     this.setState({ bindState: 'filed' });
                     return Promise.reject('auth bind filed');
@@ -53,7 +64,15 @@ export default class LoginPage extends React.PureComponent {
         }
     };
     render() {
-        const { userData, hasUserName, userChecking, verifyCodeIsRequired, bindState } = this.state;
+        const {
+            userData,
+            hasUserName,
+            userChecking,
+            verifyCodeIsRequired,
+            bindState,
+            visible,
+            secretFetching
+        } = this.state;
         const verifyCodeRequired = hasUserName && !verifyCodeIsRequired;
 
         const fieldsConfig = {
@@ -81,7 +100,8 @@ export default class LoginPage extends React.PureComponent {
                     prefix: <IconPrefix type={'lock'} />,
                     size: 'large',
                     placeholder: '密码',
-                    autoComplete: 'off'
+                    autoComplete: 'new-password',
+                    type: 'password'
                 },
                 fieldOption: {
                     rules: [
@@ -97,7 +117,7 @@ export default class LoginPage extends React.PureComponent {
                 inputProps: {
                     prefix: <IconPrefix type={'safety'} />,
                     size: 'large',
-                    autoComplete: 'off',
+                    autoComplete: 'new-password',
                     placeholder: verifyCodeRequired ? '此帐号无需输入口令' : '输入动态口令',
                     type: 'tel'
                 },
@@ -128,10 +148,10 @@ export default class LoginPage extends React.PureComponent {
                                 <LoginForm
                                     config={fieldsConfig}
                                     onSubmit={this.handleSubmit}
-                                    onAuthBind={this.handleAuthBind}
+                                    onAuthBind={this.handleOpenAuthModal}
                                     userNameField="account"
                                     passwordField="password"
-                                    disabledAuthBind={false}
+                                    disableAuthBind={secretFetching}
                                     disableSubmit={userChecking}
                                     loading={false}
                                     showAuthBind
@@ -139,14 +159,17 @@ export default class LoginPage extends React.PureComponent {
                             </div>
                         </section>
                     </div>
+                    <TwoStepVerify
+                        visible={visible}
+                        userData={userData}
+                        onNext={this.handleTwoStepOnNext}
+                        onCancel={this.handleCancelBind}
+                        onDone={this.handleBindDone}
+                        onRebind={this.handleRebindAuth}
+                        loading={secretFetching}
+                        state={bindState}
+                    />
                 </div>
-                <TwoStepVerify
-                    userData={userData}
-                    onNext={this.handleTwoStepOnNext}
-                    onCancel={this.handleCancelBind}
-                    onDone={this.handleBindDone}
-                    state={bindState}
-                />
             </div>
         );
     }
@@ -158,7 +181,14 @@ function callBindData({ account, password }) {
         setTimeout(() => {
             Math.random() < 0.1
                 ? reject({ message: 'error' })
-                : resolve({ account, password, secretKey: data.secretKey, qrcode: data.qrcode });
+                : resolve({
+                    account,
+                    password,
+                    secretKey: btoa(Math.random())
+                        .substring(0, 16)
+                        .toUpperCase(),
+                    qrcode: data.qrcode
+                });
         }, delay);
     });
 }
@@ -173,7 +203,7 @@ function callBindResult() {
     return new Promise((resolve, reject) => {
         const delay = parseInt(Math.random() * 100, 10);
         setTimeout(() => {
-            Math.random() < 0.5 ? reject() : resolve();
+            Math.random() < 0.88 ? reject() : resolve();
         }, delay);
     });
 }

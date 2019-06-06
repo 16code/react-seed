@@ -5,7 +5,12 @@
     width: 100%;
     height: 100%;
     background-color: #fff;
-    z-index: 9;
+    z-index: 11;
+    transform: translate3d(0, -100%, 0);
+    transition: transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
+    &.visible {
+        transform: translate3d(0, 0, 0);
+    }
     .wrapper {
         padding: 0.24rem;
         height: 100%;
@@ -14,13 +19,16 @@
         display: flex;
         flex-direction: column;
     }
-    :global(.auth-bind) {
+    :global(.secret-bind-wrapper) {
         display: flex;
         align-items: center;
         flex-direction: column;
+        :global(.text-primary) {
+            user-select: text;
+        }
         img {
-            width: 3.2rem;
-            height: 3.2rem;
+            width: 220px;
+            height: 220px;
         }
     }
     .donwload-point {
@@ -29,11 +37,12 @@
         flex-direction: column;
         align-items: center;
         > :global(.ant-tabs) {
-            width: 2.8rem;
+            width: 200px;
             max-width: 100%;
         }
         img {
-            max-width: 96%;
+            max-width: 90%;
+            width: 220px;
         }
     }
     .steps-content {
