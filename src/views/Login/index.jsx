@@ -1,19 +1,22 @@
 import { Icon } from 'antd';
 import LoginForm from '@components/LoginForm';
+import TwoStepVerify from '@components/TwoStepVerify';
 import styles from './styles.less';
 
 const IconPrefix = ({ type }) => <Icon type={type} style={{ color: 'rgba(0,0,0,.25)' }} />;
-export function callUserCheck(account) {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve(account !== 'admin');
-        }, 300);
-    });
-}
+
 export default class LoginPage extends React.PureComponent {
     constructor() {
         super();
         this.state = { verifyCodeIsRequired: false, hasUserName: false };
+    }
+    async componentDidMount() {
+        const userData = await handleGetBindData({ account: 'admin1', password: '1313313313aaa' }).catch(e => {
+            console.log(e);
+        });
+        if (userData) {
+            this.setState({ userData });
+        }
     }
     onUserNameChanged = async ({ target }) => {
         if (target.value && target.value !== '') {
@@ -29,7 +32,7 @@ export default class LoginPage extends React.PureComponent {
         console.log(data);
     };
     render() {
-        const { hasUserName, userChecking, verifyCodeIsRequired } = this.state;
+        const { userData, hasUserName, userChecking, verifyCodeIsRequired } = this.state;
         const verifyCodeRequired = hasUserName && !verifyCodeIsRequired;
 
         const fieldsConfig = {
@@ -116,7 +119,26 @@ export default class LoginPage extends React.PureComponent {
                         </section>
                     </div>
                 </div>
+                <TwoStepVerify userData={userData} />
             </div>
         );
     }
+}
+function handleGetBindData({ account, password }) {
+    const { data } = require('@views/auth-mock.json');
+    return new Promise((resolve, reject) => {
+        const delay = parseInt(Math.random() * 100, 10);
+        setTimeout(() => {
+            Math.random() < 0.1
+                ? reject({ message: 'error' })
+                : resolve({ account, password, secretKey: data.secretKey, qrcode: data.qrcode });
+        }, delay);
+    });
+}
+function callUserCheck(account) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(account !== 'admin');
+        }, 300);
+    });
 }
