@@ -10,7 +10,7 @@ export default class AppContainer extends React.PureComponent {
             <AppProvider>
                 <BrowserRouter>
                     <Switch>
-                        <Route path="/login2" component={LoginPage} exact />
+                        <Route path="/login" component={LoginPage} exact />
                         <Route path="/" component={BaiscLayout} />
                     </Switch>
                 </BrowserRouter>

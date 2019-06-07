@@ -6,7 +6,6 @@ export default class SecretBind extends React.PureComponent {
     render() {
         const { userData = {}, form, loading } = this.props;
         const { qrcode, secretKey } = userData;
-        console.log(loading);
 
         return (
             <div className="secret-bind-wrapper">
@@ -22,7 +21,7 @@ export default class SecretBind extends React.PureComponent {
                             style={{ minWidth: 180, display: 'inline-block', textAlign: 'center' }}
                             className="text-primary"
                         >
-                            {secretKey}
+                            {loading ? <del>{secretKey}</del> : secretKey}
                         </span>
                     </Tooltip>
                 </span>

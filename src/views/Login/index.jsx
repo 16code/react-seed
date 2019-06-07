@@ -11,10 +11,10 @@ export default class LoginPage extends React.PureComponent {
         this.state = { verifyCodeIsRequired: false, hasUserName: false, secretFetching: false };
     }
     onUserNameChanged = async ({ target }) => {
-        if (target.value && target.value !== '') {
+        if (target.value && target.value !== '' && target.value !== this.state.prevUserName) {
             this.setState({ userChecking: true });
             const verifyCodeIsRequired = await callUserCheck(target.value);
-            this.setState({ verifyCodeIsRequired, hasUserName: true, userChecking: false });
+            this.setState({ verifyCodeIsRequired, prevUserName: target.value, hasUserName: true, userChecking: false });
         }
     };
     getSecretData = async data => {

@@ -135,13 +135,13 @@ export default class TwoStepVerify extends React.PureComponent {
     }
     get stepActionRender() {
         const { current } = this.state;
-        const { state } = this.props;
+        const { state, loading } = this.props;
         ACTION_ENUM.next.label = `下一步, ${current === 0 ? '输入动态口令' : '完成绑定'}`;
         return ACTIONS[current].map(key => {
             const { btnType, label, behavior } = current !== 2 ? ACTION_ENUM[key] : ACTION_ENUM[key][state] || {};
             const onClick = this[behavior] ? this[behavior] : () => {};
             return (
-                <Button key={key} type={btnType} onClick={onClick} disabled={state === 'waiting'}>
+                <Button key={key} type={btnType} onClick={onClick} disabled={loading || state === 'waiting'}>
                     {label}
                 </Button>
             );
