@@ -9,7 +9,7 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -91,7 +91,7 @@ module.exports = function config() {
             path: distPath,
             filename: filesNameMapper.filename,
             chunkFilename: filesNameMapper.chunkFilename,
-            publicPath: './'
+            publicPath: '/'
         },
         devServer: {
             port,
@@ -249,12 +249,10 @@ function styleLoaderConfig(options = {}) {
         {
             loader: 'postcss-loader',
             options: {
+                ident: 'postcss',
                 config: {
-                    path: path.join(__dirname, '.postcssrc.js'),
+                    path: './',
                     ctx: {
-                        autoprefixer: {
-                            browsers: ['Safari >= 10', 'last 1 firefox version', 'Chrome >= 66', 'Explorer >= 10']
-                        },
                         cssnano: { preset: 'default' }
                     }
                 }
