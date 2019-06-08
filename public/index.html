@@ -8,12 +8,12 @@
         <!-- inject:moment:js -->
         <!-- endinject -->
         <script type="text/javascript">
-            (function(doc, win) {
+            !(function(doc, win) {
                 var docEl = doc.documentElement,
                     resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
                     recalc = function() {
+                        doc.removeEventListener('DOMContentLoaded', arguments.callee, false);
                         var clientWidth = docEl.clientWidth;
-                        if (!clientWidth) return;
                         if (clientWidth >= 640) {
                             docEl.style.fontSize = '100px';
                         } else {
