@@ -1,9 +1,11 @@
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+
 const Suspense = React.Suspense;
 const About = React.lazy(() => import('./About'));
 const Checkout = React.lazy(() => import('./Checkout'));
 const Dashboard = React.lazy(() => import('./Dashboard'));
 
+@withErrorBoundary
 @withRouter
 export default class Pages extends React.PureComponent {
     componentDidMount() {
