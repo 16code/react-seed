@@ -18,6 +18,10 @@
         "console": true,
         "connect": true,
         "delay": true,
+        "autobind": true,
+        "safeSetState": true,
+        "displayName": true,
+        "withErrorBoundary": true,
         "PropTypes": true
     },
     "env": {
