@@ -58,11 +58,11 @@ export default class TwoStepVerify extends React.PureComponent {
             qrcode: PropTypes.string,
             secretKey: PropTypes.string
         })
-    };
+    }
     static defaultProps = {
         visible: false,
         loading: false
-    };
+    }
     static getDerivedStateFromProps(nextProps, state) {
         if (nextProps.visible !== state.visible) {
             return { current: 0, visible: nextProps.visible };
@@ -75,10 +75,10 @@ export default class TwoStepVerify extends React.PureComponent {
     }
     onCancel = () => {
         this.props.onCancel && this.props.onCancel();
-    };
+    }
     onDone = () => {
         this.props.onDone && this.props.onDone();
-    };
+    }
     onNext = () => {
         const nextCurrent = this.state.current + 1;
         if (nextCurrent === 2) {
@@ -89,23 +89,23 @@ export default class TwoStepVerify extends React.PureComponent {
         } else {
             this.triggerNext(nextCurrent, { current: nextCurrent });
         }
-    };
+    }
     onPrev = () => {
         const nextCurrent = this.state.current - 1;
         this.setState({ current: nextCurrent });
         this.props.onPrev && this.props.onPrev({ current: nextCurrent });
-    };
+    }
     onRebind = () => {
         const nextCurrent = this.state.current - 1;
         this.setState({ current: nextCurrent });
         this.props.onRebind && this.props.onRebind({ current: nextCurrent, data: this.props.userData });
-    };
+    }
     triggerNext = (nextCurrent, data) => {
         const { onNext } = this.props;
         this.setState({ current: nextCurrent }, () => {
             onNext && onNext(data);
         });
-    };
+    }
     get stepContentRender() {
         const { current } = this.state;
         const { userData, form, state, loading } = this.props;

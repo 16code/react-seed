@@ -14,13 +14,13 @@ export default class LoginForm extends React.PureComponent {
         onAuthBind: PropTypes.func,
         userNameField: PropTypes.string.isRequired,
         passwordField: PropTypes.string.isRequired
-    };
+    }
     static defaultProps = {
         config: {},
         loading: false,
         showAuthBind: false,
         disableAuthBind: false
-    };
+    }
     componentWillReceiveProps(prevProps) {
         const { config: prevConfig } = prevProps;
         const { config } = this.props;
@@ -93,7 +93,7 @@ export default class LoginForm extends React.PureComponent {
                 errors: resetError ? null : [new Error(rule[0].message)]
             }
         });
-    };
+    }
     handleAuthBind = event => {
         event.preventDefault();
         const { form, onAuthBind, userNameField, passwordField } = this.props;
@@ -110,7 +110,7 @@ export default class LoginForm extends React.PureComponent {
         if (!errorUserName && !errorPassword) {
             onAuthBind && onAuthBind({ [userNameField]: userName, [passwordField]: password });
         }
-    };
+    }
     handleSubmit = event => {
         event.preventDefault();
         const { form, onSubmit } = this.props;
@@ -119,7 +119,7 @@ export default class LoginForm extends React.PureComponent {
                 onSubmit && onSubmit(values);
             }
         });
-    };
+    }
     render() {
         return (
             <Form onSubmit={this.handleSubmit}>
