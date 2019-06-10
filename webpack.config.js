@@ -56,7 +56,11 @@ const plugins = [
         ReactDOM: 'react-dom',
         classNames: 'classnames',
         PropTypes: 'prop-types',
-        delay: ['@helper', 'delay']
+        delay: ['@helper', 'delay'],
+        autobind: ['decoration', 'autobind'],
+        safeSetState: ['decoration', 'safeSetState'],
+        displayName: ['decoration', 'displayName'],
+        withErrorBoundary: ['ErrorBoundary', 'withErrorBoundary']
     }),
     new MiniCssExtractPlugin({
         filename: filesNameMapper.cssFilename,
@@ -65,7 +69,7 @@ const plugins = [
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/)
 ];
 if (isDev) {
-    [].push.apply(plugins, [
+    ;[].push.apply(plugins, [
         new webpack.NamedModulesPlugin(),
         new StyleLintPlugin({
             configFile: path.join(__dirname, '.stylelintrc'),
@@ -73,7 +77,7 @@ if (isDev) {
         })
     ]);
 } else {
-    [].push.apply(plugins, [
+    ;[].push.apply(plugins, [
         new CleanWebpackPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
         // new BundleAnalyzerPlugin({ openAnalyzer: !false })
@@ -119,7 +123,9 @@ module.exports = function config() {
                 '@views': path.join(__dirname, 'src/views'),
                 '@helper': path.join(__dirname, 'src/helper'),
                 '@context': path.join(__dirname, 'src/context'),
-                '@styles': path.join(__dirname, 'src/styles')
+                '@styles': path.join(__dirname, 'src/styles'),
+                ErrorBoundary: path.join(__dirname, 'src/components/ErrorBoundary.jsx'),
+                decoration: path.join(__dirname, 'src/helper/decoration/index.js')
             }
         },
         module: {
