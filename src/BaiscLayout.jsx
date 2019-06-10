@@ -6,8 +6,9 @@ import MediaQuery from '@components/MediaQuery';
 import { UiContext, themes } from '@context/ui';
 import Views from '@views';
 const { Header, Content } = Layout;
+
 export default class BasicLayout extends React.PureComponent {
-    static contextType = UiContext;
+    static contextType = UiContext
     constructor(props, context) {
         super(props);
         this.state = {
@@ -15,7 +16,6 @@ export default class BasicLayout extends React.PureComponent {
             theme: context.theme
         };
     }
-
     handleToggleAside = () => {
         this.setState(
             prev => ({ collapsed: !prev.collapsed }),
@@ -23,12 +23,12 @@ export default class BasicLayout extends React.PureComponent {
                 this.context.onToggleAside(this.state.collapsed);
             }
         );
-    };
+    }
     handleToggleTheme = () => {
         this.setState(state => ({
             theme: state.theme === themes.dark ? themes.light : themes.dark
         }));
-    };
+    }
     layoutRender = isMobile => {
         const { collapsed, theme } = this.state;
         const contextValue = {
@@ -57,7 +57,7 @@ export default class BasicLayout extends React.PureComponent {
                 </Layout>
             </ContainerQuery>
         );
-    };
+    }
     render() {
         return <MediaQuery>{this.layoutRender}</MediaQuery>;
     }
