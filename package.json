@@ -76,7 +76,7 @@
     "postcss-short": "^5.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.18.2",
-    "react-hot-loader": "^4.9.0",
+    "react-hot-loader": "^4.11.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
     "style-resources-loader": "^1.2.1",
@@ -93,7 +93,7 @@
   },
   "dependencies": {
     "@hot-loader/react-dom": "^16.8.6",
-    "antd": "^3.19.2",
+    "antd": "^3.19.3",
     "classnames": "^2.2.6",
     "enquire.js": "^2.1.6",
     "lodash": "^4.17.11",
@@ -102,10 +102,10 @@
     "react": "^16.8.6",
     "react-container-query": "^0.11.0",
     "react-media": "^1.9.2",
-    "react-redux": "^7.0.3",
+    "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "redux": "^4.0.1",
-    "redux-saga": "^1.0.2"
+    "redux-saga": "^1.0.3"
   },
   "precommit": {
     "run": "lint-staged",
