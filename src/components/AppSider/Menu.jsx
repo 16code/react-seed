@@ -1,24 +1,24 @@
 import { Menu, Icon } from 'antd';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 export default ({ theme }) => (
-    <Menu theme={theme} mode="inline" defaultSelectedKeys={['1']} style={{ padding: '16px 0', width: '100%' }}>
+    <Menu theme={theme} mode="inline" defaultSelectedKeys={[]} style={{ padding: '16px 0', width: '100%' }}>
         <Menu.Item key="1">
-            <Link to="/dashboard">
+            <NavLink to="/dashboard">
                 <Icon type="user" />
                 <span>dashboard </span>
-            </Link>
+            </NavLink>
         </Menu.Item>
         <Menu.Item key="2">
-            <Link to="/checkout">
+            <NavLink to="/checkout">
                 <Icon type="video-camera" />
                 <span>checkout</span>
-            </Link>
+            </NavLink>
         </Menu.Item>
         <Menu.Item key="3">
-            <Link to="/about">
+            <NavLink to="/about">
                 <Icon type="upload" />
                 <span>about</span>
-            </Link>
+            </NavLink>
         </Menu.Item>
     </Menu>
 );
