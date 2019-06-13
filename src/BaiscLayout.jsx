@@ -1,4 +1,4 @@
-import { Layout, Button } from 'antd';
+import { Layout } from 'antd';
 import AppSider from '@components/AppSider';
 import GlobalHeader from '@components/GlobalHeader';
 import ContainerQuery from '@components/ContainerQuery';
@@ -48,8 +48,6 @@ export default class BasicLayout extends React.PureComponent {
                                 <GlobalHeader />
                             </Header>
                             <Content className="app-content">
-                                <span>Hello React</span>
-                                <Button type="primary">111</Button>
                                 <Views />
                             </Content>
                         </Layout>

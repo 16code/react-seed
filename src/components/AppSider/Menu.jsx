@@ -20,5 +20,11 @@ export default ({ theme }) => (
                 <span>about</span>
             </NavLink>
         </Menu.Item>
+        <Menu.Item key="4">
+            <NavLink to="/table">
+                <Icon type="table" />
+                <span>table</span>
+            </NavLink>
+        </Menu.Item>
     </Menu>
 );
