@@ -17,6 +17,7 @@
         "moment": true,
         "console": true,
         "connect": true,
+        "request": true,
         "delay": true,
         "autobind": true,
         "safeSetState": true,

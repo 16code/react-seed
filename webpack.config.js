@@ -57,6 +57,7 @@ const plugins = [
         classNames: 'classnames',
         PropTypes: 'prop-types',
         delay: ['@helper', 'delay'],
+        request: ['requestJs', 'default'],
         autobind: ['decoration', 'autobind'],
         safeSetState: ['decoration', 'safeSetState'],
         displayName: ['decoration', 'displayName'],
@@ -125,7 +126,8 @@ module.exports = function config() {
                 '@context': path.join(__dirname, 'src/context'),
                 '@styles': path.join(__dirname, 'src/styles'),
                 ErrorBoundary: path.join(__dirname, 'src/components/ErrorBoundary.jsx'),
-                decoration: path.join(__dirname, 'src/helper/decoration/index.js')
+                decoration: path.join(__dirname, 'src/helper/decoration/index.js'),
+                requestJs: path.join(__dirname, 'src/helper/request.js')
             }
         },
         module: {
@@ -249,7 +251,7 @@ function styleLoaderConfig(options = {}) {
             options: {
                 importLoaders: 2,
                 modules: useCssModule,
-                localIdentName: '[local]--[hash:base64:4]'
+                localIdentName: '[local]-[hash:base64:5]'
             }
         },
         {
