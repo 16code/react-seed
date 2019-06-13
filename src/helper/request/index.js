@@ -1,3 +1,5 @@
+/// <reference path="./index.d.ts" />
+
 import axios from 'axios';
 
 const requestInstance = createInstance({

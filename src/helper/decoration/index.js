@@ -1,4 +1,4 @@
-/// <reference path="./decoration.d.ts" />
+/// <reference path="./index.d.ts" />
 
 const validateFunction = (func, decorator) => {
     if (typeof func !== 'function') {

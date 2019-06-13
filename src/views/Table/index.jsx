@@ -6,27 +6,13 @@ export default class Table extends React.PureComponent {
     state = { url: null }
     async componentDidMount() {
         this.setState({ loading: true });
-        // http://localhost:3000/api/products
-        // http://localhost:3000/api/image
-        // http://localhost:3000/api/xlsx
-        // http://localhost:8383/235538174171.png
-        // request.defaults.headers.common.Authorization = 'AUTH_TOKEN';
-        request.setHeader({ Authorization: '1313131' });
-        request('/api/products/:id', { method: 'POST', body: { data: 13131, id: 123 }, params: { id: 333333 } })
+        request('/api/products', { method: 'GET', body: { data: 13131, id: 123 }, params: { id: 333333 } })
             .then(res => {
                 console.log(res);
             })
             .catch(error => {
                 console.log(error);
             });
-        // request
-        //     .get('/api/products')
-        //     .then(res => {
-        //         console.log(res);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
     }
     handleCancel2 = () => {
         // this.xhr2.cancelRequest();

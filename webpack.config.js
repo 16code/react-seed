@@ -127,7 +127,7 @@ module.exports = function config() {
                 '@styles': path.join(__dirname, 'src/styles'),
                 ErrorBoundary: path.join(__dirname, 'src/components/ErrorBoundary.jsx'),
                 decoration: path.join(__dirname, 'src/helper/decoration/index.js'),
-                requestJs: path.join(__dirname, 'src/helper/request.js')
+                requestJs: path.join(__dirname, 'src/helper/request/index.js')
             }
         },
         module: {
