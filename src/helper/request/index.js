@@ -33,7 +33,7 @@ function request(url, options = {}) {
 request.setHeader = function(headers) {
     if (!isObject(headers)) throw Error('参数必须是一个对象');
     for (const key in headers) {
-        if (headers.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(headers, key)) {
             requestInstance.defaults.headers.common[key] = headers[key];
         }
     }
