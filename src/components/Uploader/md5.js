@@ -9,7 +9,6 @@ export default function getFileMD5(file, cb) {
     const fileReader = new FileReader();
     const chunks = [];
     fileReader.onload = e => {
-        // console.log('read chunk nr', chunkIndex + 1, 'of', chunkTotal);
         spark.append(e.target.result);  
         chunkIndex++;
         if (chunkIndex < chunkTotal) {
