@@ -6,12 +6,7 @@
   "author": "16code",
   "license": "MIT",
   "private": false,
-  "browserslist": [
-    "Safari >= 10",
-    "last 1 firefox version",
-    "Chrome >= 66",
-    "Explorer >= 10"
-  ],
+  "browserslist": ["Safari >= 10", "last 1 firefox version", "Chrome >= 66", "Explorer >= 10"],
   "scripts": {
     "dev": "cross-env BABEL_ENV=development NODE_ENV=development npx webpack-dev-server --hot",
     "build:prod": "cross-env BABEL_ENV=production NODE_ENV=production npx webpack -p --progress --colors --display minimal",
@@ -111,14 +106,9 @@
     "webpack-dev-server": "^3.7.2"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx}": [
-      "node_modules/.bin/eslint --fix",
-      "git add"
-    ],
-    "src/**/*.{less,css}": [
-      "node_modules/.bin/stylelint --syntax less --fix",
-      "git add"
-    ]
+    "src/**/*.{js,jsx}": ["node_modules/.bin/eslint --fix", "git add"],
+    "src/**/*.{less,css}": ["node_modules/.bin/stylelint --syntax less --fix", "git add"],
+    "*.json": ["prettier --write", "git add"]
   },
   "husky": {
     "hooks": {
