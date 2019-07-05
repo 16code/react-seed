@@ -1,34 +1,34 @@
-const path = require('path');
-const webpack = require('webpack');
-const vendorFiles = require('./gulpfile').vendorFiles;
+const path = require('path')
+const webpack = require('webpack')
+const vendorFiles = require('./gulpfile').vendorFiles
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin')
 
-const StyleLintPlugin = require('stylelint-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin')
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-const srcPath = path.join(__dirname, 'src');
-const distPath = path.join(__dirname, 'dist');
-const cachePath = path.join(__dirname, '.cache');
-const isDev = process.env.NODE_ENV === 'development';
-const port = process.env.PORT || 8181;
+const srcPath = path.join(__dirname, 'src')
+const distPath = path.join(__dirname, 'dist')
+const cachePath = path.join(__dirname, '.cache')
+const isDev = process.env.NODE_ENV === 'development'
+const port = process.env.PORT || 8181
 const filesNameMapper = {
     filename: isDev ? '[name].js' : 'assets/js/[name].[chunkhash:5].js',
     chunkFilename: isDev ? '[name].chunk.js' : 'assets/js/[name].[chunkhash:5].chunk.js',
     cssFilename: isDev ? '[name].css' : 'assets/css/[name].[chunkhash:5].css',
     cssChunkFilename: isDev ? '[id].css' : 'assets/css/[name].[chunkhash:5].css',
     imgFilename: 'assets/images/[name].[hash:5].[ext]'
-};
+}
 
-const isString = s => typeof s === 'string';
+const isString = s => typeof s === 'string'
 
 const plugins = [
     new HtmlWebpackPlugin({
@@ -68,7 +68,7 @@ const plugins = [
         chunkFilename: filesNameMapper.cssChunkFilename
     }),
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/)
-];
+]
 if (isDev) {
     ;[].push.apply(plugins, [
         new webpack.NamedModulesPlugin(),
@@ -76,13 +76,13 @@ if (isDev) {
             configFile: path.join(__dirname, '.stylelintrc'),
             files: '**/*.(le|c)ss'
         })
-    ]);
+    ])
 } else {
     ;[].push.apply(plugins, [
         new CleanWebpackPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
         // new BundleAnalyzerPlugin({ openAnalyzer: !false })
-    ]);
+    ])
 }
 
 module.exports = function config() {
@@ -134,7 +134,15 @@ module.exports = function config() {
             rules: [
                 {
                     test: /\.jsx?$/,
-                    use: ['eslint-loader', 'source-map-loader'],
+                    use: [
+                        {
+                            loader: 'eslint-loader',
+                            options: {
+                                formatter: require('eslint/lib/cli-engine/formatters/stylish')
+                            }
+                        },
+                        'source-map-loader'
+                    ],
                     enforce: 'pre',
                     exclude: /(node_modules|src\/libs)/
                 },
@@ -233,11 +241,11 @@ module.exports = function config() {
         cache: true,
         watch: false,
         devtool: isDev ? 'cheap-module-eval-source-map' : 'source-map'
-    };
-};
+    }
+}
 
 function styleLoaderConfig(options = {}) {
-    const useCssModule = options.useCssModule || false;
+    const cssModuleConfig = options.useCssModule ? { localIdentName: '[local]-[hash:base64:5]' } : false
     return [
         isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
         {
@@ -250,8 +258,7 @@ function styleLoaderConfig(options = {}) {
             loader: 'css-loader',
             options: {
                 importLoaders: 2,
-                modules: useCssModule,
-                localIdentName: '[local]-[hash:base64:5]'
+                modules: cssModuleConfig
             }
         },
         {
@@ -282,5 +289,5 @@ function styleLoaderConfig(options = {}) {
                 injector: 'append'
             }
         }
-    ];
+    ]
 }

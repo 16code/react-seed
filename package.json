@@ -19,8 +19,25 @@
     "predev": "yarn run copy:vendors:dev",
     "postbuild:prod": "yarn run copy:vendors:prod",
     "copy:vendors:dev": "cross-env NODE_ENV=development node_modules/.bin/gulp copy:dev --silent",
-    "copy:vendors:prod": "cross-env NODE_ENV=production node_modules/.bin/gulp copy:prod --silent",
-    "lint-staged": "lint-staged"
+    "copy:vendors:prod": "cross-env NODE_ENV=production node_modules/.bin/gulp copy:prod --silent"
+  },
+  "dependencies": {
+    "@hot-loader/react-dom": "^16.8.6",
+    "antd": "^3.20.0",
+    "axios": "^0.19.0",
+    "classnames": "^2.2.6",
+    "enquire.js": "^2.1.6",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-container-query": "^0.11.0",
+    "react-media": "^1.9.2",
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.0.1",
+    "redux": "^4.0.1",
+    "redux-saga": "^1.0.4",
+    "spark-md5": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -36,25 +53,25 @@
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.4.5",
-    "@types/react": "^16.8.19",
+    "@types/react": "^16.8.22",
     "autoprefixer": "^9.6.0",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.6",
     "babel-plugin-import": "^1.12.0",
     "babel-plugin-transform-react-pure-class-to-function": "^1.0.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "cache-loader": "^4.0.0",
+    "cache-loader": "^4.0.1",
     "clean-webpack-plugin": "^3.0.0",
-    "core-js": "3.1.3",
+    "core-js": "3.1.4",
     "cross-env": "^5.2.0",
-    "css-loader": "2.1.1",
+    "css-loader": "3.0.0",
     "cssnano": "^4.1.10",
-    "eslint": "^5.16.0",
-    "eslint-config-prettier": "^4.3.0",
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
     "eslint-loader": "^2.1.2",
-    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-react": "^7.14.2",
     "eslint-plugin-redux-saga": "^1.0.0",
     "express": "^4.17.1",
     "file-loader": "^4.0.0",
@@ -66,17 +83,18 @@
     "gulp-jsmin": "^0.1.5",
     "html-webpack-include-assets-plugin": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "husky": ">=1",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
-    "lint-staged": "^8.2.0",
+    "lint-staged": "^9.0.2",
     "mini-css-extract-plugin": "^0.7.0",
-    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "path": "^0.12.7",
     "postcss-loader": "^3.0.0",
     "postcss-short": "^5.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.18.2",
-    "react-hot-loader": "^4.11.0",
+    "react-hot-loader": "^4.12.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
     "style-resources-loader": "^1.2.1",
@@ -86,49 +104,25 @@
     "stylelint-prettier": "^1.1.1",
     "stylelint-webpack-plugin": "^0.10.5",
     "terser-webpack-plugin": "^1.3.0",
-    "webpack": "^4.33.0",
+    "webpack": "^4.35.0",
     "webpack-bundle-analyzer": "^3.3.2",
-    "webpack-cli": "^3.3.4",
-    "webpack-dev-server": "^3.7.1"
-  },
-  "dependencies": {
-    "@hot-loader/react-dom": "^16.8.6",
-    "antd": "^3.19.3",
-    "axios": "^0.19.0",
-    "classnames": "^2.2.6",
-    "enquire.js": "^2.1.6",
-    "lodash": "^4.17.11",
-    "moment": "^2.24.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-container-query": "^0.11.0",
-    "react-media": "^1.9.2",
-    "react-redux": "^7.1.0",
-    "react-router-dom": "^5.0.1",
-    "redux": "^4.0.1",
-    "redux-saga": "^1.0.3"
-  },
-  "precommit": {
-    "run": "lint-staged",
-    "silent": true
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.7.2"
   },
   "lint-staged": {
-    "linters": {
-      "src/**/*.{js,jsx}": [
-        "node_modules/.bin/eslint --fix",
-        "git add"
-      ],
-      "src/**/*.{less,css}": [
-        "node_modules/.bin/stylelint --syntax less --fix",
-        "git add"
-      ]
-    },
-    "relative": true,
-    "ignore": [
-      "**/dist/**",
-      "**/doc/**",
-      "**/test/**",
-      "**/libs/**"
+    "src/**/*.{js,jsx}": [
+      "node_modules/.bin/eslint --fix",
+      "git add"
+    ],
+    "src/**/*.{less,css}": [
+      "node_modules/.bin/stylelint --syntax less --fix",
+      "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "post-commit": "git update-index --again"
+    }
   }
 }
