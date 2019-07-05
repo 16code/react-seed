@@ -19,8 +19,8 @@ export function debounce(wait: number, immediate: boolean): void
 export function throttle(
     wait: number,
     options: {
-    leading: boolean
-    trailing: boolean
+        leading: boolean
+        trailing: boolean
     }
 ): void
 /** 阻止事件冒泡及默认行为 */
