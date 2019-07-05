@@ -121,7 +121,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yanr run lint-staged",
+      "pre-commit": "yarn run lint-staged",
       "post-commit": "git update-index --again"
     }
   }
