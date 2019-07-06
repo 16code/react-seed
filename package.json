@@ -14,7 +14,8 @@
     "predev": "yarn run copy:vendors:dev",
     "postbuild:prod": "yarn run copy:vendors:prod",
     "copy:vendors:dev": "cross-env NODE_ENV=development node_modules/.bin/gulp copy:dev --silent",
-    "copy:vendors:prod": "cross-env NODE_ENV=production node_modules/.bin/gulp copy:prod --silent"
+    "copy:vendors:prod": "cross-env NODE_ENV=production node_modules/.bin/gulp copy:prod --silent",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@hot-loader/react-dom": "^16.8.6",
@@ -49,7 +50,7 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.4.5",
     "@types/react": "^16.8.23",
-    "autoprefixer": "^9.6.0",
+    "autoprefixer": "^9.6.1",
     "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.6",
     "babel-plugin-import": "^1.12.0",
@@ -78,10 +79,9 @@
     "gulp-jsmin": "^0.1.5",
     "html-webpack-include-assets-plugin": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
-    "husky": "^3.0.0",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
-    "lint-staged": "^9.0.2",
+    "lint-staged": "8.2.1",
     "mini-css-extract-plugin": "^0.7.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "path": "^0.12.7",
@@ -104,15 +104,20 @@
     "webpack-cli": "^3.3.5",
     "webpack-dev-server": "^3.7.2"
   },
-  "lint-staged": {
-    "src/**/*.{js,jsx}": ["node_modules/.bin/eslint --fix", "git add"],
-    "src/**/*.{less,css}": ["node_modules/.bin/stylelint --syntax less --fix", "git add"],
-    "*.json": ["prettier --write", "git add"]
+  "postcommit": {
+    "run": "git update-index --again"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "post-commit": "git update-index --again"
-    }
+  "precommit": {
+    "run": "lint-staged",
+    "silent": true
+  },
+  "lint-staged": {
+    "linters": {
+      "src/**/*.{js,jsx}": ["node_modules/.bin/eslint --fix", "git add"],
+      "src/**/*.{less,css}": ["node_modules/.bin/stylelint --syntax less --fix", "git add"],
+      "*.json": ["prettier --config ./.prettierrc --write", "git add"]
+    },
+    "relative": true,
+    "ignore": ["**/dist/**", "**/doc/**", "**/test/**", "**/libs/**"]
   }
 }
