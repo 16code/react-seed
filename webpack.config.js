@@ -21,6 +21,7 @@ const distPath = path.join(__dirname, 'dist');
 const cachePath = path.join(__dirname, '.cache');
 const isDev = process.env.NODE_ENV === 'development';
 const port = process.env.PORT || 8181;
+const API_GATEWAY = process.env.API || '//localhost:3000';
 const filesNameMapper = {
     filename: isDev ? '[name].js' : 'assets/js/[name].[chunkhash:5].js',
     chunkFilename: isDev ? '[name].chunk.js' : 'assets/js/[name].[chunkhash:5].chunk.js',
@@ -111,7 +112,12 @@ module.exports = function config() {
             https: false,
             overlay: true,
             stats: 'errors-only',
-            clientLogLevel: 'error'
+            clientLogLevel: 'error',
+            proxy: {
+                '/api': {
+                    target: `http:${API_GATEWAY}`
+                }
+            }
         },
         resolve: {
             symlinks: false,
