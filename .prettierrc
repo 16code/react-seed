@@ -3,11 +3,13 @@
     "printWidth": 120,
     "trailingComma": "none",
     "useTabs": false,
+    "bracketSpacing": false,
     "eslintIntegration": true,
     "stylelintIntegration": true,
     "singleQuote": true,
-    "jsxBracketSameLine": true,
-    "semi": false,
+    "jsxSingleQuote": true,
+    "jsxBracketSameLine": false,
+    "semi": true,
     "arrowParens": "avoid",
     "overrides": [
         {

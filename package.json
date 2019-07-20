@@ -127,7 +127,7 @@
         "git add"
       ],
       "*.json": [
-        "prettier --config ./.prettierrc",
+        "node_modules/.bin/prettier --config ./.prettierrc",
         "git add"
       ]
     },
