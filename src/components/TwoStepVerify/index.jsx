@@ -120,6 +120,7 @@ export default class TwoStepVerify extends React.PureComponent {
             case 2:
                 content = <Result state={state} className={styles.result} />;
                 break;
+            default:
         }
         return content;
     }

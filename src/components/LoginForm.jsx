@@ -89,7 +89,7 @@ export default class LoginForm extends React.PureComponent {
         const rule = config[key].fieldOption.rules || [{ message: '不能为空' }];
         form.setFields({
             [key]: {
-                value: value,
+                value,
                 errors: resetError ? null : [new Error(rule[0].message)]
             }
         });

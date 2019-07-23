@@ -42,11 +42,11 @@ export function safeSetState(target) {
     target.isTestable = true;
     const setState = target.prototype.setState;
     const componentWillUnmount = target.prototype.componentWillUnmount || function() {};
-    target.prototype.setState = function() {
-        return setState.apply(this, [...arguments]);
+    target.prototype.setState = function(args) {
+        return setState.apply(this, [...args]);
     };
-    target.prototype.componentWillUnmount = function() {
-        const value = componentWillUnmount.apply(this, [...arguments]);
+    target.prototype.componentWillUnmount = function(args) {
+        const value = componentWillUnmount.apply(this, [...args]);
         this.setState = () => {};
         return value;
     };

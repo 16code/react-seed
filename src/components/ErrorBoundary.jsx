@@ -19,7 +19,7 @@ const handleError = ctx => (
 
 const catchFunc = (error, errorInfo, ctx) => {
     ctx.setState({
-        error: error,
+        error,
         errorInfo: errorInfo.componentStack
             .split('\n')
             .filter(t => t !== '')

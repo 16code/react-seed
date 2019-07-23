@@ -34,7 +34,7 @@ export default class BasicLayout extends React.PureComponent {
         const contextValue = {
             theme,
             collapsed,
-            isMobile: isMobile,
+            isMobile,
             onToggleTheme: this.handleToggleTheme,
             onToggleAside: this.handleToggleAside
         };
