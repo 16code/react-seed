@@ -4,12 +4,12 @@ import AppContainer from './AppContainer';
 
 setConfig({
     ignoreSFC: false,
-    pureRender: true,
-    logLevel: 'error'
+    pureRender: true
 });
-@hot
-export default class HotContainer extends React.PureComponent {
+class HotContainer extends React.PureComponent {
     render() {
         return <AppContainer />;
     }
 }
+
+export default hot(HotContainer);

@@ -1,0 +1,26 @@
+.text-primary {
+    color: @primary-color;
+}
+.clearfix {
+    &::before,
+    &::after {
+        display: table;
+        content: '';
+    }
+    &::after {
+        clear: both;
+    }
+}
+.unselect {
+    user-select: none;
+}
+.select-text {
+    user-select: text;
+}
+.text-center {
+    text-align: center;
+}
+[hidden],
+.hidden {
+    display: none !important;
+}

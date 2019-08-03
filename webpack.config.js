@@ -9,10 +9,11 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const TerserPlugin = require('terser-webpack-plugin');
 
+// eslint-disable-next-line no-unused-vars
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const srcPath = path.join(__dirname, 'src');
@@ -20,7 +21,7 @@ const distPath = path.join(__dirname, 'dist');
 const cachePath = path.join(__dirname, '.cache');
 const isDev = process.env.NODE_ENV === 'development';
 const port = process.env.PORT || 8181;
-
+const API_GATEWAY = process.env.API || '//localhost:3000';
 const filesNameMapper = {
     filename: isDev ? '[name].js' : 'assets/js/[name].[chunkhash:5].js',
     chunkFilename: isDev ? '[name].chunk.js' : 'assets/js/[name].[chunkhash:5].chunk.js',
@@ -29,32 +30,41 @@ const filesNameMapper = {
     imgFilename: 'assets/images/[name].[hash:5].[ext]'
 };
 
+// eslint-disable-next-line no-unused-vars
 const isString = s => typeof s === 'string';
 
 const plugins = [
     new HtmlWebpackPlugin({
         template: 'public/index.html',
         filename: 'index.html',
+        favicon: 'public/favicon.ico',
         title: 'React Seed',
         inject: 'body',
         minify: {
             minifyJS: true,
             minifyCSS: true,
-            removeComments: true,
+            removeComments: false,
             collapseWhitespace: false,
             removeAttributeQuotes: false
         }
     }),
     new HtmlWebpackIncludeAssetsPlugin({
         assets: vendorFiles,
-        append: false
+        append: false,
+        cssExtensions: ['.css', '.less']
     }),
     new webpack.HashedModuleIdsPlugin(),
     new webpack.ProvidePlugin({
         React: 'react',
         ReactDOM: 'react-dom',
         classNames: 'classnames',
-        PropTypes: 'prop-types'
+        PropTypes: 'prop-types',
+        delay: ['@helper', 'delay'],
+        request: ['requestJs', 'default'],
+        autobind: ['decoration', 'autobind'],
+        safeSetState: ['decoration', 'safeSetState'],
+        displayName: ['decoration', 'displayName'],
+        withErrorBoundary: ['ErrorBoundary', 'withErrorBoundary']
     }),
     new MiniCssExtractPlugin({
         filename: filesNameMapper.cssFilename,
@@ -63,15 +73,15 @@ const plugins = [
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/)
 ];
 if (isDev) {
-    [].push.apply(plugins, [
+    ;[].push.apply(plugins, [
         new webpack.NamedModulesPlugin(),
         new StyleLintPlugin({
             configFile: path.join(__dirname, '.stylelintrc'),
-            files: '**/*.l?(e|c)ss'
+            files: '**/*.(le|c)ss'
         })
     ]);
 } else {
-    [].push.apply(plugins, [
+    ;[].push.apply(plugins, [
         new CleanWebpackPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
         // new BundleAnalyzerPlugin({ openAnalyzer: !false })
@@ -89,23 +99,29 @@ module.exports = function config() {
             path: distPath,
             filename: filesNameMapper.filename,
             chunkFilename: filesNameMapper.chunkFilename,
-            publicPath: './'
+            publicPath: '/'
         },
         devServer: {
             port,
-            open: true,
+            open: !true,
             publicPath: '/',
             contentBase: path.join(__dirname, 'dist'),
             historyApiFallback: true,
             inline: true,
             disableHostCheck: true,
             https: false,
+            overlay: true,
             stats: 'errors-only',
-            clientLogLevel: 'error'
+            clientLogLevel: 'error',
+            proxy: {
+                '/api': {
+                    target: `http:${API_GATEWAY}`
+                }
+            }
         },
         resolve: {
             symlinks: false,
-            extensions: ['.js', '.jsx', '.less'],
+            extensions: ['.js', '.jsx', '.less', '.css'],
             modules: ['node_modules', srcPath],
             alias: {
                 'react-dom': '@hot-loader/react-dom',
@@ -115,14 +131,26 @@ module.exports = function config() {
                 '@components': path.join(__dirname, 'src/components'),
                 '@views': path.join(__dirname, 'src/views'),
                 '@helper': path.join(__dirname, 'src/helper'),
-                '@styles': path.join(__dirname, 'src/styles')
+                '@context': path.join(__dirname, 'src/context'),
+                '@styles': path.join(__dirname, 'src/styles'),
+                ErrorBoundary: path.join(__dirname, 'src/components/ErrorBoundary.jsx'),
+                decoration: path.join(__dirname, 'src/helper/decoration/index.js'),
+                requestJs: path.join(__dirname, 'src/helper/request/index.js')
             }
         },
         module: {
             rules: [
                 {
                     test: /\.jsx?$/,
-                    use: ['eslint-loader', 'source-map-loader'],
+                    use: [
+                        {
+                            loader: 'eslint-loader',
+                            options: {
+                                formatter: require('eslint/lib/cli-engine/formatters/stylish')
+                            }
+                        },
+                        'source-map-loader'
+                    ],
                     enforce: 'pre',
                     exclude: /(node_modules|src\/libs)/
                 },
@@ -225,7 +253,7 @@ module.exports = function config() {
 };
 
 function styleLoaderConfig(options = {}) {
-    const useCssModule = options.useCssModule || false;
+    const cssModuleConfig = options.useCssModule ? { localIdentName: '[local]-[hash:base64:5]' } : false;
     return [
         isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
         {
@@ -238,21 +266,17 @@ function styleLoaderConfig(options = {}) {
             loader: 'css-loader',
             options: {
                 importLoaders: 2,
-                modules: useCssModule,
-                localIdentName: '[local]--[hash:base64:4]'
+                modules: cssModuleConfig
             }
         },
         {
             loader: 'postcss-loader',
             options: {
+                ident: 'postcss',
                 config: {
-                    path: path.join(__dirname, '.postcssrc.js'),
+                    path: './',
                     ctx: {
-                        autoprefixer: {
-                            browsers: ['Safari >= 10', 'last 1 firefox version', 'Chrome >= 66', 'Explorer >= 10']
-                        },
-                        cssnano: { preset: 'default' },
-                        cssVariables: {}
+                        cssnano: { preset: 'default' }
                     }
                 }
             }
@@ -261,7 +285,16 @@ function styleLoaderConfig(options = {}) {
             loader: 'less-loader',
             options: {
                 javascriptEnabled: true,
-                modifyVars: {}
+                modifyVars: {
+                    '@primary-color': '#6777ef'
+                }
+            }
+        },
+        {
+            loader: 'style-resources-loader',
+            options: {
+                patterns: path.resolve(__dirname, 'src/styles/variables.less'),
+                injector: 'append'
             }
         }
     ];

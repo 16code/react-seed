@@ -3,15 +3,26 @@
     "printWidth": 120,
     "trailingComma": "none",
     "useTabs": false,
+    "bracketSpacing": false,
     "eslintIntegration": true,
     "stylelintIntegration": true,
     "singleQuote": true,
-    "jsxBracketSameLine": true,
+    "jsxSingleQuote": true,
+    "jsxBracketSameLine": false,
+    "semi": true,
     "arrowParens": "avoid",
     "overrides": [
         {
+            "files": "*.d.ts",
+            "options": {
+                "semi": true
+            }
+        },
+        {
             "files": ".prettierrc",
-            "options": { "parser": "json" }
+            "options": {
+                "parser": "json"
+            }
         },
         {
             "files": "package.json",

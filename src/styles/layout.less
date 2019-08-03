@@ -1,0 +1,55 @@
+.app {
+    &-root,
+    &-layout {
+        height: 100%;
+        overflow: hidden;
+    }
+    &-header {
+        padding: 0 !important;
+        background: #fff !important;
+        box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+        height: @header-height;
+    }
+    &-aside {
+        min-height: 100vh;
+        box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+    }
+    &-content {
+        overflow: auto;
+        height: calc(100vh - @header-height);
+        padding: @box-padding-base;
+    }
+}
+.aside-logo {
+    position: relative;
+    height: @header-height;
+    line-height: @header-height;
+    padding-left: @box-padding-base;
+    background-color: @sider-logo-background;
+    overflow: hidden;
+    img {
+        display: inline-block;
+        vertical-align: middle;
+        height: 32px;
+    }
+    h1 {
+        color: #fff;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 20px;
+        margin: 0 0 0 12px;
+        font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        font-weight: 400;
+    }
+}
+.ant-layout-sider-light {
+    background-color: #fff;
+    box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+    .aside-logo {
+        background-color: #fff;
+        box-shadow: 1px 1px 0 0 #e8e8e8;
+        h1 {
+            color: @primary-color;
+        }
+    }
+}

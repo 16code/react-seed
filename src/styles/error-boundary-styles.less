@@ -1,0 +1,55 @@
+.error-boundary {
+    margin-top: 0.15rem;
+    margin-bottom: 0.15rem;
+    .error-title {
+        font-size: 0.16rem;
+        margin: 0;
+        margin-bottom: 0.04rem;
+        font-family: Roboto, sans-serif;
+        color: rgb(206, 17, 38);
+        white-space: pre-wrap;
+        font-weight: 400;
+    }
+    .line {
+        border-bottom: 1px solid rgb(221, 221, 221);
+        display: block;
+        margin-top: 0.1rem;
+        margin-bottom: 0.1rem;
+    }
+    .error-description {
+        font-size: 0.12rem;
+        font-family: Consolas, Menlo, monospace;
+        color: #333;
+        white-space: pre-wrap;
+        margin: 0;
+    }
+    .error-trace {
+        summary {
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.5);
+            user-select: none;
+        }
+        pre {
+            display: block;
+            padding: 0.1rem;
+            margin-top: 0.1rem;
+            margin-bottom: 0.05rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            border-radius: 4px;
+            font-size: 12px;
+            background-color: rgba(206, 17, 38, 0.05);
+            > span {
+                display: block;
+                line-height: 1.62;
+                label {
+                    color: #333;
+                    display: inline-block;
+                    min-width: 32px;
+                    text-align: right;
+                    margin-right: 0.1rem;
+                }
+            }
+        }
+    }
+}
