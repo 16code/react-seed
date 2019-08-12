@@ -20,8 +20,7 @@
     "postbuild:prod": "yarn run copy:vendors:prod",
     "postinstall": "node ./node_modules/husky/lib/installer/bin install",
     "copy:vendors:dev": "cross-env NODE_ENV=development node_modules/.bin/gulp copy:dev --silent",
-    "copy:vendors:prod": "cross-env NODE_ENV=production node_modules/.bin/gulp copy:prod --silent",
-    "lint-staged": "lint-staged"
+    "copy:vendors:prod": "cross-env NODE_ENV=production node_modules/.bin/gulp copy:prod --silent"
   },
   "dependencies": {
     "@hot-loader/react-dom": "^16.9.0-4.12.11",
