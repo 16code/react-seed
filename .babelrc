@@ -15,15 +15,35 @@
         "@babel/preset-react"
     ],
     "plugins": [
-        "react-hot-loader/babel",
         "@babel/plugin-syntax-dynamic-import",
         "@babel/plugin-proposal-object-rest-spread",
         "@babel/plugin-transform-runtime",
-        ["@babel/plugin-proposal-decorators", { "legacy": true }],
-        ["@babel/plugin-proposal-class-properties", { "loose": true }],
-        ["babel-plugin-import", { "libraryName": "antd", "style": true }]
+        [
+            "@babel/plugin-proposal-decorators",
+            {
+                "legacy": true
+            }
+        ],
+        [
+            "@babel/plugin-proposal-class-properties",
+            {
+                "loose": true
+            }
+        ],
+        [
+            "babel-plugin-import",
+            {
+                "libraryName": "antd",
+                "style": true
+            }
+        ]
     ],
     "env": {
+        "development": {
+            "plugins": [
+                "react-hot-loader/babel"
+            ]
+        },
         "production": {
             "plugins": [
                 "@babel/transform-react-constant-elements",
@@ -33,5 +53,7 @@
             ]
         }
     },
-    "ignore": ["node_modules", "dist"]
+    "ignore": [
+        "dist"
+    ]
 }

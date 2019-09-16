@@ -83,7 +83,7 @@
         ],
         "function-paren-newline": [
             "error",
-            "multiline"
+            "consistent"
         ],
         "yield-star-spacing": [
             "error",

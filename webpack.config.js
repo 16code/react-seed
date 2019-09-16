@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const vendorFiles = require('./gulpfile').vendorFiles;
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -48,8 +48,8 @@ const plugins = [
             removeAttributeQuotes: false
         }
     }),
-    new HtmlWebpackIncludeAssetsPlugin({
-        assets: vendorFiles,
+    new HtmlWebpackTagsPlugin({
+        tags: vendorFiles,
         append: false,
         cssExtensions: ['.css', '.less']
     }),
@@ -93,7 +93,7 @@ module.exports = function config() {
         mode: isDev ? 'development' : 'production',
         target: 'web',
         entry: {
-            app: './src/index.jsx'
+            app: ['./src/index.jsx']
         },
         output: {
             path: distPath,

@@ -1,9 +1,8 @@
 import SparkMD5 from 'spark-md5';
 
-export default function getFileMD5(file, cb) {
+export default function getFileMD5(file, chunkSize, cb) {
     let chunkIndex = 0;
     const blobSlice = File.prototype.slice;
-    const chunkSize = 5 * 1024 * 1024;                
     const chunkTotal = Math.ceil(file.size / chunkSize);
     const spark = new SparkMD5.ArrayBuffer();
     const fileReader = new FileReader();

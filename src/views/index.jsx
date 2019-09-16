@@ -1,9 +1,9 @@
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-
+// import Dashboard from './Dashboard';
 const Suspense = React.Suspense;
 const About = React.lazy(() => import('./About'));
 const Checkout = React.lazy(() => import('./Checkout'));
-const Dashboard = React.lazy(() => import('./Dashboard'));
+const Dashboard = React.lazy(() => import(/* webpackChunkName: "dashboard" */ './Dashboard'));
 const Table = React.lazy(() => import('./Table'));
 
 @withErrorBoundary

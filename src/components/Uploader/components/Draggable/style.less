@@ -1,0 +1,66 @@
+.draggable-wrapper {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: #f9f9fc;
+    border-radius: 6px;
+    line-height: normal;
+    color: rgba(0, 0, 0, 0.6);
+    .draggable {
+        width: 100%;
+        height: 100%;
+        padding: 56px 0;
+        border: 2px dashed #c2cdda;
+        border-radius: 8px;
+        background: #fff;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        transition: all 0.15s ease-out;
+        .upload-icon {
+            width: 60px;
+            padding-bottom: 6px;
+            img {
+                max-width: 100%;
+            }
+        }
+    }
+    .hint-wrapper {
+        height: 18px;
+        line-height: 18px;
+        overflow: hidden;
+        .hint {
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.2s ease-out;
+            text-align: center;
+            transform: translate3d(0, -18px, 0);
+        }
+        .drop-message {
+            color: @primary-color;
+        }
+        .error-message {
+            color: #f5222d;
+        }
+    }
+}
+.on-select-error {
+    .draggable {
+        border-color: #f5222d;
+    }
+    .hint-wrapper .hint {
+        transform: translate3d(0, -36px, 0);
+    }
+}
+.on-file-dragover {
+    .draggable {
+        border-color: @primary-color;
+    }
+    .hint-wrapper .hint {
+        transform: translate3d(0, 0, 0);
+    }
+}
