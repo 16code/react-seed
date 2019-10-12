@@ -38,17 +38,22 @@ export function initialState(state) {
         target.prototype.state = state;
     };
 }
-export function safeSetState(target) {
-    target.isTestable = true;
-    const setState = target.prototype.setState;
-    const componentWillUnmount = target.prototype.componentWillUnmount || function() {};
-    target.prototype.setState = function(args) {
-        return setState.apply(this, [...args]);
-    };
-    target.prototype.componentWillUnmount = function(args) {
-        const value = componentWillUnmount.apply(this, [...args]);
-        this.setState = () => {};
-        return value;
+export function safeSetState() {
+    return function(target) {
+        target.isTestable = true;
+        const setState = target.prototype.setState;
+        const componentWillUnmount =
+      target.prototype.componentWillUnmount || function() {};
+        target.prototype.setState = function() {
+            // eslint-disable-next-line prefer-rest-params
+            return setState.apply(this, [...arguments]);
+        };
+        target.prototype.componentWillUnmount = function() {
+            // eslint-disable-next-line prefer-rest-params
+            const value = componentWillUnmount.apply(this, [...arguments]);
+            this.setState = () => {};
+            return value;
+        };
     };
 }
 export function displayName(name) {

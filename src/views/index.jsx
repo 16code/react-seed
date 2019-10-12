@@ -1,15 +1,12 @@
-import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-// import Dashboard from './Dashboard';
+import { Switch, Redirect, withRouter } from 'react-router-dom';
+import routes, { renderRoutes } from './routes.config';
+
 const Suspense = React.Suspense;
-const About = React.lazy(() => import('./About'));
-const Checkout = React.lazy(() => import('./Checkout'));
-const Dashboard = React.lazy(() => import(/* webpackChunkName: "dashboard" */ './Dashboard'));
-const Table = React.lazy(() => import('./Table'));
 
 @withErrorBoundary
 @withRouter
 export default class Pages extends React.PureComponent {
-    componentDidMount() {
+    componentDidMount() {        
         this.onRouteChanged();
     }
     componentDidUpdate(prevProps) {
@@ -25,10 +22,7 @@ export default class Pages extends React.PureComponent {
             <Suspense fallback={<div>Loading...</div>}>
                 <Switch>
                     <Redirect from="/" to="/dashboard" exact />
-                    <Route path="/dashboard" component={Dashboard} />
-                    <Route path="/checkout" component={Checkout} />
-                    <Route path="/about" component={About} />
-                    <Route path="/table" component={Table} />
+                    {renderRoutes(routes)}
                 </Switch>
             </Suspense>
         );

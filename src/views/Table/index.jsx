@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 
 @displayName('Table')
-@safeSetState
+@safeSetState()
 export default class Table extends React.PureComponent {
     state = { url: null }
     async componentDidMount() {
@@ -23,7 +23,7 @@ export default class Table extends React.PureComponent {
     render() {
         return (
             <div>
-                <Button>13131</Button>
+                <Button>aa1eeewwwaaa</Button>
                 {this.state.loading && <button onClick={this.handleCancel}>cancel xhr</button>}
                 {this.state.loading && <button onClick={this.handleCancel2}>cancel xhr2</button>}
                 <img width="40" src={this.state.url} alt="" />

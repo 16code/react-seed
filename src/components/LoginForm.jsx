@@ -21,14 +21,14 @@ export default class LoginForm extends React.PureComponent {
         showAuthBind: false,
         disableAuthBind: false
     }
-    componentWillReceiveProps(prevProps) {
+    componentDidUpdate(prevProps) {
         const { config: prevConfig } = prevProps;
         const { config } = this.props;
         if (prevConfig.verifycode.disabled !== config.verifycode.disabled) {
             if (config.verifycode.disabled) {
-                this.setFieldError('verifycode');
-            } else {
                 this.setFieldError('verifycode', undefined, 'resetError');
+            } else {
+                this.setFieldError('verifycode');
             }
         }
     }

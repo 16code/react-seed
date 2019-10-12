@@ -5,7 +5,7 @@ export default ({ theme }) => (
         <Menu.Item key="1">
             <NavLink to="/dashboard">
                 <Icon type="user" />
-                <span>dashboard </span>
+                <span>dashboard</span>
             </NavLink>
         </Menu.Item>
         <Menu.Item key="2">
