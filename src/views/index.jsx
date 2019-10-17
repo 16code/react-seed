@@ -6,7 +6,7 @@ const Suspense = React.Suspense;
 @withErrorBoundary
 @withRouter
 export default class Pages extends React.PureComponent {
-    componentDidMount() {        
+    componentDidMount() {
         this.onRouteChanged();
     }
     componentDidUpdate(prevProps) {

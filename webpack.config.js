@@ -13,7 +13,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const TerserPlugin = require('terser-webpack-plugin');
 
-// eslint-disable-next-line no-unused-vars
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const srcPath = path.join(__dirname, 'src');
@@ -27,10 +26,10 @@ const filesNameMapper = {
     chunkFilename: isDev ? '[name].chunk.js' : 'assets/js/[name].[chunkhash:5].chunk.js',
     cssFilename: isDev ? '[name].css' : 'assets/css/[name].[chunkhash:5].css',
     cssChunkFilename: isDev ? '[id].css' : 'assets/css/[name].[chunkhash:5].css',
-    imgFilename: 'assets/images/[name].[hash:5].[ext]'
+    imgFilename: 'assets/images/[name].[hash:5].[ext]',
+    fontFilename: 'assets/fonts/[name].[hash:5].[ext]'
 };
 
-// eslint-disable-next-line no-unused-vars
 const isString = s => typeof s === 'string';
 
 const plugins = [
@@ -59,7 +58,10 @@ const plugins = [
         ReactDOM: 'react-dom',
         classNames: 'classnames',
         PropTypes: 'prop-types',
-        delay: ['@helper', 'delay'],
+        hot: ['react-hot-loader/root', 'hot'],
+        delay: ['helper', 'delay'],
+        px2vw: ['helper', 'px2vw'],
+        sizeFormat: ['helper', 'sizeFormat'],
         request: ['requestJs', 'default'],
         autobind: ['decoration', 'autobind'],
         safeSetState: ['decoration', 'safeSetState'],
@@ -73,7 +75,7 @@ const plugins = [
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/)
 ];
 if (isDev) {
-    ;[].push.apply(plugins, [
+    [].push.apply(plugins, [
         new webpack.NamedModulesPlugin(),
         new StyleLintPlugin({
             configFile: path.join(__dirname, '.stylelintrc'),
@@ -81,7 +83,7 @@ if (isDev) {
         })
     ]);
 } else {
-    ;[].push.apply(plugins, [
+    [].push.apply(plugins, [
         new CleanWebpackPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
         // new BundleAnalyzerPlugin({ openAnalyzer: !false })
@@ -125,14 +127,13 @@ module.exports = function config() {
             modules: ['node_modules', srcPath],
             alias: {
                 'react-dom': '@hot-loader/react-dom',
-                '@': path.join(__dirname, 'src'),
-                '@i18n': path.join(__dirname, 'src/i18n'),
-                '@assets': path.join(__dirname, 'src/assets'),
-                '@components': path.join(__dirname, 'src/components'),
-                '@views': path.join(__dirname, 'src/views'),
-                '@helper': path.join(__dirname, 'src/helper'),
-                '@context': path.join(__dirname, 'src/context'),
-                '@styles': path.join(__dirname, 'src/styles'),
+                common: path.join(__dirname, 'src/common'),
+                assets: path.join(__dirname, 'src/assets'),
+                components: path.join(__dirname, 'src/components'),
+                hooks: path.join(__dirname, 'src/hooks'),
+                views: path.join(__dirname, 'src/views'),
+                helper: path.join(__dirname, 'src/helper'),
+                styles: path.join(__dirname, 'src/styles'),
                 ErrorBoundary: path.join(__dirname, 'src/components/ErrorBoundary.jsx'),
                 decoration: path.join(__dirname, 'src/helper/decoration/index.js'),
                 requestJs: path.join(__dirname, 'src/helper/request/index.js')
@@ -183,6 +184,18 @@ module.exports = function config() {
                     test: /\.(le|c)ss$/,
                     include: /src\/(views|components|containers|layouts)/,
                     use: styleLoaderConfig({ useCssModule: true })
+                },
+                {
+                    test: /\.(woff|woff2|ttf|eot)(\?]?.*)?$/,
+                    use: [
+                        {
+                            loader: 'url-loader',
+                            options: {
+                                limit: 8192,
+                                name: filesNameMapper.fontFilename
+                            }
+                        }
+                    ]
                 },
                 {
                     test: /\.(png|jpg|gif|svg)$/,
@@ -293,7 +306,7 @@ function styleLoaderConfig(options = {}) {
         {
             loader: 'style-resources-loader',
             options: {
-                patterns: path.resolve(__dirname, 'src/styles/variables.less'),
+                patterns: path.resolve(__dirname, 'src/styles/mixins.less'),
                 injector: 'append'
             }
         }

@@ -1,0 +1,37 @@
+.app-menu {
+    padding: calc(var(--box-padding-base) * 1.4);
+    font-size: var(--font-size-base);
+    color: var(--text-color);
+    display: grid;
+    grid-gap: 32px;
+    max-height: 100%;
+    overflow: auto;
+    &-item-group-title {
+        color: var(--text-color-secondary);
+        font-size: 16px;
+        padding-bottom: 14px;
+    }
+    &-item-children-list {
+        display: grid;
+        align-items: center;
+        grid-gap: 12px;
+    }
+    .menu-item {
+        padding-left: 2px;
+    }
+    .menu-link {
+        align-items: center;
+        display: flex;
+        color: var(--text-color);
+        font-size: 16px;
+        &-selected {
+            color: var(--primary-color);
+        }
+    }
+    .iconfont {
+        font-size: 22px;
+    }
+    .menu-name {
+        padding-left: 8px;
+    }
+}

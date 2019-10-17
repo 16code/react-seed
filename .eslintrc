@@ -4,6 +4,7 @@
         "react",
         "import",
         "prettier",
+        "react-hooks",
         "redux-saga"
     ],
     "extends": [
@@ -19,7 +20,9 @@
         "React": true,
         "ReactDOM": true,
         "classNames": true,
-        "moment": true,
+        "hot": true,
+        "px2vw": true,
+        "sizeFormat": true,
         "console": true,
         "connect": true,
         "request": true,
@@ -45,6 +48,8 @@
         }
     },
     "rules": {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error",
         "import/imports-first": [
             2,
             "absolute-first"

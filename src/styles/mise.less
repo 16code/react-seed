@@ -1,0 +1,77 @@
+.color {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    &-dashboard {
+        background-color: var(--color-pink-light);
+    }
+    &-music {
+        &-recommend {
+            background-color: var(--color-chill);
+        }
+        &-new {
+            background-color: var(--color-sky);
+        }
+        &-top {
+            background-color: var(--color-coral);
+        }
+    }
+    &-artist {
+        background-color: var(--color-blue);
+        &-recommend {
+            background-color: var(--color-tomato);
+        }
+    }
+    &-playlist {
+        &-hot {
+            background-color: var(--color-green);
+        }
+    }
+}
+
+.overlay {
+    line-height: 1;
+    color: #fff;
+    position: absolute;
+    padding: 0;
+    top: 50%;
+    left: 50%;
+    margin-top: -20px;
+    margin-left: -20px;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.4s linear 0.1s, box-shadow 0.5s ease-in-out;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    &:hover {
+        box-shadow: 0 0 0 320px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.number {
+    font-family: var(--number-font);
+}
+
+img.lazy {
+    opacity: 0;
+    transition: opacity 0.5s linear 0.2s;
+    background: rgb(232, 233, 234);
+}
+.masked-img {
+    figcaption,
+    img {
+        position: relative;
+        z-index: 1;
+    }
+    figcaption {
+        z-index: 3;
+    }
+}
+.masked-img::before {
+    content: '';
+    &:extend(.pos-center all);
+
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 2;
+}

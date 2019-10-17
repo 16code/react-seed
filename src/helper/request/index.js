@@ -1,6 +1,7 @@
 /// <reference path="./index.d.ts" />
 
 import axios from 'axios';
+const CancelToken = axios.CancelToken;
 
 const requestInstance = createInstance({
     baseURL: '//localhost:3000',
@@ -26,7 +27,11 @@ function request(url, options = {}) {
         });
         delete mergedOptions.body;
     }
-
+    if (options.getCancel) {
+        const source = CancelToken.source();
+        mergedOptions.getCancel(source.cancel);
+        mergedOptions.cancelToken = source.token;
+    }
     return requestInstance(mergedOptions);
 }
 
@@ -38,6 +43,7 @@ request.setHeader = function(headers) {
         }
     }
 };
+requestInstance.interceptors.response.use(response => ({ ...response.data.data }));
 
 export default request;
 

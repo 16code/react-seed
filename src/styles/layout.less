@@ -1,55 +1,52 @@
-.app {
-    &-root,
-    &-layout {
-        height: 100%;
-        overflow: hidden;
-    }
-    &-header {
-        padding: 0 !important;
-        background: #fff !important;
-        box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-        height: @header-height;
-    }
-    &-aside {
-        min-height: 100vh;
-        box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
-    }
-    &-content {
-        overflow: auto;
-        height: calc(100vh - var(@header-height));
-        padding: @box-padding-base;
-    }
+.layout-basic {
+    display: grid;
+    grid-template-columns: var(--layout-sider-width) 1fr;
+    grid-template-rows: var(--layout-header-height) 1fr var(--layout-player-height);
+    grid-template-areas: 'aside content' 'aside content' 'player player';
+    height: 100vh;
+    width: 100vw;
 }
-.aside-logo {
-    position: relative;
-    height: @header-height;
-    line-height: @header-height;
-    padding-left: @box-padding-base;
-    background-color: @sider-logo-background;
-    overflow: hidden;
-    img {
-        display: inline-block;
-        vertical-align: middle;
-        height: 32px;
-    }
-    h1 {
-        color: #fff;
-        display: inline-block;
-        vertical-align: middle;
-        font-size: 20px;
-        margin: 0 0 0 12px;
-        font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-        font-weight: 400;
-    }
+.layout-aside {
+    &:extend(.pos-relative all);
+
+    grid-area: aside;
+    background-color: var(--aside-background);
+    padding-bottom: var(--layout-player-height);
+    z-index: 2;
 }
-.ant-layout-sider-light {
-    background-color: #fff;
-    box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
-    .aside-logo {
-        background-color: #fff;
-        box-shadow: 1px 1px 0 0 #e8e8e8;
-        h1 {
-            color: @primary-color;
-        }
-    }
+.layout-header {
+    &:extend(.pos-relative all);
+
+    grid-area: header;
+    background-color: var(--header-background);
+    z-index: 2;
+}
+.layout-content {
+    &:extend(.pos-relative all);
+
+    grid-area: content;
+    background-color: var(--content-background);
+    border-color: var(--border-color-base);
+    border-style: solid;
+    border-width: 0 0 0 1px;
+    overflow: auto;
+    z-index: 2;
+}
+.layout-footer {
+    &:extend(.pos-relative all);
+
+    grid-area: player;
+    background-color: var(--footer-background);
+    border-color: var(--border-color-base);
+    border-style: solid;
+    border-width: 1px 0 0 0;
+    z-index: 999;
+}
+.blur-effect {
+    &:extend(.pos-center all);
+
+    background-image: var(--blur-image);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 150% 150%;
 }

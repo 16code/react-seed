@@ -6,6 +6,11 @@ module.exports = ({ options, env }) => ({
             size: {
                 skip: '*'
             }
+        }),
+        px2viewport: require('px2viewport')({
+            viewportWidth: 1000,
+            viewportHeight: 570,
+            viewportUnit: 'vw'
         })
     }
 });

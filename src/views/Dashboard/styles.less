@@ -1,0 +1,18 @@
+.playlist-wraper,
+.djprogram-wraper,
+.artists-wraper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 20px;
+    min-height: 146px;
+}
+.djprogram-wraper {
+    min-height: 96px;
+    img {
+        object-fit: cover;
+    }
+}
+.artists-wraper {
+    grid-template-columns: repeat(8, 1fr);
+    min-height: 64px;
+}

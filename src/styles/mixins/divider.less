@@ -1,0 +1,27 @@
+.divider {
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.65);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #e8e8e8;
+    &,
+    &-vertical {
+        margin: 0 8px;
+        display: inline-block;
+        height: 1px;
+        width: 1px;
+        vertical-align: middle;
+        position: relative;
+        top: -0.06em;
+    }
+    &-horizontal {
+        display: block;
+        height: 1px;
+        width: 100%;
+        margin: calc(var(--box-padding-base) / 2) 0;
+        clear: both;
+    }
+}

@@ -13,10 +13,6 @@ const vendorPath = path.join(distPath, vendors);
 
 const vendorFileAlias = [
     {
-        path: 'moment/min',
-        prod: 'moment.min.js'
-    },
-    {
         path: 'moment/locale',
         prod: 'zh-cn.js'
     },
@@ -52,7 +48,6 @@ const vendorFileAlias = [
     }
 ];
 const fileName = {
-    moment: 'moment.min.js',
     redux: isDev ? 'redux-all.development.js' : 'redux-all.production.js',
     react: isDev ? 'react-all.development.js' : 'react-all.production.js'
 };
@@ -100,8 +95,8 @@ task('inject:moment', function() {
 });
 
 task('clean', series('clean:vendors'));
-task('copy:dev', series('clean', 'concat:moment', 'concat:redux', 'concat:react'));
-task('copy:prod', series('copy:dev', 'inject:moment'));
+task('copy:dev', series('clean', 'concat:redux', 'concat:react'));
+task('copy:prod', series('copy:dev'));
 
 const vendorFiles = Object.keys(fileName).map(k => `${vendors}${fileName[k]}`);
 exports.vendorFiles = isDev ? vendorFiles : vendorFiles.filter(f => !(f.includes && f.includes('moment')));

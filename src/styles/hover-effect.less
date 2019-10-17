@@ -1,0 +1,11 @@
+.ui-hover-effect {
+    figure > img {
+        transition: transform 0.75s, opacity 0.5s linear 0.2s;
+    }
+    &:hover {
+        figure > img {
+            transform: scale(1.2) translateZ(0);
+            transition: transform 0.75s cubic-bezier(0, 1, 0.75, 1);
+        }
+    }
+}

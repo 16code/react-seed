@@ -1,19 +1,33 @@
-import '@styles';
+import 'styles';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import LoginPage from '@views/Login';
-import AppProvider from './AppProvider';
-import BaiscLayout from './BaiscLayout';
+import GlobalLayout from 'components/Layout/GlobalLayout';
+import AppMenu from 'components/Menu';
+import { getMenuData } from 'common/menu';
+import Views from 'views';
+
+const menuData = getMenuData();
+
+function BasicLayout() {
+    const aside = <AppMenu data={menuData} />;
+    const header = 'header';
+    const footer = 'footer';
+    return (
+        <>
+            <GlobalLayout aside={aside} header={header} footer={footer}>
+                <Views />
+            </GlobalLayout>
+            <div className="blur-effect-image" />
+        </>
+    );
+}
 
 export default function AppContainer() {
     return (
-        <AppProvider>
-            <BrowserRouter>
-                <Switch>
-                    <Route path="/login" component={LoginPage} exact />
-                    <Route path="/" component={BaiscLayout} />
-                </Switch>
-            </BrowserRouter>
-        </AppProvider>
+        <BrowserRouter>
+            <Switch>
+                <Route path="/" component={BasicLayout} />
+            </Switch>
+        </BrowserRouter>
     );
 }
 

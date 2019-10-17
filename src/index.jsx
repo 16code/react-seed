@@ -1,4 +1,4 @@
-import ErrorBoundary from '@components/ErrorBoundary';
+import ErrorBoundary from 'components/ErrorBoundary';
 import root from './root';
 const rootElement = document.getElementById('root');
 

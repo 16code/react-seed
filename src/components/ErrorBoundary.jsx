@@ -35,7 +35,7 @@ export const withErrorBoundary = WrappedComponent =>
             this.displayName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
         }
 
-        componentDidCatch = (error, errorInfo) => catchFunc(error, errorInfo, this)
+        componentDidCatch = (error, errorInfo) => catchFunc(error, errorInfo, this);
 
         render() {
             if (this.state.errorInfo) return handleError(this);
@@ -48,8 +48,8 @@ export default class ErrorBoundary extends React.PureComponent {
         // eslint-disable-next-line react/no-unused-state
         error: null,
         errorInfo: null
-    }
-    componentDidCatch = (error, errorInfo) => catchFunc(error, errorInfo, this)
+    };
+    componentDidCatch = (error, errorInfo) => catchFunc(error, errorInfo, this);
     render() {
         if (this.state.errorInfo) return handleError(this);
         return this.props.children;

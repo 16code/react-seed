@@ -5,26 +5,6 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
         <title><%= htmlWebpackPlugin.options.title %></title>
-        <!-- inject:moment:js -->
-        <!-- endinject -->
-        <script type="text/javascript">
-            !(function(doc, win) {
-                var docEl = doc.documentElement,
-                    resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
-                    recalc = function() {
-                        doc.removeEventListener('DOMContentLoaded', arguments.callee, false);
-                        var clientWidth = docEl.clientWidth;
-                        if (clientWidth >= 640) {
-                            docEl.style.fontSize = '100px';
-                        } else {
-                            docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
-                        }
-                    };
-                if (!doc.addEventListener) return;
-                win.addEventListener(resizeEvt, recalc, false);
-                doc.addEventListener('DOMContentLoaded', recalc, false);
-            })(document, window);
-        </script>
     </head>
     <body>
         <div id="root" class="app-root">Loading...</div>

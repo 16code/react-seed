@@ -1,0 +1,58 @@
+.thumb-card {
+    &:extend(.pos-relative all);
+    &:extend(.unselect all);
+
+    color: var(--text-color-light);
+    display: block;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.14);
+    overflow: hidden;
+    &.squared {
+        border-radius: 4px;
+    }
+    &.circled {
+        border-radius: 50%;
+        figcaption {
+            text-align: center;
+            display: inline-block;
+            width: 100%;
+            max-width: 100% !important;
+        }
+    }
+    .count,
+    figcaption {
+        &:extend(.pos-absolute all);
+
+        font-size: var(--font-size-sm);
+        z-index: 3;
+    }
+    .count {
+        &::before {
+            &:extend(.iconfont);
+            &:extend(.icon-headset::before);
+        }
+
+        top: 0;
+        right: 0;
+        font-size: var(--font-size-sm);
+        padding: 4px 8px 0 0;
+        span {
+            padding-left: 4px;
+            line-height: 1;
+        }
+    }
+    figure {
+        &:extend(.pos-relative all);
+    }
+    figcaption {
+        &:extend(.ellipsis);
+
+        bottom: 0;
+        left: 0;
+        padding: 0 8px 8px;
+        line-height: 1.4;
+        width: 100%;
+        a:hover {
+            text-decoration: underline;
+        }
+    }
+}

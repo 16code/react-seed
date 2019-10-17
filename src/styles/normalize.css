@@ -11,17 +11,31 @@ html {
 
 body {
     margin: 0;
-    font-size: 0.14rem;
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    color: var(--text-color);
 }
-
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
 main {
     display: block;
+}
+
+figure,
+ul,
+ol {
+    margin: 0;
+    padding: 0;
 }
 
 a {
     outline: none;
     text-decoration: none;
     background-color: transparent;
+    color: var(--text-color-light);
 }
 
 hr {
@@ -75,6 +89,7 @@ sup {
 
 img {
     border-style: none;
+    vertical-align: top;
 }
 
 button,

@@ -4,6 +4,7 @@ import AppContainer from './AppContainer';
 
 setConfig({
     ignoreSFC: false,
+    trackTailUpdates: false,
     pureRender: true
 });
 class HotContainer extends React.PureComponent {

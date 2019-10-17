@@ -1,0 +1,67 @@
+import throttle from 'lodash/throttle';
+import scrollParent from 'helper/scroll-parent';
+
+const useEffect = React.useEffect;
+const useRef = React.useRef;
+const useState = React.useState;
+
+function loadImg(src, imgEl, scrollBox, cb) {
+    const inView = hasElementInViewport(imgEl, scrollBox);
+    if (inView) {
+        let image = new Image();
+        image.onload = () => {
+            cb(src);
+            image = null;
+        };
+        image.src = src;
+    }
+}
+function cleanup(throttled, scrollBox) {
+    throttled && throttled.cancel;
+    scrollBox.removeEventListener('scroll', throttled, { passive: true });
+}
+function Img(props) {
+    const imgElRef = useRef(null);
+    const { size, style, lazyload, src, className } = props;
+    const [imgSrc, setImgSrc] = useState(null);
+    useEffect(() => {
+        const imgEl = imgElRef.current;
+        const { width, height } = sizeFormat(size);
+        imgEl.style.width = width;
+        imgEl.style.height = height;
+        if (lazyload) {
+            const scrollBox = scrollParent(imgEl);
+            const throttled = throttle(
+                loadImg.bind(null, src, imgEl, scrollBox, loaded => {
+                    setImgSrc(loaded);
+                    imgEl.classList.remove('lazy');
+                    cleanup(throttled, scrollBox);
+                }),
+                200
+            );
+            scrollBox.addEventListener('scroll', throttled, { passive: true });
+            throttled();
+            return cleanup.bind(null, throttled, scrollBox);
+        }
+        setImgSrc(src);
+    }, [imgSrc, lazyload, size, src]);
+
+    return (
+        <img
+            ref={imgElRef}
+            className={classNames(className, { lazy: lazyload })}
+            style={style}
+            src={imgSrc}
+            draggable="false"
+        />
+    );
+}
+export default React.memo(Img);
+
+function hasElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    const elemTop = rect.top;
+    const elemBottom = rect.bottom;
+    const isVisible = elemTop >= 0 && elemBottom <= window.innerHeight;
+    return isVisible;
+}

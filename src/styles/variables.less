@@ -1,6 +1,49 @@
-@import '~antd/lib/style/themes/default.less';
+:root {
+    --layout-sider-width: 220px;
+    --layout-header-height: 64px;
+    --layout-player-height: 64px;
 
-@header-height: 64px;
-@box-padding-base: 0.24rem;
-@layout-sider-background: #001529;
-@sider-logo-background: #002140;
+    // color
+    --primary-color: #1890ff;
+    --color-primary: var(--primary-color);
+    --color-sky: #5352ed;
+    --color-chill: #1e90ff;
+    --color-coral: #ff7f50;
+    --color-green: #2ed573;
+    --color-green-light: #20bf6b;
+    --color-green-darken: #009688;
+    --color-orange: #ffa502;
+    --color-tomato: #ff6348;
+    --color-blue: #70a1ff;
+    --color-pink: #ff6b81;
+    --color-pink-light: #e056fd;
+    --color-pink-darken: #a55eea;
+
+    // text
+    --text-color: fade(#000, 70%);
+    --text-color-secondary: fade(#000, 45%);
+    --text-color-light: fade(#f4f2f9, 80%);
+    --text-color-light-secondary: fade(#f4f2f9, 70%);
+
+    //
+    --box-padding-base: 16px;
+
+    // background
+    --background-base: rgba(255, 255, 255, 0.88);
+    --aside-background: var(--background-base);
+    --footer-background: var(--background-base);
+    --header-background: var(--background-base);
+    --content-background: var(--background-base);
+
+    // border-color;
+    --border-color-base: #e8e8e8;
+
+    // fonts;
+    --font-family-base: Monospaced Number, Chinese Quote, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+        PingFang SC, Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif;
+    --number-font: TrebuchetMS, Rotobo, Microsoft YaHei, sans-serif;
+
+    //
+    --font-size-base: 14px;
+    --font-size-sm: 12px;
+}

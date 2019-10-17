@@ -1,0 +1,60 @@
+@font-face {
+    font-family: 'player-icon';
+    src: url('~assets/fonts/player_ctrl.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.iconplayer {
+    display: inline-block;
+    font-style: normal;
+    &::before,
+    &::after {
+        font-family: 'player-icon', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        vertical-align: bottom;
+        display: inline-block;
+        text-decoration: inherit;
+        font-size: 22px;
+        line-height: 1;
+    }
+}
+.icon-skip-back::before {
+    content: '\F146';
+}
+.icon-skip-forward::before {
+    content: '\F148';
+}
+.icon-play::before {
+    content: '\F132';
+}
+.icon-pause::before {
+    content: '\F130';
+}
+.icon-queue::before {
+    content: '\F13A';
+}
+.icon-volume::before {
+    content: '\F15E';
+}
+.icon-shuffle::before {
+    content: '\F144';
+}
+.icon-repeat::before {
+    content: '\F13E';
+}
+.icon-repeatonce::before {
+    content: '\F200';
+}
+.icon-volume-off::before {
+    content: '\F1EF';
+}
+.icon-volume-onewave::before {
+    content: '\F203';
+}
+.icon-volume-twowave::before {
+    content: '\F206';
+}
