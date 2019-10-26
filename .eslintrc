@@ -23,6 +23,7 @@
         "hot": true,
         "px2vw": true,
         "sizeFormat": true,
+        "formatDuration": true,
         "console": true,
         "connect": true,
         "request": true,

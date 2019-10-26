@@ -1,5 +1,8 @@
 {
-    "extends": ["stylelint-config-standard", "stylelint-prettier/recommended"],
+    "extends": [
+        "stylelint-config-standard",
+        "stylelint-prettier/recommended"
+    ],
     "rules": {
         "prettier/prettier": true,
         "indentation": 4,
@@ -10,11 +13,26 @@
         "property-no-unknown": true,
         "block-no-empty": true,
         "no-descending-specificity": null,
-        "unit-whitelist": ["rem", "em", "px", "%", "deg", "s", "ms", "fr", "vh", "vw"],
+        "unit-whitelist": [
+            "rem",
+            "em",
+            "px",
+            "%",
+            "deg",
+            "s",
+            "ms",
+            "fr",
+            "vh",
+            "vw",
+            "turn"
+        ],
         "selector-pseudo-class-no-unknown": [
             true,
             {
-                "ignorePseudoClasses": ["global", "local"]
+                "ignorePseudoClasses": [
+                    "global",
+                    "local"
+                ]
             }
         ]
     }

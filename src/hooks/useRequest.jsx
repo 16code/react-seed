@@ -30,7 +30,7 @@ export const withRequest = (theRequest, theHandles) => WrappedComponent => props
     let initData;
     let handles;
     if (typeof theRequest === 'function') {
-        const configs = theRequest();
+        const configs = theRequest(props);
         initData = configs.initialData;
         apiUrl = configs.url;
         config = configs.requestConfig;

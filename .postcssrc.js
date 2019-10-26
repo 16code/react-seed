@@ -7,10 +7,16 @@ module.exports = ({ options, env }) => ({
                 skip: '*'
             }
         }),
-        px2viewport: require('px2viewport')({
+        'postcss-px-to-viewport': {
             viewportWidth: 1000,
-            viewportHeight: 570,
-            viewportUnit: 'vw'
-        })
+            viewportUnit: 'vw',
+            selectorBlackList: [
+                '.wavebars',
+                '.wavebars-bar--1',
+                '.wavebars-bar--2',
+                '.wavebars-bar--3',
+                '.wavebars-bar--4'
+            ]
+        }
     }
 });

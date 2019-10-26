@@ -61,6 +61,7 @@ const plugins = [
         hot: ['react-hot-loader/root', 'hot'],
         delay: ['helper', 'delay'],
         px2vw: ['helper', 'px2vw'],
+        formatDuration: ['helper', 'formatDuration'],
         sizeFormat: ['helper', 'sizeFormat'],
         request: ['requestJs', 'default'],
         autobind: ['decoration', 'autobind'],
