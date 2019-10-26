@@ -43,7 +43,7 @@ request.setHeader = function(headers) {
         }
     }
 };
-requestInstance.interceptors.response.use(response => ({ ...response.data.data }));
+requestInstance.interceptors.response.use(response => ({ ...response.data }));
 
 export default request;
 

@@ -1,13 +1,21 @@
 import ThumbCard from 'components/ThumbCard';
+import SongList from 'components/SongList';
 import Box from 'components/Box';
 import { withRequest } from 'hooks/useRequest';
 import styles from './styles';
+
 const emptyArr = [];
 function theRequest() {
     return {
         url: '/api/dashboard',
         requestConfig: null,
-        initialData: { playlist: emptyArr, djprogram: emptyArr, artists: emptyArr }
+        initialData: {
+            playlist: emptyArr,
+            djprogram: emptyArr,
+            artists: emptyArr,
+            topboard: emptyArr,
+            latest: emptyArr
+        }
     };
 }
 function theHandles(updateRequestConfig) {
@@ -34,7 +42,7 @@ export default class Dashboard extends React.PureComponent {
                 name={item.name}
                 coverImg={item.coverImgUrl}
                 countNum={item.playCount}
-                size="146x146"
+                size="130x130"
             />
         );
     }
@@ -46,11 +54,11 @@ export default class Dashboard extends React.PureComponent {
                 name={item.name}
                 coverImg={item.picUrl}
                 countNum={item.program.listenerCount}
-                size="146x96"
+                size="130x96"
             />
         );
     }
-    artistRener(item) {
+    artistRender(item) {
         return (
             <ThumbCard
                 shape="circled"
@@ -58,22 +66,34 @@ export default class Dashboard extends React.PureComponent {
                 id={item.id}
                 name={item.name}
                 coverImg={item.img1v1Url}
-                size="84x84"
+                size="72x72"
             />
         );
     }
     render() {
-        const { playlist, djprogram, artists } = this.props.data;
+        const { playlist, djprogram, artists, topboard, latest } = this.props.data;
         return (
             <>
                 <Box title="推荐歌单">
                     <div className={styles['playlist-wraper']}>{playlist.map(this.playlistRender)}</div>
                 </Box>
+                <div className={styles['songs-wraper']}>
+                    <Box title="热门歌曲">
+                        <div className={styles['songlist-wraper']}>
+                            <SongList dataSource={topboard} />
+                        </div>
+                    </Box>
+                    <Box title="最新歌曲">
+                        <div className={styles['songlist-wraper']}>
+                            <SongList dataSource={latest} />
+                        </div>
+                    </Box>
+                </div>
                 <Box title="推荐电台">
                     <div className={styles['djprogram-wraper']}>{djprogram.map(this.djRender)}</div>
                 </Box>
                 <Box title="热门歌手">
-                    <div className={styles['artists-wraper']}>{artists.map(this.artistRener)}</div>
+                    <div className={styles['artists-wraper']}>{artists.map(this.artistRender)}</div>
                 </Box>
             </>
         );

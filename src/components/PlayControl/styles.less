@@ -1,0 +1,85 @@
+.play-control {
+    --size: 36px;
+    --background: rgba(255, 255, 255, 0.86);
+    --dark-color: rgba(0, 0, 0, 0.8);
+    --iconSize: 20px;
+
+    &:extend(.pos-center all);
+
+    border: 0;
+    padding: 0;
+    transition: opacity 500ms ease;
+    width: var(--size);
+    height: var(--size);
+    margin: auto;
+    border-radius: 50%;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    opacity: 0;
+    &:hover {
+        opacity: 1;
+    }
+    &::after {
+        &:extend(.pos-center all);
+
+        content: '';
+        width: var(--size);
+        height: var(--size);
+        background-color: var(--background);
+        border-radius: 50%;
+        border-color: var(--background);
+        border-style: solid;
+        border-width: 2px;
+        z-index: 1;
+    }
+    &::before {
+        &:extend(.iconplayer::before);
+
+        font-size: var(--iconSize);
+        position: relative;
+        z-index: 2;
+    }
+    &.pending {
+        &::after {
+            background-image: url('~assets/loading.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 50% 50%;
+            :local {
+                animation: spin 0.4s linear 30;
+            }
+        }
+        &::before {
+            opacity: 0;
+        }
+    }
+    &.failed::before,
+    &.stoped::before {
+        &:extend(.icon-play::before);
+    }
+    &.playing::before,
+    &.paused::before {
+        &:extend(.icon-pause::before);
+    }
+    &.dark {
+        color: var(--dark-color);
+    }
+    &.light {
+        color: var(--color-sky);
+        &::after {
+            border-color: var(--color-sky);
+            background-color: unset;
+        }
+    }
+}
+@keyframes spin {
+    from {
+        transform: rotateZ(0);
+    }
+    to {
+        transform: rotateZ(1turn);
+    }
+}

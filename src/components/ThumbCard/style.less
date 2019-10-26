@@ -6,6 +6,7 @@
     display: block;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.14);
     overflow: hidden;
+    justify-self: center;
     &.squared {
         border-radius: 4px;
     }
@@ -51,8 +52,11 @@
         padding: 0 8px 8px;
         line-height: 1.4;
         width: 100%;
-        a:hover {
-            text-decoration: underline;
+        a {
+            color: var(--text-color-light);
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 }

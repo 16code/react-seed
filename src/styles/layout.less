@@ -1,9 +1,8 @@
 .layout-basic {
     display: grid;
     grid-template-columns: var(--layout-sider-width) 1fr;
-    grid-template-rows: var(--layout-header-height) 1fr var(--layout-player-height);
-    grid-template-areas: 'aside content' 'aside content' 'player player';
-    height: 100vh;
+    grid-template-areas: 'aside content';
+    height: calc(100vh - var(--layout-player-height));
     width: 100vw;
 }
 .layout-aside {
@@ -11,7 +10,6 @@
 
     grid-area: aside;
     background-color: var(--aside-background);
-    padding-bottom: var(--layout-player-height);
     z-index: 2;
 }
 .layout-header {
@@ -30,12 +28,13 @@
     border-style: solid;
     border-width: 0 0 0 1px;
     overflow: auto;
+    padding-right: 14px;
     z-index: 2;
 }
 .layout-footer {
     &:extend(.pos-relative all);
 
-    grid-area: player;
+    height: var(--layout-player-height);
     background-color: var(--footer-background);
     border-color: var(--border-color-base);
     border-style: solid;

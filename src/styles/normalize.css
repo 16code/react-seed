@@ -35,7 +35,7 @@ a {
     outline: none;
     text-decoration: none;
     background-color: transparent;
-    color: var(--text-color-light);
+    color: var(--text-color);
 }
 
 hr {
@@ -150,7 +150,8 @@ template,
 [role='button'] {
     cursor: pointer;
 }
-::-webkit-scrollbar {
+
+/* ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
@@ -163,4 +164,4 @@ template,
     background-color: darkgrey;
     outline: 1px solid slategrey;
     border-radius: 2px;
-}
+} */

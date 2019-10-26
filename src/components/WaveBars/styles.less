@@ -1,0 +1,59 @@
+.wavebars {
+    width: 15px;
+    height: 15px;
+    pointer-events: none;
+    display: inline-flex;
+    visibility: hidden;
+    .wavebars-svg {
+        width: inherit;
+        height: inherit;
+    }
+    .wavebars-bar {
+        transform: translateY(9px);
+        animation-name: none;
+        animation-duration: 0.4s;
+        animation-delay: var(--delay, 0);
+        animation-direction: alternate;
+        animation-timing-function: ease-in;
+        animation-iteration-count: infinite;
+        fill: var(--text-color);
+    }
+    &.is-paused .wavebars-bar,
+    &.is-playing .wavebars-bar {
+        :local {
+            animation-name: playback-bar;
+        }
+
+        visibility: visible;
+    }
+    &.is-playing .wavebars-bar {
+        animation-play-state: running;
+    }
+    &.is-paused .wavebars-bar {
+        animation-play-state: paused;
+    }
+    .wavebars-bar--1 {
+        --max-height-offset: 6px;
+        --delay: 250ms;
+
+        animation-duration: 0.6s;
+    }
+    .wavebars-bar--2 {
+        --max-height-offset: 2px;
+        --delay: 615ms;
+    }
+    .wavebars-bar--3 {
+        --max-height-offset: 4px;
+        --delay: 475ms;
+    }
+    .wavebars-bar--4 {
+        --max-height-offset: 2px;
+        --delay: 25ms;
+    }
+}
+
+@keyframes playback-bar {
+    to {
+        transform: translateY(var(--max-height-offset, 0));
+    }
+}
