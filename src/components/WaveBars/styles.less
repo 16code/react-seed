@@ -4,6 +4,7 @@
     pointer-events: none;
     display: inline-flex;
     visibility: hidden;
+    margin-top: -4px;
     .wavebars-svg {
         width: inherit;
         height: inherit;
@@ -17,20 +18,6 @@
         animation-timing-function: ease-in;
         animation-iteration-count: infinite;
         fill: var(--text-color);
-    }
-    &.is-paused .wavebars-bar,
-    &.is-playing .wavebars-bar {
-        :local {
-            animation-name: playback-bar;
-        }
-
-        visibility: visible;
-    }
-    &.is-playing .wavebars-bar {
-        animation-play-state: running;
-    }
-    &.is-paused .wavebars-bar {
-        animation-play-state: paused;
     }
     .wavebars-bar--1 {
         --max-height-offset: 6px;
@@ -51,7 +38,33 @@
         --delay: 25ms;
     }
 }
+:global {
+    .player-paused,
+    .player-playing {
+        :local {
+            .wavebars-bar {
+                animation-name: playback-bar;
+                visibility: visible;
+            }
+        }
 
+        visibility: visible;
+    }
+    .player-playing {
+        :local {
+            .wavebars-bar {
+                animation-play-state: running;
+            }
+        }
+    }
+    .player-paused {
+        :local {
+            .wavebars-bar {
+                animation-play-state: paused;
+            }
+        }
+    }
+}
 @keyframes playback-bar {
     to {
         transform: translateY(var(--max-height-offset, 0));

@@ -1,0 +1,46 @@
+.volume {
+    position: relative;
+    &.visible {
+        .volume-controls {
+            transform: translateY(0);
+            visibility: visible;
+            opacity: 1;
+            z-index: 2;
+        }
+        .volume-btn {
+            color: var(--volume-bar-color);
+        }
+    }
+}
+.volume-btn {
+    transition: color 0.2s ease 0.1s;
+    background-color: transparent;
+    border-width: 0;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    font-size: var(--player-icon-size);
+    .volume-icon {
+        color: var(--player-color);
+        display: inline-block;
+        line-height: 1;
+    }
+}
+.volume-controls {
+    width: 16px;
+    height: 100px;
+    background-color: var(--volume-bg-color);
+    border-radius: 4px;
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 102%;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    transition: all 0.15s ease;
+    transform: translateY(-15px);
+    visibility: hidden;
+    opacity: 0;
+}

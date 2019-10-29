@@ -4,7 +4,6 @@ import axios from 'axios';
 const CancelToken = axios.CancelToken;
 
 const requestInstance = createInstance({
-    baseURL: '//localhost:3000',
     responseEncoding: 'utf8',
     validateStatus: status => status >= 200 && status < 300
 });
@@ -43,7 +42,12 @@ request.setHeader = function(headers) {
         }
     }
 };
-requestInstance.interceptors.response.use(response => ({ ...response.data }));
+requestInstance.interceptors.response.use(response => {
+    if (response && response.data instanceof Blob) {
+        return response.data;
+    }
+    return { ...response.data };
+});
 
 export default request;
 

@@ -1,16 +1,11 @@
 import styles from './styles';
 
-export default function WaveBars({ isPlaying, id = parseInt(Math.random() * 100, 10) }) {
+export default function WaveBars({ id = parseInt(Math.random() * 100, 10) }) {
     const barEmberId = `bar-ember${id}`;
     const barMaskId = `bar-mask-ember${id}`;
     const barMaskUrl = `url(${barMaskId})`;
     return (
-        <span
-            className={classNames(styles.wavebars, {
-                [styles['is-playing']]: isPlaying === true,
-                [styles['is-paused']]: isPlaying === false
-            })}
-        >
+        <span id={`music-${id}`} className={classNames(styles.wavebars)}>
             <svg className={styles['wavebars-svg']} viewBox="0 0 11 11">
                 <defs>
                     <rect id={barEmberId} x="0" width="2.1" y="0" height="11" rx=".25" />

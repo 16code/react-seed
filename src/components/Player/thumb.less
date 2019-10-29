@@ -1,0 +1,72 @@
+.player-thumb {
+    position: absolute;
+    width: var(--layout-sider-width);
+    bottom: 100%;
+    z-index: 2;
+    display: grid;
+    padding: calc(var(--box-padding-base) / 2) var(--box-padding-base);
+    grid-column-gap: 10px;
+    grid-template-columns: 58px 1fr;
+    font-size: 14px;
+    align-items: center;
+    color: var(--text-color-secondary);
+    border-top: 1px solid var(--border-color-base);
+    figure {
+        border-radius: var(--border-radius-base);
+        overflow: hidden;
+        width: 58px;
+        height: 58px;
+        background: rgb(230, 230, 230);
+        position: relative;
+        &:hover {
+            .btn-handle {
+                opacity: 1;
+            }
+        }
+    }
+    img {
+        vertical-align: middle;
+        width: 100%;
+        height: 100%;
+    }
+    .content {
+        overflow: hidden;
+    }
+    .singer,
+    .name {
+        display: block;
+        max-width: 100%;
+        .ellipsis;
+    }
+    .name {
+        color: var(--color-sky);
+        font-size: 15px;
+    }
+    .singer {
+        font-size: 12px;
+        display: block;
+        a {
+            color: inherit;
+            &:hover {
+                color: var(--text-color-secondary);
+                text-decoration: underline;
+            }
+        }
+    }
+    .btn-handle {
+        border: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: opacity 0.3s 0.1s;
+        > i {
+            font-size: 30px;
+        }
+    }
+}

@@ -1,0 +1,51 @@
+@progress-slider-color: #d5d6d7;
+.range-slider {
+    cursor: pointer;
+    position: relative;
+    border-radius: var(--border-radius-base);
+    height: 4px;
+    flex-grow: 1;
+    background-color: fade(@progress-slider-color, 70%);
+    &.disabled {
+        cursor: not-allowed;
+    }
+    .progress {
+        border-radius: inherit;
+        position: absolute;
+        pointer-events: none;
+        background-color: var(--color-sky);
+        z-index: 4;
+        contain: layout;
+    }
+    .pin {
+        height: 16px;
+        width: 16px;
+        border-radius: 8px;
+        background-color: var(--color-sky);
+        position: absolute;
+        pointer-events: all;
+    }
+    &.horizontal {
+        .pin {
+            right: -8px;
+            top: -6px;
+        }
+        .progress {
+            width: 0;
+            height: 100%;
+        }
+    }
+    &.vertical {
+        height: 135px;
+        width: 6px;
+        .progress {
+            bottom: 0;
+            height: 30%;
+            width: 100%;
+        }
+        .pin {
+            left: -5px;
+            top: -8px;
+        }
+    }
+}

@@ -10,11 +10,13 @@ function theRequest() {
         url: '/api/dashboard',
         requestConfig: null,
         initialData: {
-            playlist: emptyArr,
-            djprogram: emptyArr,
-            artists: emptyArr,
-            topboard: emptyArr,
-            latest: emptyArr
+            data: {
+                playlist: emptyArr,
+                djprogram: emptyArr,
+                artists: emptyArr,
+                topboard: emptyArr,
+                latest: emptyArr
+            }
         }
     };
 }
@@ -71,7 +73,7 @@ export default class Dashboard extends React.PureComponent {
         );
     }
     render() {
-        const { playlist, djprogram, artists, topboard, latest } = this.props.data;
+        const { playlist, djprogram, artists, topboard, latest } = this.props.response.data;
         return (
             <>
                 <Box title="推荐歌单">

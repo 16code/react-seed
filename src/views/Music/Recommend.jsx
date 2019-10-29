@@ -5,7 +5,7 @@ function theRequest() {
     return {
         url: '/api/songs/top',
         requestConfig: {
-            params: { limit: 5 }
+            params: { limit: 10 }
         },
         initialData: []
     };
@@ -13,7 +13,7 @@ function theRequest() {
 @withRequest(theRequest)
 export default class Recommend extends React.PureComponent {
     render() {
-        const { data } = this.props.data;
+        const data = this.props.response.data;
         return (
             <Box title="热门歌曲">
                 <SongList dataSource={data} />

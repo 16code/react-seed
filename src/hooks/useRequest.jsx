@@ -39,5 +39,5 @@ export const withRequest = (theRequest, theHandles) => WrappedComponent => props
     if (typeof theHandles === 'function') {
         handles = theHandles(setRequestConfig);
     }
-    return <WrappedComponent {...props} {...handles} data={data} isLoading={isLoading} isError={isError} />;
+    return <WrappedComponent {...props} {...handles} response={data} isLoading={isLoading} isError={isError} />;
 };
