@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { formatTime, bindEvents, removeEvents } from 'helper';
-import { actions as playerActions } from 'reducers/playerState';
+import { actions as playerActions } from 'reducers/player';
 import { actions as lyricBoxActions } from 'reducers/lyricBox';
 import PlayControl from 'components/PlayControl';
 import RangeSlider from 'components/RangeSlider';

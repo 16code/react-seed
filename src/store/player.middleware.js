@@ -1,4 +1,4 @@
-import { types, hasSongInPlaylist } from 'reducers/playerState.js';
+import { types, hasSongInPlaylist } from 'reducers/player';
 export default function playerMiddleware() {
     return ({ dispatch, getState }) => next => action => {
         if (!action || action.type !== types.playerStop) return next(action);

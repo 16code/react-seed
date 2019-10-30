@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { actions as playerActions } from 'reducers/playerState';
+import { actions as playerActions } from 'reducers/player';
 import styles from './styles.less';
 
 // playState 播放状态 stoped, pending, playing, paused, failed

@@ -1,7 +1,7 @@
 import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 // import { delay } from 'utils';
 
-import { types } from 'reducers/playerState';
+import { types } from 'reducers/player';
 import { loadSongInfo as getSongData } from './apiCalls';
 
 export const getPlayingSongFromState = state => state.player;
