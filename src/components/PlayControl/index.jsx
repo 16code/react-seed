@@ -15,7 +15,6 @@ function PlayControl({
     disabled = false,
     isCurrentPlay
 }) {
-    console.log('PlayControl re render', songId);
     const btnPlayState = isCurrentPlay ? playerState : 'stoped';
     const ctrlClass = classNames(styles['play-control'], className, styles[`${theme}`], styles[btnPlayState]);
     React.useEffect(() => {

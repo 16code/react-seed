@@ -119,6 +119,9 @@ module.exports = function config() {
             proxy: {
                 '/api': {
                     target: `http:${API_GATEWAY}`
+                },
+                '/media': {
+                    target: `http:${API_GATEWAY}`
                 }
             }
         },

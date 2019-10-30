@@ -5,7 +5,6 @@ import { actions as lyricBoxActions } from 'reducers/lyricBox';
 import PlayControl from 'components/PlayControl';
 import RangeSlider from 'components/RangeSlider';
 import VolumeControl from './Volume';
-import PlayerThumb from './PlayerThumb';
 import styles from './styles.less';
 const URLTool = window.URL;
 
@@ -15,7 +14,6 @@ const URLTool = window.URL;
         canPlaying: player.canPlaying,
         playerState: player.playerState,
         playingSongId: player.playingSongId,
-        playingSongData: player.playingSongData,
         listRepeatState: player.listRepeatState,
         playListSongs: player.playListByMusic,
         songFetching: player.songFetching,
@@ -195,20 +193,6 @@ export default class AudioPlayer extends React.PureComponent {
     handleToggleLrcBox = () => {
         this.props.toggleLrcBoxVisible();
     };
-    get songInfo() {
-        const { playingSongData, lyricBoxVisible } = this.props;
-        return (
-            playingSongData &&
-            playingSongData.id && (
-                <PlayerThumb
-                    onClick={this.handleToggleLrcBox}
-                    lyricModalVisible={lyricBoxVisible}
-                    key="playerThumb"
-                    data={playingSongData}
-                />
-            )
-        );
-    }
     render() {
         const { audioProps, playingSongId, playerState, volume, listRepeatState, playListSongs } = this.props;
         const repeatModeIonClass = this.getRepeatModeClass(listRepeatState);

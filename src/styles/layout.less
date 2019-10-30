@@ -4,6 +4,8 @@
     grid-template-areas: 'aside content';
     height: calc(100vh - var(--layout-player-height));
     width: 100vw;
+    position: relative;
+    z-index: 2;
 }
 .layout-aside {
     &:extend(.pos-relative all);

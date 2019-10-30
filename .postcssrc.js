@@ -11,6 +11,8 @@ module.exports = ({ options, env }) => ({
             viewportWidth: 1000,
             viewportUnit: 'vw',
             selectorBlackList: [
+                '.range-slider',
+                '.pin',
                 '.wavebars',
                 '.wavebars-bar--1',
                 '.wavebars-bar--2',

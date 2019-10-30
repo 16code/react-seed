@@ -19,7 +19,7 @@ function BasicLayout() {
             <GlobalLayout aside={aside} header={header} footer={footer}>
                 <Views />
             </GlobalLayout>
-            <div className="blur-effect-image" />
+            <div id="blur-effect-image" />
         </>
     );
 }

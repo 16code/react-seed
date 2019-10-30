@@ -7,7 +7,6 @@ import styles from './styles';
 
 function SongItem({ data, size }) {
     const { id: songId, name, dt, ar, al } = data;
-    console.log('SongItem re render', songId);
     return (
         <div className={classNames(styles['song-item'])}>
             <figure className={styles['song-thumb']}>
