@@ -1,7 +1,9 @@
 import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 // import { delay } from 'utils';
 
-import { types } from 'reducers/player';
+import { types as playerTypes } from 'reducers/player';
+import { types as lyricTypes } from 'reducers/lyric';
+import { types as songTypes } from 'reducers/song';
 import { loadSongInfo as getSongData } from './apiCalls';
 
 export const getPlayingSongFromState = state => state.player;
@@ -11,21 +13,26 @@ export function* loadSongData() {
     try {
         const { playingSongId: id, playerState } = yield select(getPlayingSongFromState);
         if (playerState === 'pending' && id) {
-            yield put({ type: types.fetchSongDataRequest });
+            yield put({ type: songTypes.getInfo });
             const data = yield call(getSongData, id);
             if (data) {
                 // yield delay(1000);
-                yield put({ type: types.fetchSongDataSuccess, payload: data });
+                const { id, name, blur, album, alia, mv, quality, lyric } = data;
+                yield put({ type: lyricTypes.updateLyric, payload: { id, lyric } });
+                yield put({ type: songTypes.getInfoSuccess, payload: { id, name, blur, album, alia, mv, quality } });
             }
         }
     } catch (error) {
-        yield put({ type: types.fetchSongDataFailure });
+        yield put({ type: songTypes.getInfoFailed });
     }
 }
 
 export function* loadMediaSourceSaga() {
     try {
-        yield all([takeLatest(types.playSong, loadSongData), takeLatest(types.playNextOrPrevSong, loadSongData)]);
+        yield all([
+            takeLatest(playerTypes.playSong, loadSongData),
+            takeLatest(playerTypes.playNextOrPrevSong, loadSongData)
+        ]);
     } catch (error) {
         console.log(error);
     }

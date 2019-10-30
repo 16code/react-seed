@@ -1,4 +1,4 @@
-export default function BasicLayout({ className, children, aside, footer }) {
+export default function GlobalLayout({ className, children, aside, footer }) {
     return (
         <>
             <div className={classNames('layout-basic', className)}>

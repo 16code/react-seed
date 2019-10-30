@@ -1,18 +1,25 @@
 import { createReducer } from 'helper';
 export const types = {
-    lyricBox: 'lyricBox/toggleVisible'
+    toggleVisible: 'lyric/toggleVisible',
+    updateLyric: 'lyric/updateLyric'
 };
-export const lyricReducer = createReducer(
-    { visible: false },
-    {
-        [types.lyricBox]: cb
-    }
-);
+const initialState = { visible: false };
+export const lyricReducer = createReducer(initialState, {
+    [types.toggleVisible]: toggleVisible,
+    [types.updateLyric]: updateLyric
+});
 
 export const actions = {
     toggleVisible: payload => ({ type: types.lyricBox, payload })
 };
 
-function cb(state, action) {
+function toggleVisible(state, action) {
     return { visible: typeof action.payload !== 'undefined' ? action.payload : !state.visible };
+}
+
+function updateLyric(state, action) {
+    return {
+        ...state,
+        ...action.payload
+    };
 }

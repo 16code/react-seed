@@ -9,15 +9,15 @@ import styles from './styles.less';
 const URLTool = window.URL;
 
 @connect(
-    ({ player, lyricBox }) => ({
+    ({ player, lyric, song }) => ({
         volume: player.volume,
         canPlaying: player.canPlaying,
         playerState: player.playerState,
         playingSongId: player.playingSongId,
-        listRepeatState: player.listRepeatState,
+        listRepeatMode: player.listRepeatMode,
         playListSongs: player.playListByMusic,
-        songFetching: player.songFetching,
-        lyricBoxVisible: lyricBox.visible
+        songFetching: song.fetching,
+        lyricBoxVisible: lyric.visible
     }),
     {
         changePendingToPlaying: playerActions.changePendingToPlaying,
@@ -112,8 +112,8 @@ export default class AudioPlayer extends React.PureComponent {
     };
     // 切换播放模式
     handleChangeRepeatMode = () => {
-        const { listRepeatState, changeRepeatMode } = this.props;
-        changeRepeatMode(listRepeatState);
+        const { listRepeatMode, changeRepeatMode } = this.props;
+        changeRepeatMode(listRepeatMode);
     };
     // 音量调整
     handleVolumeChange = value => {
@@ -194,8 +194,8 @@ export default class AudioPlayer extends React.PureComponent {
         this.props.toggleLrcBoxVisible();
     };
     render() {
-        const { audioProps, playingSongId, playerState, volume, listRepeatState, playListSongs } = this.props;
-        const repeatModeIonClass = this.getRepeatModeClass(listRepeatState);
+        const { audioProps, playingSongId, playerState, volume, listRepeatMode, playListSongs } = this.props;
+        const repeatModeIonClass = this.getRepeatModeClass(listRepeatMode);
         const btnDisabled = !playListSongs.length;
         const mediaUrl = playingSongId && `/media/${playingSongId}/url`;
         return [
@@ -265,7 +265,7 @@ export default class AudioPlayer extends React.PureComponent {
                 <audio
                     {...audioProps}
                     src={mediaUrl}
-                    loop={listRepeatState === 'repeatonce'}
+                    loop={listRepeatMode === 'repeatonce'}
                     ref={this.mediaPlayerRef}
                 />
             </div>

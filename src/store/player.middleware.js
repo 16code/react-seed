@@ -4,8 +4,8 @@ export default function playerMiddleware() {
         if (!action || action.type !== types.playerStop) return next(action);
         const { player } = getState();
         // shuffle , repeat
-        const { listRepeatState, playListByMusic, playingSongId } = player;
-        if (listRepeatState === 'repeat' && playListByMusic.length > 1) {
+        const { listRepeatMode, playListByMusic, playingSongId } = player;
+        if (listRepeatMode === 'repeat' && playListByMusic.length > 1) {
             const offst = hasSongInPlaylist(playingSongId, playListByMusic);
             const nextSong = playListByMusic[offst + 1] || playListByMusic[0];
             if (nextSong.id) {
@@ -14,7 +14,7 @@ export default function playerMiddleware() {
                     payload: { id: nextSong.id }
                 });
             }
-        } else if (listRepeatState === 'shuffle') {
+        } else if (listRepeatMode === 'shuffle') {
             const nextSong = getNextSong(playingSongId, playListByMusic);
             if (nextSong.id) {
                 return dispatch({
