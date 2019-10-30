@@ -1,5 +1,5 @@
-import { createReducer, safaJsonParse } from 'helper';
-import { HISTORY_BY_SONG_LIST, KEY_PREFIX_SETTING, PLAYER_STATE } from 'common/constants';
+import { createReducer } from 'helper';
+import { KEY_PREFIX_SETTING, PLAYER_STATE } from 'common/constants';
 
 export const types = {
     playSong: 'player/playSong', // 播放歌曲
@@ -8,7 +8,7 @@ export const types = {
     playerChangeRepeatMode: 'player/changeRepeatMode', // 调整播放器循环模式,
     changePlayerState: 'player/changeState'
 };
-const cachedSongs = safaJsonParse(window.localStorage.getItem(HISTORY_BY_SONG_LIST)) || [];
+const cachedSongs = [];
 
 const initialState = {
     listRepeatMode: window.localStorage.getItem(`${KEY_PREFIX_SETTING}listRepeatMode`) || 'repeat',
@@ -28,15 +28,13 @@ export const playerReducer = createReducer(initialState, {
 
 // 处理歌曲播放状态
 function handlePlaySong(state, action) {
-    const { playingSongId, playerState, playListByMusic } = state;
+    const { playingSongId, playerState } = state;
     const { id: nextSongId } = action.payload || {};
     // 验证是否当前播放歌曲
     const adjustState = { playerState, playingSongId };
 
     if (playingSongId !== nextSongId) {
         // 如果要播放的歌曲是当前正在播放的歌曲, 那么就要做播放处理, 并且要添加到播放列表;
-        const newPlayList = addSongToPlaylist(action.payload, playListByMusic);
-        adjustState.playListByMusic = [...newPlayList];
         adjustState.playerState = PLAYER_STATE.PENDING;
         adjustState.playingSongId = nextSongId;
     }
@@ -63,14 +61,7 @@ function handleChangePlayerState(state, action) {
 export function hasSongInPlaylist(checkID, songs) {
     return songs.findIndex(item => item.id === checkID);
 }
-function addSongToPlaylist(song, songs) {
-    const isInList = hasSongInPlaylist(song.id, songs) !== -1;
-    if (!isInList) {
-        songs.unshift(song);
-        window.localStorage.setItem(HISTORY_BY_SONG_LIST, JSON.stringify(songs));
-    }
-    return songs;
-}
+
 // 调整播放器音量
 function handleChangeVolume(state, action) {
     window.localStorage.setItem(`${KEY_PREFIX_SETTING}volume`, action.payload);
