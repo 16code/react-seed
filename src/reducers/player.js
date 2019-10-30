@@ -29,7 +29,7 @@ const initialState = {
     playListByMusic: cachedSongs // 歌曲列表
 };
 
-export const updatedReducer = createReducer(initialState, {
+export const playerReducer = createReducer(initialState, {
     [types.playSong]: handlePlaySong,
     [types.playNextOrPrevSong]: handlePlayNextOrPrevSong,
     [types.playerStop]: handlePlayerStop,

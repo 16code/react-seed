@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { updatedReducer } from './player';
-import { lyricBoxVisibleReducer } from './lyricBox';
+import { playerReducer } from './player';
+import { lyricReducer } from './lyric';
 
 export default combineReducers({
-    player: updatedReducer,
-    lyricBox: lyricBoxVisibleReducer
+    player: playerReducer,
+    lyricBox: lyricReducer
 });

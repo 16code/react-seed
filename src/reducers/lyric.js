@@ -2,7 +2,7 @@ import { createReducer } from 'helper';
 export const types = {
     lyricBox: 'lyricBox/toggleVisible'
 };
-export const lyricBoxVisibleReducer = createReducer(
+export const lyricReducer = createReducer(
     { visible: false },
     {
         [types.lyricBox]: cb

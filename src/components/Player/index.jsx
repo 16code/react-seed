@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { formatTime, bindEvents, removeEvents } from 'helper';
 import { actions as playerActions } from 'reducers/player';
-import { actions as lyricBoxActions } from 'reducers/lyricBox';
+import { actions as lyricBoxActions } from 'reducers/lyric';
 import PlayControl from 'components/PlayControl';
 import RangeSlider from 'components/RangeSlider';
 import VolumeControl from './Volume';
