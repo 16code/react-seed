@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { PLAYER_STATE } from 'common/constants';
 import { actions as playerActions } from 'reducers/player';
 import styles from './styles.less';
 
@@ -10,10 +11,11 @@ function PlayControl({
     className,
     style,
     theme = 'dark',
-    onPlaySong,
     playerState,
     disabled = false,
-    isCurrentPlay
+    isCurrentPlay,
+    onPlaySong,
+    changePlayerState
 }) {
     const btnPlayState = isCurrentPlay ? playerState : 'stoped';
     const ctrlClass = classNames(styles['play-control'], className, styles[`${theme}`], styles[btnPlayState]);
@@ -27,6 +29,7 @@ function PlayControl({
             }
         }
     });
+    const nextState = playerState === PLAYER_STATE.PLAYING ? PLAYER_STATE.PAUSED : PLAYER_STATE.PLAYING;
     return (
         <button
             style={style}
@@ -34,7 +37,7 @@ function PlayControl({
             role="button"
             disabled={disabled}
             onClick={() => {
-                onPlaySong({ id: songId });
+                isCurrentPlay ? changePlayerState(nextState) : onPlaySong({ id: songId });
             }}
         />
     );
@@ -47,9 +50,12 @@ export default connect(
         const currentPlayId = player.playingSongId;
         return {
             currentPlayId,
-            playerState: player.playerState || 'stoped',
+            playerState: player.playerState,
             isCurrentPlay: currentPlayId === props.songId
         };
     },
-    { onPlaySong: playerActions.playSong }
+    {
+        onPlaySong: playerActions.playSong,
+        changePlayerState: playerActions.changePlayerState
+    }
 )(React.memo(PlayControl, areEqual));

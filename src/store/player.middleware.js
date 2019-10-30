@@ -1,9 +1,10 @@
 import { types, hasSongInPlaylist } from 'reducers/player';
 export default function playerMiddleware() {
     return ({ dispatch, getState }) => next => action => {
-        if (!action || action.type !== types.playerStop) return next(action);
+        if (!action || action.type !== types.changePlayerState) return next(action);
         const { player } = getState();
         // shuffle , repeat
+        if (player.playerState !== 'stoped') return next(action);
         const { listRepeatMode, playListByMusic, playingSongId } = player;
         if (listRepeatMode === 'repeat' && playListByMusic.length > 1) {
             const offst = hasSongInPlaylist(playingSongId, playListByMusic);

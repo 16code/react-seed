@@ -1,13 +1,13 @@
 import { createReducer } from 'helper';
 export const types = {
-    getInfo: 'song/getInfo',
-    getInfoSuccess: 'song/getInfoSuccess',
-    getInfoFailed: 'song/getInfoFailed'
+    getInfo: 'playingSong/getInfo',
+    getInfoSuccess: 'playingSong/getInfoSuccess',
+    getInfoFailed: 'playingSong/getInfoFailed'
 };
 const initialState = {
     fetching: false
 };
-export const songInfoReducer = createReducer(initialState, {
+export const playingSongReducer = createReducer(initialState, {
     [types.getInfo]: getSongInfo,
     [types.getInfoSuccess]: getSongInfoSuccess,
     [types.getInfoFailed]: getInfoFailed

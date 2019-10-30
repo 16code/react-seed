@@ -1,30 +1,27 @@
 import { connect } from 'react-redux';
 import { formatTime, bindEvents, removeEvents } from 'helper';
+import { PLAYER_STATE } from 'common/constants';
 import { actions as playerActions } from 'reducers/player';
 import { actions as lyricBoxActions } from 'reducers/lyric';
 import PlayControl from 'components/PlayControl';
 import RangeSlider from 'components/RangeSlider';
 import VolumeControl from './Volume';
 import styles from './styles.less';
-const URLTool = window.URL;
 
 @connect(
-    ({ player, lyric, song }) => ({
+    ({ player, lyric, playingSong }) => ({
         volume: player.volume,
-        canPlaying: player.canPlaying,
         playerState: player.playerState,
         playingSongId: player.playingSongId,
         listRepeatMode: player.listRepeatMode,
         playListSongs: player.playListByMusic,
-        songFetching: song.fetching,
+        songFetching: playingSong.fetching,
         lyricBoxVisible: lyric.visible
     }),
     {
-        changePendingToPlaying: playerActions.changePendingToPlaying,
-        changePlayerCanPlay: playerActions.changePlayerCanPlay,
         playSong: playerActions.playSong,
+        changePlayerState: playerActions.changePlayerState,
         playNextOrPrevSong: playerActions.playNextOrPrevSong,
-        playerStop: playerActions.playerStop,
         changeVolume: playerActions.changeVolume,
         changeRepeatMode: playerActions.changeRepeatMode,
         toggleLrcBoxVisible: lyricBoxActions.toggleVisible
@@ -42,23 +39,23 @@ export default class AudioPlayer extends React.PureComponent {
     };
     state = { playListVisible: false };
     cachedRepaatModeIcons = {};
-    events = () => ({
-        progress: this.onProgress,
-        durationchange: this.onLoadedMetaData,
-        timeupdate: this.onPlayerTimeUpdate,
-        error: () => {
-            console.log('player error');
-            this.props.playerStop('stoped');
-        },
-        canplay: () => {
-            const { playerState, changePlayerCanPlay, canPlaying, changePendingToPlaying } = this.props;
-            if (!canPlaying) changePlayerCanPlay(true);
-            if (playerState === 'pending') changePendingToPlaying('playing');
-        },
-        ended: () => {
-            this.props.playerStop('stoped');
-        }
-    });
+    events = () => {
+        const { changePlayerState } = this.props;
+        return {
+            progress: this.onProgress,
+            durationchange: this.onLoadedMetaData,
+            timeupdate: this.onPlayerTimeUpdate,
+            error: () => {
+                changePlayerState(PLAYER_STATE.FAILED);
+            },
+            canplay: () => {
+                changePlayerState(PLAYER_STATE.PLAYING);
+            },
+            ended: () => {
+                changePlayerState(PLAYER_STATE.STOPED);
+            }
+        };
+    };
     componentDidMount() {
         this.mediaPlayer = this.mediaPlayerRef.current;
         this.playerProgressBar = this.playerProgressBarRef.current.progressBar;
@@ -165,9 +162,8 @@ export default class AudioPlayer extends React.PureComponent {
         this.onProgress();
     };
     onProgress = () => {
-        const { buffered, duration, currentSrc } = this.mediaMetaInfo;
+        const { buffered, duration } = this.mediaMetaInfo;
         updatePreloadBar(buffered, duration, this.preloadedBarElement);
-        URLTool.revokeObjectURL(currentSrc);
     };
     updateVolume = v => {
         const volume = v / 100;
