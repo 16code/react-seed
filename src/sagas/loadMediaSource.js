@@ -2,6 +2,7 @@ import DB from 'services/dbs';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { types as playerTypes } from 'reducers/player';
 import { types as songTypes } from 'reducers/song';
+// import { types as historyTypes } from 'reducers/history';
 import { loadSongInfo as getSongData } from './apiCalls';
 
 export const getPlayingSongFromState = state => state.player;
