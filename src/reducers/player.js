@@ -65,7 +65,7 @@ export function hasSongInPlaylist(checkID, songs) {
 // 调整播放器音量
 function handleChangeVolume(state, action) {
     window.localStorage.setItem(`${KEY_PREFIX_SETTING}volume`, action.payload);
-    return { ...state, volume: action.payload };
+    return state;
 }
 // 调整播放器列表循环模式
 function handleChangeRepeatMode(state, action) {

@@ -10,7 +10,7 @@ function SongItem({ data, size }) {
     return (
         <div className={classNames(styles['song-item'])}>
             <figure className={styles['song-thumb']}>
-                <Image src={al.picUrl} size={size} lazyload />
+                <Image src={`${al.picUrl}?param=100y100&quality=60`} size={size} lazyload />
                 <PlayControl songId={songId} />
             </figure>
             <div className={styles['song-meta']}>

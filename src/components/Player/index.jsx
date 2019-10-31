@@ -6,6 +6,7 @@ import { actions as lyricBoxActions } from 'reducers/lyric';
 import PlayControl from 'components/PlayControl';
 import RangeSlider from 'components/RangeSlider';
 import VolumeControl from './Volume';
+import PlayerThumb from './PlayerThumb';
 import styles from './styles.less';
 
 @connect(
@@ -15,7 +16,7 @@ import styles from './styles.less';
         playingSongId: player.playingSongId,
         listRepeatMode: player.listRepeatMode,
         playListSongs: player.playListByMusic,
-        songFetching: playingSong.fetching,
+        playingSong,
         lyricBoxVisible: lyric.visible
     }),
     {
@@ -190,80 +191,91 @@ export default class AudioPlayer extends React.PureComponent {
         this.props.toggleLrcBoxVisible();
     };
     render() {
-        const { audioProps, playingSongId, playerState, volume, listRepeatMode, playListSongs } = this.props;
+        const {
+            audioProps,
+            playingSongId,
+            playerState,
+            volume,
+            listRepeatMode,
+            playListSongs,
+            playingSong = {}
+        } = this.props;
         const repeatModeIonClass = this.getRepeatModeClass(listRepeatMode);
         const btnDisabled = !playListSongs.length;
         const mediaUrl = playingSongId && `/media/${playingSongId}/url`;
         return [
             <div className={styles['audio-player']} ref={this.playerBoxRef} key="audioPlayerBox">
-                <div className={classNames(styles['player-controls'], styles['left-controls'])}>
-                    <button
-                        className={styles['control-button']}
-                        title="上一曲"
-                        role="button"
-                        disabled={btnDisabled}
-                        onClick={() => this.handlePlayPrevAndNext('prev')}
-                    >
-                        <i className="iconplayer icon-skip-back" />
-                    </button>
-                    <PlayControl
-                        songId={playingSongId}
-                        disabled={playerState === 'pending'}
-                        onClick={this.handlePlayBtnClick}
-                        theme="light"
-                        className={styles['play-button']}
+                <PlayerThumb data={playingSong} />
+                <div className={styles.controls}>
+                    <div className={classNames(styles['player-controls'], styles['left-controls'])}>
+                        <button
+                            className={styles['control-button']}
+                            title="上一曲"
+                            role="button"
+                            disabled={btnDisabled}
+                            onClick={() => this.handlePlayPrevAndNext('prev')}
+                        >
+                            <i className="iconplayer icon-skip-back" />
+                        </button>
+                        <PlayControl
+                            songId={playingSongId}
+                            disabled={playerState === 'pending'}
+                            onClick={this.handlePlayBtnClick}
+                            theme="light"
+                            className={styles['play-button']}
+                        />
+                        <button
+                            className={styles['control-button']}
+                            title="下一曲"
+                            role="button"
+                            disabled={btnDisabled}
+                            onClick={() => this.handlePlayPrevAndNext('next')}
+                        >
+                            <i className="iconplayer icon-skip-forward" />
+                        </button>
+                    </div>
+                    <div className={styles['player-extra']}>
+                        <span id="audio-current-time" className={classNames(styles['player-time'], styles.current)}>
+                            00:00
+                        </span>
+                        <RangeSlider
+                            ref={this.playerProgressBarRef}
+                            percentage={0}
+                            onChange={this.handleProgressMoved}
+                            disabled={!playingSongId}
+                        >
+                            <span id="audio-preload-bar" className={styles['bar-preload']} />
+                        </RangeSlider>
+                        <span id="audio-duration-titme" className={classNames(styles['player-time'], styles.duration)}>
+                            00:00
+                        </span>
+                    </div>
+                    <div className={classNames(styles['player-controls'], styles['right-controls'])}>
+                        <VolumeControl onChange={this.handleVolumeChange} volume={volume} />
+                        <button
+                            className={styles['control-button']}
+                            title="循环模式"
+                            role="button"
+                            onClick={this.handleChangeRepeatMode}
+                        >
+                            <i className={repeatModeIonClass} />
+                        </button>
+                        <button
+                            className={styles['control-button']}
+                            title="播放列表"
+                            role="button"
+                            onClick={this.handleTogglePlaylist}
+                        >
+                            <i className="iconplayer icon-queue" />
+                        </button>
+                    </div>
+                    <audio
+                        {...audioProps}
+                        src={mediaUrl}
+                        loop={listRepeatMode === 'repeatonce'}
+                        ref={this.mediaPlayerRef}
                     />
-                    <button
-                        className={styles['control-button']}
-                        title="下一曲"
-                        role="button"
-                        disabled={btnDisabled}
-                        onClick={() => this.handlePlayPrevAndNext('next')}
-                    >
-                        <i className="iconplayer icon-skip-forward" />
-                    </button>
                 </div>
-                <div className={styles['player-extra']}>
-                    <span id="audio-current-time" className={classNames(styles['player-time'], styles.current)}>
-                        00:00
-                    </span>
-                    <RangeSlider
-                        ref={this.playerProgressBarRef}
-                        percentage={0}
-                        onChange={this.handleProgressMoved}
-                        disabled={!playingSongId}
-                    >
-                        <span id="audio-preload-bar" className={styles['bar-preload']} />
-                    </RangeSlider>
-                    <span id="audio-duration-titme" className={classNames(styles['player-time'], styles.duration)}>
-                        00:00
-                    </span>
-                </div>
-                <div className={classNames(styles['player-controls'], styles['right-controls'])}>
-                    <VolumeControl onChange={this.handleVolumeChange} volume={volume} />
-                    <button
-                        className={styles['control-button']}
-                        title="循环模式"
-                        role="button"
-                        onClick={this.handleChangeRepeatMode}
-                    >
-                        <i className={repeatModeIonClass} />
-                    </button>
-                    <button
-                        className={styles['control-button']}
-                        title="播放列表"
-                        role="button"
-                        onClick={this.handleTogglePlaylist}
-                    >
-                        <i className="iconplayer icon-queue" />
-                    </button>
-                </div>
-                <audio
-                    {...audioProps}
-                    src={mediaUrl}
-                    loop={listRepeatMode === 'repeatonce'}
-                    ref={this.mediaPlayerRef}
-                />
             </div>
         ];
     }

@@ -65,11 +65,13 @@
 .number {
     font-family: var(--font-family-number);
 }
-
-img.lazy {
-    opacity: 0;
-    transition: opacity 0.5s linear 0.2s;
+img {
     background: rgb(232, 233, 234);
+    &.lazy {
+        opacity: 0.3;
+        transition: opacity 0.5s linear 0.2s;
+        background: rgb(232, 233, 234);
+    }
 }
 .masked-img {
     figcaption,

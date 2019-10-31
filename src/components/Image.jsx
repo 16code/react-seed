@@ -1,6 +1,6 @@
 import throttle from 'lodash/throttle';
 import scrollParent from 'helper/scroll-parent';
-
+import AlbumDefault from 'assets/AlbumDefault.png';
 const useEffect = React.useEffect;
 const useRef = React.useRef;
 const useState = React.useState;
@@ -13,6 +13,9 @@ function loadImg(src, imgEl, scrollBox, cb) {
             cb(src);
             image = null;
         };
+        image.onerror = () => {
+            console.log('load img error', image.src);
+        };
         image.src = src;
     }
 }
@@ -23,13 +26,13 @@ function cleanup(throttled, scrollBox) {
 function Img(props) {
     const imgElRef = useRef(null);
     const { size, style, lazyload, src, className } = props;
-    const [imgSrc, setImgSrc] = useState(null);
+    const [imgSrc, setImgSrc] = useState(AlbumDefault);
     useEffect(() => {
         const imgEl = imgElRef.current;
         const { width, height } = sizeFormat(size);
         imgEl.style.width = width;
         imgEl.style.height = height;
-        if (lazyload) {
+        if (lazyload && src) {
             const scrollBox = scrollParent(imgEl);
             const throttled = throttle(
                 loadImg.bind(null, src, imgEl, scrollBox, loaded => {
@@ -43,13 +46,13 @@ function Img(props) {
             throttled();
             return cleanup.bind(null, throttled, scrollBox);
         }
-        setImgSrc(src);
+        src && setImgSrc(src);
     }, [imgSrc, lazyload, size, src]);
 
     return (
         <img
             ref={imgElRef}
-            className={classNames(className, { lazy: lazyload })}
+            className={classNames('img', className, { lazy: lazyload })}
             style={style}
             src={imgSrc}
             draggable="false"

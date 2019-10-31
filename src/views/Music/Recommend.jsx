@@ -5,7 +5,7 @@ function theRequest() {
     return {
         url: '/api/songs/top',
         requestConfig: {
-            params: { limit: 20, id: 5 }
+            params: { limit: 20, id: 0 }
         },
         initialData: []
     };

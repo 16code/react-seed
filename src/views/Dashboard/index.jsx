@@ -42,7 +42,7 @@ export default class Dashboard extends React.PureComponent {
                 key={item.id}
                 id={item.id}
                 name={item.name}
-                coverImg={item.coverImgUrl}
+                coverImg={`${item.coverImgUrl}?param=130y130&quality=60`}
                 countNum={item.playCount}
                 size="130x130"
             />
@@ -54,7 +54,7 @@ export default class Dashboard extends React.PureComponent {
                 key={item.id}
                 id={item.id}
                 name={item.name}
-                coverImg={item.picUrl}
+                coverImg={`${item.picUrl}?param=130y96&quality=60`}
                 countNum={item.program.listenerCount}
                 size="130x96"
             />
@@ -67,7 +67,7 @@ export default class Dashboard extends React.PureComponent {
                 key={item.id}
                 id={item.id}
                 name={item.name}
-                coverImg={item.img1v1Url}
+                coverImg={`${item.img1v1Url}?param=72y72&quality=60`}
                 size="72x72"
             />
         );
