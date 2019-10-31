@@ -8,7 +8,7 @@ module.exports = ({ options, env }) => ({
             }
         }),
         'postcss-px-to-viewport': {
-            viewportWidth: 1000,
+            viewportWidth: 1200,
             viewportUnit: 'vw',
             selectorBlackList: [
                 '.range-slider',

@@ -138,6 +138,7 @@ module.exports = function config() {
                 views: path.join(__dirname, 'src/views'),
                 helper: path.join(__dirname, 'src/helper'),
                 styles: path.join(__dirname, 'src/styles'),
+                services: path.join(__dirname, 'src/services'),
                 ErrorBoundary: path.join(__dirname, 'src/components/ErrorBoundary.jsx'),
                 decoration: path.join(__dirname, 'src/helper/decoration/index.js'),
                 requestJs: path.join(__dirname, 'src/helper/request/index.js')
