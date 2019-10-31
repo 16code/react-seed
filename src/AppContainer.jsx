@@ -5,13 +5,19 @@ import GlobalLayout from 'components/Layout/GlobalLayout';
 import { store } from 'store/configureStore';
 import AudioPlayer from 'components/Player';
 import AppMenu from 'components/Menu';
+import PlayCurrent from 'components/PlayCurrent';
 import { getMenuData } from 'common/menu';
 import Views from 'views';
 
 const menuData = getMenuData();
 
 function BasicLayout() {
-    const aside = <AppMenu data={menuData} />;
+    const aside = (
+        <>
+            <AppMenu data={menuData} />
+            <PlayCurrent />
+        </>
+    );
     const header = 'header';
     const footer = <AudioPlayer />;
     return (

@@ -3,17 +3,9 @@
 .audio-player {
     height: var(--layout-player-height);
     display: grid;
-    grid-template-columns: var(--layout-sider-width) 1fr;
+    grid-template-columns: var(--layout-sider-width) 1fr 140px;
     align-items: center;
-    padding: 0 var(--box-padding-sm);
-    .player-extra {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        flex: 1 1 auto;
-        padding-left: var(--box-padding-base);
-        padding-right: var(--box-padding-base);
-    }
+    grid-gap: var(--box-padding-sm);
     .player-time {
         font-family: var(--font-family-number);
         font-style: normal;
@@ -40,28 +32,28 @@
         border-radius: inherit;
         transition: width 0.75s var(--ease-in) 0.15s;
     }
-    .controls {
+    .player-extra,
+    .player-controls {
         display: flex;
         flex-direction: row;
+        align-items: center;
     }
     .player-controls {
         color: var(--player-color);
-        display: flex;
-        width: 100%;
         text-align: center;
-        align-items: center;
+        width: 100%;
         .play-button {
             position: relative;
+            margin: unset;
             opacity: 1;
+            z-index: 999;
         }
         &.left-controls {
-            flex: 0 0 120px;
+            justify-content: space-evenly;
         }
         &.right-controls {
-            flex: 0 0 130px;
-            justify-content: space-around;
+            justify-content: space-evenly;
         }
-
         .control-button {
             color: inherit;
             font-size: var(--player-icon-size);

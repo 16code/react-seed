@@ -42,9 +42,9 @@ export default class Dashboard extends React.PureComponent {
                 key={item.id}
                 id={item.id}
                 name={item.name}
-                coverImg={`${item.coverImgUrl}?param=130y130&quality=60`}
+                coverImg={`${item.coverImgUrl}?param=150y150&quality=50`}
                 countNum={item.playCount}
-                size="130x130"
+                size="170x170"
             />
         );
     }
@@ -54,9 +54,9 @@ export default class Dashboard extends React.PureComponent {
                 key={item.id}
                 id={item.id}
                 name={item.name}
-                coverImg={`${item.picUrl}?param=130y96&quality=60`}
+                coverImg={`${item.picUrl}?param=170y132&quality=50`}
                 countNum={item.program.listenerCount}
-                size="130x96"
+                size="170x132"
             />
         );
     }
@@ -67,8 +67,8 @@ export default class Dashboard extends React.PureComponent {
                 key={item.id}
                 id={item.id}
                 name={item.name}
-                coverImg={`${item.img1v1Url}?param=72y72&quality=60`}
-                size="72x72"
+                coverImg={`${item.img1v1Url}?param=100y100&quality=50`}
+                size="100x100"
             />
         );
     }

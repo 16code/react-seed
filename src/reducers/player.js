@@ -13,6 +13,7 @@ const cachedSongs = [];
 const initialState = {
     listRepeatMode: window.localStorage.getItem(`${KEY_PREFIX_SETTING}listRepeatMode`) || 'repeat',
     volume: +window.localStorage.getItem(`${KEY_PREFIX_SETTING}volume`) || 65,
+    isUnplayed: true,
     playerState: PLAYER_STATE.STOPED, // 当前播放状态
     playingSongId: undefined, // 正在播放的歌曲ID,
     playListByMusic: cachedSongs // 歌曲列表
@@ -31,7 +32,7 @@ function handlePlaySong(state, action) {
     const { playingSongId, playerState } = state;
     const { id: nextSongId } = action.payload || {};
     // 验证是否当前播放歌曲
-    const adjustState = { playerState, playingSongId };
+    const adjustState = { playerState, playingSongId, isUnplayed: false };
 
     if (playingSongId !== nextSongId) {
         // 如果要播放的歌曲是当前正在播放的歌曲, 那么就要做播放处理, 并且要添加到播放列表;

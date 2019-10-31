@@ -6,18 +6,15 @@ import { actions as lyricBoxActions } from 'reducers/lyric';
 import PlayControl from 'components/PlayControl';
 import RangeSlider from 'components/RangeSlider';
 import VolumeControl from './Volume';
-import PlayerThumb from './PlayerThumb';
 import styles from './styles.less';
 
 @connect(
-    ({ player, lyric, playingSong }) => ({
+    ({ player }) => ({
         volume: player.volume,
         playerState: player.playerState,
         playingSongId: player.playingSongId,
         listRepeatMode: player.listRepeatMode,
-        playListSongs: player.playListByMusic,
-        playingSong,
-        lyricBoxVisible: lyric.visible
+        playListSongs: player.playListByMusic
     }),
     {
         playSong: playerActions.playSong,
@@ -191,22 +188,13 @@ export default class AudioPlayer extends React.PureComponent {
         this.props.toggleLrcBoxVisible();
     };
     render() {
-        const {
-            audioProps,
-            playingSongId,
-            playerState,
-            volume,
-            listRepeatMode,
-            playListSongs,
-            playingSong = {}
-        } = this.props;
+        const { audioProps, playingSongId, playerState, volume, listRepeatMode, playListSongs } = this.props;
         const repeatModeIonClass = this.getRepeatModeClass(listRepeatMode);
         const btnDisabled = !playListSongs.length;
         const mediaUrl = playingSongId && `/media/${playingSongId}/url`;
-        return [
-            <div className={styles['audio-player']} ref={this.playerBoxRef} key="audioPlayerBox">
-                <PlayerThumb data={playingSong} />
-                <div className={styles.controls}>
+        return (
+            <>
+                <div className={styles['audio-player']} ref={this.playerBoxRef} key="audioPlayerBox">
                     <div className={classNames(styles['player-controls'], styles['left-controls'])}>
                         <button
                             className={styles['control-button']}
@@ -269,15 +257,15 @@ export default class AudioPlayer extends React.PureComponent {
                             <i className="iconplayer icon-queue" />
                         </button>
                     </div>
-                    <audio
-                        {...audioProps}
-                        src={mediaUrl}
-                        loop={listRepeatMode === 'repeatonce'}
-                        ref={this.mediaPlayerRef}
-                    />
                 </div>
-            </div>
-        ];
+                <audio
+                    {...audioProps}
+                    src={mediaUrl}
+                    loop={listRepeatMode === 'repeatonce'}
+                    ref={this.mediaPlayerRef}
+                />
+            </>
+        );
     }
 }
 

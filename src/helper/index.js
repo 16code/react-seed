@@ -13,10 +13,10 @@ export const delay = ms =>
         }, ms);
     });
 
-const $baseFontSize = 1000;
+const viewportWidth = 1200;
 export function px2vw($px) {
     const pixel = $px;
-    const floatNum = (pixel / $baseFontSize) * 100;
+    const floatNum = (pixel / viewportWidth) * 100;
     return `${Math.floor(floatNum * 100) / 100}vw`;
 }
 
