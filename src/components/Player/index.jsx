@@ -209,8 +209,7 @@ export default class AudioPlayer extends React.PureComponent {
                             songId={playingSongId}
                             disabled={playerState === 'pending'}
                             onClick={this.handlePlayBtnClick}
-                            theme="light"
-                            className={styles['play-button']}
+                            theme="dark"
                         />
                         <button
                             className={styles['control-button']}

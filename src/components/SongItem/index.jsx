@@ -11,7 +11,7 @@ function SongItem({ data, size }) {
         <div className={classNames(styles['song-item'])}>
             <figure className={styles['song-thumb']}>
                 <Image src={`${al.picUrl}?param=100y100&quality=60`} size={size} lazyload />
-                <PlayControl songId={songId} />
+                <PlayControl theme="light" songId={songId} inOverlay />
             </figure>
             <div className={styles['song-meta']}>
                 <h4 className={styles.name}>{name}</h4>
