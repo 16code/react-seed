@@ -1,9 +1,9 @@
 .play-control {
-    --size: 36px;
+    --size: 40px;
     --background: rgba(255, 255, 255, 0.86);
     --dark-color: rgba(0, 0, 0, 0.76);
 
-    padding: 0;
+    padding: 2px;
     width: var(--size);
     height: var(--size);
     border: 2px solid var(--color-sky);
@@ -39,17 +39,20 @@
     }
 }
 .pending {
-    width: calc(var(--size) - 4px);
-    height: calc(var(--size) - 4px);
+    width: calc(var(--size) - 8px);
+    height: calc(var(--size) - 8px);
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
     > span {
+        display: inline-block;
         position: absolute;
         border: 2px solid var(--color-sky);
         border-radius: 50%;
         :local {
-            animation: spin 1s cubic-bezier(0, 0.2, 0.8, 1) 30;
+            animation: spin 1.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
         }
         &:nth-child(2) {
             animation-delay: -0.6s;
@@ -64,8 +67,8 @@
         opacity: 1;
     }
     100% {
-        width: calc(var(--size) - 8px);
-        height: calc(var(--size) - 8px);
+        width: 96%;
+        height: 96%;
         opacity: 0;
     }
 }
