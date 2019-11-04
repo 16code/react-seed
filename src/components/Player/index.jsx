@@ -3,6 +3,7 @@ import { formatTime, bindEvents, removeEvents } from 'helper';
 import { PLAYER_STATE } from 'common/constants';
 import { actions as playerActions } from 'reducers/player';
 import { actions as lyricBoxActions } from 'reducers/lyric';
+import { actions as historyBoxActions } from 'reducers/history';
 import PlayControl from 'components/PlayControl';
 import RangeSlider from 'components/RangeSlider';
 import VolumeControl from './Volume';
@@ -22,7 +23,8 @@ import styles from './styles.less';
         playNextOrPrevSong: playerActions.playNextOrPrevSong,
         changeVolume: playerActions.changeVolume,
         changeRepeatMode: playerActions.changeRepeatMode,
-        toggleLrcBoxVisible: lyricBoxActions.toggleVisible
+        toggleLrcBoxVisible: lyricBoxActions.toggleVisible,
+        toggleHistoryVisible: historyBoxActions.toggleVisible
     }
 )
 export default class AudioPlayer extends React.PureComponent {
@@ -35,7 +37,6 @@ export default class AudioPlayer extends React.PureComponent {
             preload: 'auto'
         }
     };
-    state = { playListVisible: false };
     cachedRepaatModeIcons = {};
     events = () => {
         const { changePlayerState } = this.props;
@@ -131,7 +132,7 @@ export default class AudioPlayer extends React.PureComponent {
     };
     // 切换播放列表
     handleTogglePlaylist = () => {
-        this.setState(p => ({ playListVisible: !p.playListVisible }));
+        this.props.toggleHistoryVisible();
     };
     // 播放上一曲下一曲
     handlePlayPrevAndNext = type => {

@@ -3,23 +3,15 @@ export const types = {
     toggleVisible: 'lyric/toggleVisible',
     updateLyric: 'lyric/updateLyric'
 };
-const initialState = { visible: false };
+const initialState = { visible: true };
 export const lyricReducer = createReducer(initialState, {
-    [types.toggleVisible]: toggleVisible,
-    [types.updateLyric]: updateLyric
+    [types.toggleVisible]: toggleVisible
 });
 
 export const actions = {
-    toggleVisible: payload => ({ type: types.lyricBox, payload })
+    toggleVisible: () => ({ type: types.toggleVisible })
 };
 
-function toggleVisible(state, action) {
-    return { visible: typeof action.payload !== 'undefined' ? action.payload : !state.visible };
-}
-
-function updateLyric(state, action) {
-    return {
-        ...state,
-        ...action.payload
-    };
+function toggleVisible(state) {
+    return { visible: !state.visible };
 }

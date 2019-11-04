@@ -2,17 +2,20 @@ import { createReducer } from 'helper';
 export const types = {
     getHistory: 'history/get',
     getHistorySucceed: 'history/getSucceed',
-    getHistoryFailed: 'history/getFailed'
+    getHistoryFailed: 'history/getFailed',
+    toggleVisible: 'history/toggleVisible'
 };
-const initialState = { fetching: false, list: [] };
+const initialState = { fetching: false, visible: false, list: [] };
 export const historyReducer = createReducer(initialState, {
     [types.getHistory]: getHistory,
     [types.getHistorySucceed]: getHistorySucceed,
-    [types.getHistoryFailed]: getHistoryFailed
+    [types.getHistoryFailed]: getHistoryFailed,
+    [types.toggleVisible]: toggleVisible
 });
 
 export const actions = {
-    getHistory: payload => ({ type: types.getHistory, payload })
+    getHistory: payload => ({ type: types.getHistory, payload }),
+    toggleVisible: () => ({ type: types.toggleVisible })
 };
 
 function getHistorySucceed(state, action) {
@@ -29,4 +32,7 @@ function getHistory(state) {
         ...state,
         fetching: true
     };
+}
+function toggleVisible(state) {
+    return { ...state, visible: !state.visible };
 }
