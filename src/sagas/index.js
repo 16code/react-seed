@@ -5,7 +5,7 @@ import { historySaga } from './history';
 
 function* initialSaga() {
     try {
-        yield delay(1000000);
+        yield delay(3000);
         yield put({ type: playerTypes.playSong, payload: { id: 1396568325 } });
     } catch (error) {
         console.log(error);

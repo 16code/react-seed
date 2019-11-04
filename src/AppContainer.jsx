@@ -25,7 +25,7 @@ function BasicLayout() {
             <GlobalLayout aside={aside} header={header} footer={footer}>
                 <Views />
             </GlobalLayout>
-            <div id="blur-effect-image" />
+            <div id="lyricBox" />
         </>
     );
 }
