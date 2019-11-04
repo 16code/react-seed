@@ -18,7 +18,7 @@ export function* loadSongData(action) {
                 data = yield call(getSongData, id);
                 yield call(DB.history.put, data);
             }
-            yield put({ type: songTypes.getInfoSuccess, payload: data });
+            yield put({ type: songTypes.getInfoSucceed, payload: data });
         }
     } catch (error) {
         console.error(error);

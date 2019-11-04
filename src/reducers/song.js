@@ -1,7 +1,7 @@
 import { createReducer } from 'helper';
 export const types = {
     getInfo: 'playingSong/getInfo',
-    getInfoSuccess: 'playingSong/getInfoSuccess',
+    getInfoSucceed: 'playingSong/getInfoSucceed',
     getInfoFailed: 'playingSong/getInfoFailed'
 };
 const initialState = {
@@ -9,7 +9,7 @@ const initialState = {
 };
 export const playingSongReducer = createReducer(initialState, {
     [types.getInfo]: getSongInfo,
-    [types.getInfoSuccess]: getSongInfoSuccess,
+    [types.getInfoSucceed]: getSongInfoSuccess,
     [types.getInfoFailed]: getInfoFailed
 });
 function getSongInfo(state) {
