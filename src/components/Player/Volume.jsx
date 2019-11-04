@@ -1,4 +1,4 @@
-import throttle from 'lodash/throttle';
+import throttle from 'lodash/debounce';
 import RangeSlider from 'components/RangeSlider';
 
 import styles from './volume.less';
@@ -9,16 +9,26 @@ export default class VolumeControl extends React.PureComponent {
     };
     componentDidMount() {
         this.barBtnElement = this.barBtnElementRef.current;
-        this.onChangeDebounce = throttle(value => this.props.onChange(value), 200);
+        this.onChangeDebounce = throttle(this.props.onChange, 200);
     }
     componentWillUnmount() {
         this.onChangeDebounce && this.onChangeDebounce.cancel;
     }
-    handleMouseLeave = () => {
-        this.setState({ visible: false });
+    hideVolumeCtrl = () => {
+        this.setState({ visible: false }, () => {
+            document.removeEventListener('click', this.hideVolumeCtrl);
+        });
     };
-    handleToggleVolumeCtrl = () => {
-        this.setState(prevState => ({ visible: !prevState.visible }));
+    handleToggleVolumeCtrl = event => {
+        event.stopPropagation();
+        this.setState(
+            prevState => ({ visible: !prevState.visible }),
+            () => {
+                if (this.state.visible) {
+                    document.addEventListener('click', this.hideVolumeCtrl);
+                }
+            }
+        );
     };
     handleProgressMoved = ({ eventType, origin }) => {
         const inEvent = eventType === 'dragMove' || 'dragEnd';
@@ -41,7 +51,7 @@ export default class VolumeControl extends React.PureComponent {
         const { volume } = this.props;
         const volumeBtnClassStr = this.getIconClass(volume);
         return (
-            <div className={wraperClass} onMouseLeave={this.handleMouseLeave}>
+            <div className={wraperClass}>
                 <button
                     className={classNames(styles['control-button'], styles['volume-btn'])}
                     onClick={this.handleToggleVolumeCtrl}

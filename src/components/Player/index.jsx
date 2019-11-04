@@ -112,8 +112,8 @@ export default class AudioPlayer extends React.PureComponent {
     };
     // 音量调整
     handleVolumeChange = value => {
-        this.props.changeVolume(value);
         this.updateVolume(value);
+        this.props.changeVolume(value);
     };
     // 进度条拖拽回调
     handleProgressMoved = ({ eventType, origin: percentageNum }) => {
