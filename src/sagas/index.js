@@ -1,12 +1,17 @@
-import { all, put, fork, delay } from 'redux-saga/effects';
-import { types as playerTypes } from 'reducers/player';
+import { all, fork, delay, put } from 'redux-saga/effects';
+import { types as historyTypes } from 'reducers/history';
 import { loadMediaSourceSaga } from './loadMediaSource';
 import { historySaga } from './history';
 
 function* initialSaga() {
     try {
-        yield delay(3000);
-        yield put({ type: playerTypes.playSong, payload: { id: 1396568325 } });
+        yield delay(1000);
+        yield put({
+            type: historyTypes.getHistory,
+            payload: {
+                isInitGet: true
+            }
+        });
     } catch (error) {
         console.log(error);
     }

@@ -6,6 +6,7 @@ import { actions as lyricBoxActions } from 'reducers/lyric';
 import { actions as historyBoxActions } from 'reducers/history';
 import PlayControl from 'components/PlayControl';
 import RangeSlider from 'components/RangeSlider';
+import LyricModal from 'components/Lyric';
 import VolumeControl from './Volume';
 import styles from './styles.less';
 
@@ -258,6 +259,7 @@ export default class AudioPlayer extends React.PureComponent {
                         </button>
                     </div>
                 </div>
+                <LyricModal />
                 <audio
                     {...audioProps}
                     src={mediaUrl}

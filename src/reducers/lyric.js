@@ -3,7 +3,7 @@ export const types = {
     toggleVisible: 'lyric/toggleVisible',
     updateLyric: 'lyric/updateLyric'
 };
-const initialState = { visible: true };
+const initialState = { visible: false };
 export const lyricReducer = createReducer(initialState, {
     [types.toggleVisible]: toggleVisible
 });

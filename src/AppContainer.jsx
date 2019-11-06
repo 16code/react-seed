@@ -25,7 +25,6 @@ function BasicLayout() {
             <GlobalLayout aside={aside} header={header} footer={footer}>
                 <Views />
             </GlobalLayout>
-            <div id="lyricBox" />
         </>
     );
 }
