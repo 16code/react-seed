@@ -24,6 +24,7 @@ function BasicLayout() {
         <>
             <GlobalLayout aside={aside} header={header} footer={footer}>
                 <Views />
+                <audio id="audio" controls={false} preload="auto" />
             </GlobalLayout>
         </>
     );
