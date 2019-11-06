@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import Image from 'components/Image';
+import { actions } from 'reducers/lyric';
 import { SingerLink } from 'components/Links';
 import styles from './index.less';
 
-function PlayCurrent({ data, onClick, lyricModalVisible, isPlaying }) {
+function PlayCurrent({ data, onClick, lyricModalVisible, isPlaying, toggleVisible }) {
     const { album = {}, name, artist } = data || {};
     const iconCls = lyricModalVisible ? 'icon-suoxiao' : 'icon-bianda';
     const imgProps = {
@@ -19,7 +20,7 @@ function PlayCurrent({ data, onClick, lyricModalVisible, isPlaying }) {
         >
             <figure>
                 <Image {...imgProps} />
-                <button className={styles['btn-handle']}>
+                <button onClick={toggleVisible} className={styles['btn-handle']}>
                     <i className={`iconfont ${iconCls}`} />
                 </button>
             </figure>
@@ -35,8 +36,13 @@ function PlayCurrent({ data, onClick, lyricModalVisible, isPlaying }) {
     );
 }
 
-export default connect(({ lyric, playingSong, player }) => ({
-    data: playingSong,
-    isPlaying: !player.isUnplayed && player.playerState !== 'paused',
-    lyricBoxVisible: lyric.visible
-}))(PlayCurrent);
+export default connect(
+    ({ lyric, playingSong, player }) => ({
+        data: playingSong,
+        isPlaying: !player.isUnplayed && player.playerState !== 'paused',
+        lyricBoxVisible: lyric.visible
+    }),
+    {
+        toggleVisible: actions.toggleVisible
+    }
+)(PlayCurrent);
