@@ -29,15 +29,8 @@ import styles from './styles.less';
     }
 )
 export default class AudioPlayer extends React.PureComponent {
-    mediaPlayerRef = React.createRef();
     playerBoxRef = React.createRef();
     playerProgressBarRef = React.createRef();
-    static defaultProps = {
-        audioProps: {
-            controls: false,
-            preload: 'auto'
-        }
-    };
     cachedRepaatModeIcons = {};
     events = () => {
         const { changePlayerState } = this.props;
@@ -57,7 +50,7 @@ export default class AudioPlayer extends React.PureComponent {
         };
     };
     componentDidMount() {
-        this.mediaPlayer = this.mediaPlayerRef.current;
+        this.mediaPlayer = document.getElementById('audio');
         this.playerProgressBar = this.playerProgressBarRef.current.progressBar;
         const playerBox = this.playerBoxRef.current;
         this.currentTimeElement = playerBox.querySelector('#audio-current-time');
@@ -189,11 +182,20 @@ export default class AudioPlayer extends React.PureComponent {
     handleToggleLrcBox = () => {
         this.props.toggleLrcBoxVisible();
     };
+    setupAudio = config => {
+        for (const key in config) {
+            if (Object.prototype.hasOwnProperty.call(config, key)) {
+                const val = config[key];
+                if (val) this.mediaPlayer[key] = val;
+            }
+        }
+    };
     render() {
-        const { audioProps, playingSongId, playerState, volume, listRepeatMode, playListSongs } = this.props;
+        const { playingSongId, playerState, volume, listRepeatMode, playListSongs } = this.props;
         const repeatModeIonClass = this.getRepeatModeClass(listRepeatMode);
         const btnDisabled = !playListSongs.length;
         const mediaUrl = playingSongId && `/media/${playingSongId}/url`;
+        this.setupAudio({ src: mediaUrl, loop: listRepeatMode === 'repeatonce' });
         return (
             <>
                 <div className={styles['audio-player']} ref={this.playerBoxRef} key="audioPlayerBox">
@@ -260,12 +262,6 @@ export default class AudioPlayer extends React.PureComponent {
                     </div>
                 </div>
                 <LyricModal />
-                <audio
-                    {...audioProps}
-                    src={mediaUrl}
-                    loop={listRepeatMode === 'repeatonce'}
-                    ref={this.mediaPlayerRef}
-                />
             </>
         );
     }
