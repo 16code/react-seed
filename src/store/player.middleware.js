@@ -2,13 +2,13 @@ import { types, hasSongInPlaylist } from 'reducers/player';
 export default function playerMiddleware() {
     return ({ dispatch, getState }) => next => action => {
         if (!action || action.type !== types.changePlayerState) return next(action);
-        const { player } = getState();
+        const { player, playHistory } = getState();
         // shuffle , repeat
         if (player.playerState !== 'stoped') return next(action);
-        const { listRepeatMode, playListByMusic, playingSongId } = player;
-        if (listRepeatMode === 'repeat' && playListByMusic.length > 1) {
-            const offst = hasSongInPlaylist(playingSongId, playListByMusic);
-            const nextSong = playListByMusic[offst + 1] || playListByMusic[0];
+        const { listRepeatMode, playingSongId } = player;
+        if (listRepeatMode === 'repeat' && playHistory.list.length > 1) {
+            const offst = hasSongInPlaylist(playingSongId, playHistory.list);
+            const nextSong = playHistory.list[offst + 1] || playHistory.list[0];
             if (nextSong.id) {
                 return dispatch({
                     type: types.playSong,
@@ -16,7 +16,7 @@ export default function playerMiddleware() {
                 });
             }
         } else if (listRepeatMode === 'shuffle') {
-            const nextSong = getNextSong(playingSongId, playListByMusic);
+            const nextSong = getNextSong(playingSongId, playHistory.list);
             if (nextSong.id) {
                 return dispatch({
                     type: types.playSong,
