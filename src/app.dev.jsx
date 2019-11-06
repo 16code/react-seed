@@ -7,6 +7,8 @@ setConfig({
     trackTailUpdates: false,
     pureRender: true
 });
+const whyDidYouRender = require('@welldone-software/why-did-you-render/dist/no-classes-transpile/umd/whyDidYouRender');
+whyDidYouRender(React);
 class HotContainer extends React.PureComponent {
     render() {
         return <AppContainer />;

@@ -6,6 +6,7 @@ import { store } from 'store/configureStore';
 import AudioPlayer from 'components/Player';
 import AppMenu from 'components/Menu';
 import PlayCurrent from 'components/PlayCurrent';
+import LyricModal from 'components/Lyric';
 import { getMenuData } from 'common/menu';
 import Views from 'views';
 
@@ -25,6 +26,7 @@ function BasicLayout() {
             <GlobalLayout aside={aside} header={header} footer={footer}>
                 <Views />
             </GlobalLayout>
+            <LyricModal />
         </>
     );
 }
