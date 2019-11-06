@@ -1,6 +1,7 @@
 import { Route } from 'react-router-dom';
 const dashboard = React.lazy(() => import('./Dashboard'));
 const Recommend = React.lazy(() => import('./Music/Recommend'));
+const Search = React.lazy(() => import('./Music/Search'));
 const routes = [
     {
         key: 'dashboard',
@@ -15,6 +16,13 @@ const routes = [
         strict: false,
         path: '/music/recommend',
         component: Recommend
+    },
+    {
+        key: 'search',
+        exact: true,
+        strict: false,
+        path: '/music/new',
+        component: Search
     }
 ];
 
