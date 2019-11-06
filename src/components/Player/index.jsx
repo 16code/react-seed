@@ -31,6 +31,7 @@ import styles from './styles.less';
 export default class AudioPlayer extends React.PureComponent {
     playerBoxRef = React.createRef();
     playerProgressBarRef = React.createRef();
+    mediaPlayer = document.getElementById('audio');
     cachedRepaatModeIcons = {};
     events = () => {
         const { changePlayerState } = this.props;
@@ -50,12 +51,12 @@ export default class AudioPlayer extends React.PureComponent {
         };
     };
     componentDidMount() {
-        this.mediaPlayer = document.getElementById('audio');
         this.playerProgressBar = this.playerProgressBarRef.current.progressBar;
         const playerBox = this.playerBoxRef.current;
         this.currentTimeElement = playerBox.querySelector('#audio-current-time');
         this.totalTimeElement = playerBox.querySelector('#audio-duration-titme');
         this.preloadedBarElement = playerBox.querySelector('#audio-preload-bar');
+        this.mediaPlayer.controls = false;
         bindEvents(this.mediaPlayer, this.events());
         this.updateVolume(this.props.volume);
     }
@@ -63,9 +64,11 @@ export default class AudioPlayer extends React.PureComponent {
         removeEvents(this.mediaPlayer, this.events());
     }
     componentDidUpdate(prevProps) {
-        const { playerState, playingSongId } = this.props;
+        const { playerState, playingSongId, listRepeatMode } = this.props;
         if (!prevProps.playerState || prevProps.playerState === playerState) return;
         if (prevProps.playingSongId !== playingSongId) {
+            const isloop = listRepeatMode === 'repeatonce';
+            this.setupAudio(playingSongId, isloop);
             this.doPause();
         }
 
@@ -182,20 +185,18 @@ export default class AudioPlayer extends React.PureComponent {
     handleToggleLrcBox = () => {
         this.props.toggleLrcBoxVisible();
     };
-    setupAudio = config => {
-        for (const key in config) {
-            if (Object.prototype.hasOwnProperty.call(config, key)) {
-                const val = config[key];
-                if (val) this.mediaPlayer[key] = val;
-            }
+    setupAudio = (nextId, isLoop) => {
+        const dataset = this.mediaPlayer.dataset;
+        if (nextId && +dataset.songid !== nextId) {
+            dataset.songid = nextId;
+            this.mediaPlayer.src = `/media/${nextId}/url`;
         }
+        this.mediaPlayer.loop = isLoop;
     };
     render() {
         const { playingSongId, playerState, volume, listRepeatMode, playListSongs } = this.props;
         const repeatModeIonClass = this.getRepeatModeClass(listRepeatMode);
         const btnDisabled = !playListSongs.length;
-        const mediaUrl = playingSongId && `/media/${playingSongId}/url`;
-        this.setupAudio({ src: mediaUrl, loop: listRepeatMode === 'repeatonce' });
         return (
             <>
                 <div className={styles['audio-player']} ref={this.playerBoxRef} key="audioPlayerBox">
