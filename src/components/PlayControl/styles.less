@@ -6,7 +6,7 @@
     padding: 2px;
     width: var(--size);
     height: var(--size);
-    border: 2px solid var(--color-sky);
+    border: 2px solid var(--player-control-color);
     cursor: pointer;
     svg {
         fill: var(--dark-color);
@@ -29,7 +29,7 @@
     }
     &.dark {
         svg {
-            fill: var(--color-sky);
+            fill: var(--player-control-color);
         }
     }
     &.light {
@@ -49,7 +49,7 @@
     > span {
         display: inline-block;
         position: absolute;
-        border: 2px solid var(--color-sky);
+        border: 2px solid var(--player-control-color);
         border-radius: 50%;
         :local {
             animation: spin 1.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;

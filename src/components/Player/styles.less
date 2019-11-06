@@ -1,11 +1,19 @@
-@progress-bar-color: #5352ed;
-
+.dark {
+    --border-color-base: transparent;
+    --player-control-color: rgb(150, 160, 180);
+    --progress-slider-color: var(--player-control-color);
+    --progress-pin-color: var(--progress-slider-color);
+    --progress-slider-bg: rgb(77, 78, 102);
+    --player-preload-bar-color: rgb(90, 92, 126);
+    --footer-background: rgba(0, 0, 0, 0.2);
+}
 .audio-player {
     height: var(--layout-player-height);
     display: grid;
     grid-template-columns: var(--layout-sider-width) 1fr 140px;
     align-items: center;
     grid-gap: var(--box-padding-sm);
+    color: var(--player-control-color);
     .player-time {
         font-family: var(--font-family-number);
         font-style: normal;
@@ -13,6 +21,7 @@
         font-size: 12px;
         line-height: 1;
         contain: paint;
+        color: inherit;
         &.current {
             padding-right: 15px;
         }
@@ -21,7 +30,7 @@
         }
     }
     .bar-preload {
-        background: lighten(@progress-bar-color, 24%);
+        background: var(--player-preload-bar-color);
         display: block;
         position: absolute;
         left: 0;
@@ -39,7 +48,7 @@
         align-items: center;
     }
     .player-controls {
-        color: var(--player-color);
+        color: var(--player-control-color);
         text-align: center;
         width: 100%;
         &.left-controls {
