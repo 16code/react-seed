@@ -60,7 +60,7 @@ export default class AudioEffect {
         if (visible) this.start();
     };
     updateAnimations = () => {
-        console.log('updateAnimations');
+        // console.log('updateAnimations');
         if (this.isPlaying && this.inVisible) {
             this.startTimer();
         } else {
