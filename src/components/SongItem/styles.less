@@ -23,6 +23,12 @@
             opacity: 1;
         }
     }
+    &.disabled {
+        color: var(--text-color-disabled);
+        .singers {
+            color: var(--text-color-disabled);
+        }
+    }
 }
 .song-meta,
 .song-extra,
@@ -49,13 +55,13 @@
     .singers {
         line-height: 1;
         padding-top: 2px;
+        color: var(--text-color-secondary);
         span {
             &:extend(.ellipsis);
         }
-
         a {
             display: inline-block;
-            color: var(--text-color-secondary);
+            color: inherit;
             font-size: var(--font-size-sm);
             & + a {
                 padding-left: 5px;

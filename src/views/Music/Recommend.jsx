@@ -1,11 +1,14 @@
 import SongList from 'components/SongList';
 import Box from 'components/Box';
 import { withRequest } from 'hooks/useRequest';
-function theRequest() {
+function theRequest(props) {
+    const searchParams = new URLSearchParams(props.location.search);
+    const id = searchParams.get('id') || 5;
+    const limit = searchParams.get('size') || 30;
     return {
         url: '/api/songs/top',
         requestConfig: {
-            params: { limit: 20, id: 0 }
+            params: { limit, id }
         },
         initialData: []
     };

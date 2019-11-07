@@ -53,7 +53,8 @@ function PlayControl({
 }) {
     const btnPlayState = isCurrentPlay ? playerState : 'stoped';
     const ctrlClass = classNames(styles['play-control'], className, styles[`${theme}`], {
-        [styles['in-overlay']]: inOverlay
+        [styles['in-overlay']]: inOverlay,
+        [styles.disabled]: disabled
     });
     React.useEffect(() => {
         const dom = document.getElementById(`music-${songId}`);

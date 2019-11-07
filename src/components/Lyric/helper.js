@@ -41,12 +41,12 @@ export default class Lyric {
         }
     }
     updateScrollBox(pos, index) {
-        const { container, scrollBox } = this.options;
+        const { container, scrollBox, lrcOnClassName = 'lrc-on' } = this.options;
         const posRem = `translate3d(0, ${px2vw(pos)}, 0)`;
         scrollBox.style.cssText = `; transform: ${posRem}; -webkit-transform: ${posRem};`;
         if (index) {
-            container.getElementsByClassName('lrc-on')[0].classList.remove('lrc-on');
-            container.getElementsByTagName('li')[index].classList.add('lrc-on');
+            container.querySelector(`.${lrcOnClassName}`).classList.remove(lrcOnClassName);
+            container.getElementsByTagName('li')[index].classList.add(lrcOnClassName);
         }
     }
     calcScrollOffset(lrcLen, currentIndex, index) {
@@ -64,12 +64,10 @@ export default class Lyric {
     createLrc(data) {
         const oFrag = document.createDocumentFragment();
         for (let i = 0; i < data.length; i++) {
-            const op = document.createElement('li');
-            op.innerText = data[i][1];
-            if (i === 0) {
-                op.classList.add('lrc-on');
-            }
-            oFrag.appendChild(op);
+            const li = document.createElement('li');
+            li.innerText = data[i][1];
+            if (i === 0) li.classList.add(this.options.lrcOnClassName || 'lrc-on');
+            oFrag.appendChild(li);
         }
         return oFrag;
     }
@@ -112,9 +110,4 @@ export default class Lyric {
         }
         return larArray.filter(item => item[1]).sort((a, b) => a[0] - b[0]);
     }
-}
-function px2vw($px) {
-    const $baseFontSize = 1024;
-    const floatNum = ($px / $baseFontSize) * 100;
-    return `${Math.floor(floatNum * 100) / 100}vw`;
 }
