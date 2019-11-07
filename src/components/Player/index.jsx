@@ -10,12 +10,13 @@ import VolumeControl from './Volume';
 import styles from './styles.less';
 
 @connect(
-    ({ player }) => ({
+    ({ player, lyric, playHistory }) => ({
         volume: player.volume,
+        lyricVisible: lyric.visible,
         playerState: player.playerState,
         playingSongId: player.playingSongId,
         listRepeatMode: player.listRepeatMode,
-        playListSongs: player.playListByMusic
+        playHistory: playHistory.list
     }),
     {
         playSong: playerActions.playSong,
@@ -131,7 +132,7 @@ export default class AudioPlayer extends React.PureComponent {
         this.props.toggleHistoryVisible();
     };
     // 播放上一曲下一曲
-    handlePlayPrevAndNext = type => {
+    playNextOrPrevSong = type => {
         this.props.playNextOrPrevSong(type);
     };
     onPlayerTimeUpdate = () => {
@@ -193,19 +194,21 @@ export default class AudioPlayer extends React.PureComponent {
         this.mediaPlayer.loop = isLoop;
     };
     render() {
-        const { playingSongId, playerState, volume, listRepeatMode, playListSongs } = this.props;
+        const { playingSongId, playerState, volume, listRepeatMode, playHistory, lyricVisible } = this.props;
         const repeatModeIonClass = this.getRepeatModeClass(listRepeatMode);
-        const btnDisabled = !playListSongs.length;
+        const btnDisabled = !playHistory.length;
+        const method = lyricVisible ? 'add' : 'remove';
+        document.body.classList[method](styles.dark);
         return (
             <>
-                <div className={styles['audio-player']} ref={this.playerBoxRef} key="audioPlayerBox">
+                <div className={classNames(styles['audio-player'])} ref={this.playerBoxRef} key="audioPlayerBox">
                     <div className={classNames(styles['player-controls'], styles['left-controls'])}>
                         <button
                             className={styles['control-button']}
                             title="上一曲"
                             role="button"
                             disabled={btnDisabled}
-                            onClick={() => this.handlePlayPrevAndNext('prev')}
+                            onClick={() => this.playNextOrPrevSong('prev')}
                         >
                             <i className="iconplayer icon-skip-back" />
                         </button>
@@ -220,7 +223,7 @@ export default class AudioPlayer extends React.PureComponent {
                             title="下一曲"
                             role="button"
                             disabled={btnDisabled}
-                            onClick={() => this.handlePlayPrevAndNext('next')}
+                            onClick={() => this.playNextOrPrevSong('next')}
                         >
                             <i className="iconplayer icon-skip-forward" />
                         </button>
