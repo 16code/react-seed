@@ -1,12 +1,14 @@
 import { bindEvents, removeEvents } from 'helper';
+import Particle from 'helper/Particle';
 import defaultCoverImg from 'assets/default.jpg';
 const PI = Math.PI;
 const dpr = window.devicePixelRatio || 1;
-
 const accuracy = 128;
-const TIME = 35;
-class AudioEffect {
+
+export default class AudioEffect {
     constructor(audio, canvas) {
+        this.audio = audio;
+        this.canvas = canvas;
         this.inVisible = false;
         this.animationId = null;
         this.particles = [];
@@ -26,67 +28,57 @@ class AudioEffect {
         };
         this.init(audio, canvas);
     }
-    init = (audio, canvas) => {
-        this.audio = audio;
-        this.canvas = canvas;
-
+    init = () => {
         this.setupAudio();
         this.setupCanvas();
-        this.restoreDelay();
         this.setupGradient();
     };
     get audioEvents() {
         return {
-            play: this.start,
-            pause: this.stop
+            play: () => {
+                this.start();
+            },
+            pause: () => {
+                console.log('audio paused');
+            },
+            ended: () => {
+                console.log('audio ended');
+            }
         };
     }
-    stop = () => {
-        this.restoreDelay();
-        this.updateDelay();
-    };
     start = () => {
-        this.restoreDelay();
-        if (!this.audio.paused || this.analyser.context.state === 'suspended') {
-            this.freqByteData = new Uint8Array(this.analyser.frequencyBinCount);
-            this.analyser.context.resume();
-            this.updateAnimations();
-        }
+        this.freqByteData = new Uint8Array(this.analyser.frequencyBinCount);
+        this.analyser.context.resume();
+        this.updateAnimations();
     };
-    updateSongInfo = nextSong => {
+    updateSongInfo = (nextSong, visible) => {
+        this.inVisible = visible;
         if (this.plyingSongInfo.id !== nextSong.id) {
             this.plyingSongInfo = nextSong;
             this.preloadCoverImg(nextSong.coverImg);
         }
-    };
-    updateVisible = visible => {
-        this.inVisible = visible;
-        if (this.inVisible === false) {
-            this.stop();
-        } else {
-            this.start();
-        }
-    };
-    clearTimers = () => {
-        if (this.delayTimerId) window.cancelAnimationFrame(this.delayTimerId);
-        if (this.animationId) window.cancelAnimationFrame(this.animationId);
-        this.delayTimerId = null;
-        this.animationId = null;
-    };
-    updateDelay = () => {
-        this.delayTimerId = window.requestAnimationFrame(this.updateDelay);
-        if (this.clearCanvasDelay <= 0) {
-            this.clearTimers();
-        }
-        this.clearCanvasDelay--;
+        if (visible) this.start();
     };
     updateAnimations = () => {
-        this.analyser.getByteFrequencyData(this.freqByteData);
-        this.effects(rebuildData(this.freqByteData));
-        if (!this.inVisible) return;
-        this.animationId = window.requestAnimationFrame(this.updateAnimations);
+        console.log('updateAnimations');
+        if (this.isPlaying && this.inVisible) {
+            this.startTimer();
+        } else {
+            const isEmpty = !this.freqData || !this.freqData.some(a => a > 0);
+            if (isEmpty) {
+                this.clearTimers();
+            } else if (this.inVisible) {
+                this.startTimer();
+            }
+        }
+        this.animate();
     };
-    effects = freqBytseData => {
+    animate = () => {
+        this.analyser.getByteFrequencyData(this.freqByteData);
+        this.freqData = rebuildData(this.freqByteData);
+        this.render(this.freqData);
+    };
+    render = freqBytseData => {
         const audio = this.audio;
         const ctx2d = this.ctx2d;
         const option = this.option;
@@ -235,7 +227,7 @@ class AudioEffect {
         // setup analyser
         this.analyser.minDecibels = -90;
         this.analyser.maxDecibels = -20;
-        this.analyser.smoothingTimeConstant = 0.65;
+        this.analyser.smoothingTimeConstant = 0.88;
         this.analyser.fftSize = 256;
     };
     setupCanvas = () => {
@@ -253,18 +245,23 @@ class AudioEffect {
         this.ctx2d.scale(dpr, dpr);
         this.ctx2d.globalCompositeOperation = 'lighter';
     };
-    restoreDelay = () => {
-        this.clearCanvasDelay = TIME;
+    get isPlaying() {
+        return !this.audio.paused;
+    }
+    clearTimers = () => {
+        this.particles = [];
+        this.animationId && window.cancelAnimationFrame(this.animationId);
+        this.animationId = null;
+    };
+    startTimer = () => {
+        this.animationId = window.requestAnimationFrame(this.updateAnimations);
     };
     destroy = () => {
         this.particles = [];
-        this.plyingSongInfo = {};
         this.ctx2d.clearRect(0, 0, this.canvasSize, this.canvasSize);
         removeEvents(this.audio, this.audioEvents);
     };
 }
-
-export default AudioEffect;
 
 function rebuildData(freqByteData) {
     const output = [].concat(
@@ -274,47 +271,4 @@ function rebuildData(freqByteData) {
         Array.from(freqByteData).splice(0, accuracy / 2)
     );
     return output;
-}
-
-function Particle(opt) {
-    this.x = opt.x || 0;
-    this.y = opt.y || 0;
-    this.vx = opt.vx || Math.random() - 0.5;
-    this.vy = opt.vy || Math.random() - 0.5;
-    this.size = opt.size || Math.random() * 3;
-    this.life = opt.life || Math.random() * 5;
-
-    this.dead = false;
-
-    this.alpha = 1;
-    this.rotate = 0;
-    this.color = opt.color || 'rgba(244,244,244,.9)';
-
-    this.update = update;
-    this.render = render;
-    // return this;
-}
-
-function update(ctx) {
-    this.x += this.vx;
-    this.y += this.vy;
-
-    this.life -= 0.01;
-    this.alpha -= 0.003;
-    this.rotate += (Math.random() * 0.02) - 0.01; // prettier-ignore
-    if (this.life < 0) {
-        this.dead = true;
-        this.alpha = 0;
-        return;
-    }
-    this.render(ctx);
-}
-
-function render(ctx) {
-    const dot = this;
-    ctx.fillStyle = dot.color;
-    ctx.beginPath();
-    ctx.globalAlpha = dot.alpha;
-    ctx.arc(dot.x, dot.y, dot.size, 0, Math.PI * 2);
-    ctx.fill();
 }
