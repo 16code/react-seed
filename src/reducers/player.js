@@ -21,7 +21,6 @@ const initialState = {
 
 export const playerReducer = createReducer(initialState, {
     [types.playSong]: handlePlaySong,
-    [types.playNextOrPrevSong]: handlePlayNextOrPrevSong,
     [types.changePlayerState]: handleChangePlayerState,
     [types.playerChangeVolume]: handleChangeVolume,
     [types.playerChangeRepeatMode]: handleChangeRepeatMode
@@ -42,25 +41,13 @@ function handlePlaySong(state, action) {
     return { ...state, ...adjustState };
 }
 // 上一曲 下一曲
-function handlePlayNextOrPrevSong(state, action) {
-    const { playListByMusic, playingSongId } = state;
-    const currentMusicOffset = hasSongInPlaylist(playingSongId, playListByMusic);
-    const fallbackPos = action.payload === 'next' ? 0 : playListByMusic.length - 1;
-    const nextSongPos = action.payload === 'next' ? currentMusicOffset + 1 : currentMusicOffset - 1;
-    const nextSong = playListByMusic[nextSongPos] ? playListByMusic[nextSongPos] : playListByMusic[fallbackPos];
-    if (nextSong && nextSong.id && nextSong.id !== playingSongId) {
-        return { ...state, playingSongId: nextSong.id, playerState: PLAYER_STATE.PENDING };
-    }
-    return state;
-}
-
 function handleChangePlayerState(state, action) {
     return { ...state, playerState: action.payload };
 }
 
 // 添加到播放列表
-export function hasSongInPlaylist(checkID, songs) {
-    return songs.findIndex(item => item.id === checkID);
+export function hasSongInPlaylist(id, list = []) {
+    return list.findIndex(item => item.id === id);
 }
 
 // 调整播放器音量
