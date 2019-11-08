@@ -37,8 +37,6 @@ export default class Search extends React.PureComponent {
         this.autocompleteSearchThrottled(v);
     };
     render() {
-        // this.props.onSearch(1313131);
-
         const data = this.props.response.data;
         return (
             <Box title="搜索歌曲">
