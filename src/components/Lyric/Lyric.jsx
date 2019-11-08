@@ -18,13 +18,13 @@ export default class LyricBox extends React.PureComponent {
             lrcOnClassName: styles['lrc-on']
         });
         this.audio = document.getElementById('audio');
-        this.addEvents();
         if (visible && (data && data !== '')) {
+            this.addEvents();
             this.lrc.setOption({ lrcData: LyricHelper.parseLyric(data.lyric) });
         }
     }
     componentDidUpdate() {
-        const { data } = this.props;
+        const { data, visible } = this.props;
         const currentLrcId = this.lrc.getCurrentLrcId();
         if (!currentLrcId || currentLrcId !== data.id) {
             if (data && data !== '') {
@@ -33,6 +33,11 @@ export default class LyricBox extends React.PureComponent {
                     id: data.id
                 });
             }
+        }
+        if (visible) {
+            this.addEvents();
+        } else {
+            this.removeEvents();
         }
     }
     componentWillUnmount() {

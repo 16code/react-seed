@@ -246,8 +246,8 @@ export default class AudioEffect {
         this.animationId = window.requestAnimationFrame(this.updateAnimations);
     };
     destroy = () => {
-        this.particles.length = 0;
         this.ctx2d.clearRect(0, 0, this.canvasSize, this.canvasSize);
+        this.clearTimers();
         emitter.off('play', this.start);
     };
 }
