@@ -17,7 +17,7 @@ function LyricWrapper({ playingSong, visible, toggleVisible }) {
         visualizer.updateSongInfo(
             {
                 fetching: playingSong.fetching,
-                coverImg: picUrl ? `${picUrl}?param=440y440&&quality=80` : null,
+                coverImg: picUrl ? `${picUrl}?param=180y180&quality=60` : null,
                 id: playingSong.id
             },
             visible
@@ -33,7 +33,9 @@ function LyricWrapper({ playingSong, visible, toggleVisible }) {
             })}
         >
             <figure
-                style={{ backgroundImage: playingSong.blur && `url(/media/${playingSong.blur}/blur?quality=50)` }}
+                style={{
+                    backgroundImage: playingSong.blur && `url(/media/${playingSong.blur}/blur?param=800y560&quality=50)`
+                }}
             />
             <header className={styles['meta-title']}>
                 <div className={styles['meta-left']}>

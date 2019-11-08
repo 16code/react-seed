@@ -1,4 +1,4 @@
-import { bindEvents, removeEvents } from 'helper';
+import { emitter } from 'components/AudioEventEmitter';
 import Particle from 'helper/Particle';
 import defaultCoverImg from 'assets/default.jpg';
 const PI = Math.PI;
@@ -33,20 +33,10 @@ export default class AudioEffect {
         this.setupCanvas();
         this.setupGradient();
     };
-    get audioEvents() {
-        return {
-            play: () => {
-                this.start();
-            },
-            pause: () => {
-                console.log('audio paused');
-            },
-            ended: () => {
-                console.log('audio ended');
-            }
-        };
-    }
     start = () => {
+        // listener audio events
+        emitter.on('play', this.start);
+
         this.freqByteData = new Uint8Array(this.analyser.frequencyBinCount);
         this.analyser.context.resume();
         this.updateAnimations();
@@ -94,7 +84,7 @@ export default class AudioEffect {
         ctx2d.save();
         ctx2d.translate(this.canvasSize / 2, this.canvasSize / 2);
         this.drawCover(progress, circleRadius);
-        this.createParticles();
+        // this.createParticles();
         ctx2d.beginPath();
         freqBytseData.forEach((value, index) => {
             // prettier-ignore
@@ -144,14 +134,17 @@ export default class AudioEffect {
         ctx2d.stroke();
         ctx2d.clip();
         const drawSize = circleRadius * 2;
-        let sx = -circleRadius;
-        const sy = -circleRadius;
-        if (img.width / img.height !== 1) {
-            const croppedImgWidth = (circleRadius * 2 * (img.width - img.height)) / img.height;
-            // prettier-ignore
-            sx = sx - (croppedImgWidth / 2);
-        }
-        ctx2d.drawImage(img, sx, sy, drawSize, drawSize);
+        const sx = -circleRadius;
+        const sy = sx;
+        const imgWidth = img.width;
+        // if (img.width / img.height !== 1) {
+        //     const croppedImgWidth = (circleRadius * 2 * (img.width - img.height)) / img.height;
+        //     // prettier-ignore
+        //     sx = sx - (croppedImgWidth / 2);
+        // }
+        // void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+        // ctx2d.drawImage(img, sx, sy, drawSize, drawSize);
+        ctx2d.drawImage(img, 0, 0, imgWidth, imgWidth, sx, sy, drawSize, drawSize);
         ctx2d.restore();
     };
     drawProgress = (progress, circleRadius) => {
@@ -174,16 +167,15 @@ export default class AudioEffect {
     createParticles = () => {
         const deg = Math.random() * PI * 2;
         const { circleRadius, particleColor, maxParticle } = this.option;
-        this.particles.push(
-            new Particle({
-                x: (circleRadius + 20) * Math.sin(deg),
-                y: (circleRadius + 20) * Math.cos(deg),
-                vx: ((0.3 * Math.sin(deg)) + (Math.random() * 0.5)) - 0.3, // prettier-ignore
-                vy: ((0.3 * Math.cos(deg)) + (Math.random() * 0.5)) - 0.3, // prettier-ignore
-                life: Math.random() * 10,
-                color: particleColor
-            })
-        );
+        const particle = new Particle({
+            x: (circleRadius + 20) * Math.sin(deg),
+            y: (circleRadius + 20) * Math.cos(deg),
+            vx: ((0.3 * Math.sin(deg)) + (Math.random() * 0.5)) - 0.3, // prettier-ignore
+            vy: ((0.3 * Math.cos(deg)) + (Math.random() * 0.5)) - 0.3, // prettier-ignore
+            life: Math.random() * 10,
+            color: particleColor
+        });
+        this.particles.push(particle);
         // should clean dead particle before render.
         if (this.particles.length > maxParticle) {
             this.particles.shift();
@@ -221,13 +213,10 @@ export default class AudioEffect {
         this.audioSrc.connect(this.analyser);
         this.analyser.connect(this.audioContext.destination);
 
-        // listener audio events
-        bindEvents(this.audio, this.audioEvents);
-
         // setup analyser
         this.analyser.minDecibels = -90;
         this.analyser.maxDecibels = -20;
-        this.analyser.smoothingTimeConstant = 0.88;
+        this.analyser.smoothingTimeConstant = 0.72;
         this.analyser.fftSize = 256;
     };
     setupCanvas = () => {
@@ -249,7 +238,7 @@ export default class AudioEffect {
         return !this.audio.paused;
     }
     clearTimers = () => {
-        this.particles = [];
+        this.particles.length = 0;
         this.animationId && window.cancelAnimationFrame(this.animationId);
         this.animationId = null;
     };
@@ -257,9 +246,9 @@ export default class AudioEffect {
         this.animationId = window.requestAnimationFrame(this.updateAnimations);
     };
     destroy = () => {
-        this.particles = [];
+        this.particles.length = 0;
         this.ctx2d.clearRect(0, 0, this.canvasSize, this.canvasSize);
-        removeEvents(this.audio, this.audioEvents);
+        emitter.off('play', this.start);
     };
 }
 

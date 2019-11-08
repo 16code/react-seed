@@ -12,7 +12,7 @@ function SongItem({ data, size }) {
     return (
         <div className={classNames(styles['song-item'], { [styles.disabled]: disable })}>
             <figure className={styles['song-thumb']}>
-                <Image src={`${picUrl}?param=100y100&quality=50`} size={size} lazyload />
+                <Image src={`${picUrl}?param=180y180&quality=60`} size={size} lazyload />
                 <PlayControl disabled={disable} theme="light" songId={songId} inOverlay />
             </figure>
             <div className={styles['song-meta']}>

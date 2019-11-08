@@ -1,3 +1,4 @@
+import { emitter } from 'components/AudioEventEmitter';
 import LyricHelper from './helper';
 import styles from './styles.less';
 
@@ -39,12 +40,12 @@ export default class LyricBox extends React.PureComponent {
         this.lrc = null;
     }
     addEvents() {
-        this.audio.addEventListener('ended', this.onEnd);
-        this.audio.addEventListener('timeupdate', this.onTimeUpdate);
+        emitter.on('ended', this.onEnd);
+        emitter.on('timeupdate', this.onTimeUpdate);
     }
     removeEvents() {
-        this.audio.removeEventListener('timeupdate', this.onTimeUpdate);
-        this.audio.removeEventListener('ended', this.onEnd);
+        emitter.off('ended', this.onEnd);
+        emitter.off('timeupdate', this.onTimeUpdate);
     }
     onEnd = () => {
         this.onTimeUpdate(0);

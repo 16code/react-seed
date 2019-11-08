@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import { formatTime, bindEvents, removeEvents } from 'helper';
+import { formatTime } from 'helper';
+import { emitter } from 'components/AudioEventEmitter';
 import { PLAYER_STATE } from 'common/constants';
 import { actions as playerActions } from 'reducers/player';
 import { actions as lyricBoxActions } from 'reducers/lyric';
@@ -33,35 +34,28 @@ export default class AudioPlayer extends React.PureComponent {
     playerProgressBarRef = React.createRef();
     mediaPlayer = document.getElementById('audio');
     cachedRepaatModeIcons = {};
-    events = () => {
-        const { changePlayerState } = this.props;
-        return {
-            progress: this.onProgress,
-            durationchange: this.onLoadedMetaData,
-            timeupdate: this.onPlayerTimeUpdate,
-            error: () => {
-                changePlayerState(PLAYER_STATE.FAILED);
-            },
-            canplay: () => {
-                changePlayerState(PLAYER_STATE.PLAYING);
-            },
-            ended: () => {
-                changePlayerState(PLAYER_STATE.STOPED);
-            }
-        };
-    };
     componentDidMount() {
-        this.playerProgressBar = this.playerProgressBarRef.current.progressBar;
+        emitter.on('progress', this.onProgress);
+        emitter.on('durationchange', this.onLoadedMetaData);
+        emitter.on('timeupdate', this.onPlayerTimeUpdate);
+        emitter.on('canplay', this.props.changePlayerState.bind(null, PLAYER_STATE.PLAYING));
+        emitter.on('error', this.props.changePlayerState.bind(null, PLAYER_STATE.FAILED));
+        emitter.on('ended', this.props.changePlayerState.bind(null, PLAYER_STATE.STOPED));
+
         const playerBox = this.playerBoxRef.current;
+        this.playerProgressBar = this.playerProgressBarRef.current.progressBar;
         this.currentTimeElement = playerBox.querySelector('#audio-current-time');
         this.totalTimeElement = playerBox.querySelector('#audio-duration-titme');
         this.preloadedBarElement = playerBox.querySelector('#audio-preload-bar');
-        this.mediaPlayer.controls = false;
-        bindEvents(this.mediaPlayer, this.events());
         this.updateVolume(this.props.volume);
     }
     componentWillUnmount() {
-        removeEvents(this.mediaPlayer, this.events());
+        emitter.off('progress', this.onProgress);
+        emitter.off('durationchange', this.onLoadedMetaData);
+        emitter.off('timeupdate', this.onPlayerTimeUpdate);
+        emitter.off('canplay', this.props.changePlayerState.bind(null, PLAYER_STATE.PLAYING));
+        emitter.off('error', this.props.changePlayerState.bind(null, PLAYER_STATE.FAILED));
+        emitter.off('ended', this.props.changePlayerState.bind(null, PLAYER_STATE.STOPED));
     }
     componentDidUpdate(prevProps) {
         const { playerState, playingSongId, listRepeatMode } = this.props;
@@ -198,7 +192,8 @@ export default class AudioPlayer extends React.PureComponent {
         const repeatModeIonClass = this.getRepeatModeClass(listRepeatMode);
         const btnDisabled = !playHistory.length;
         const method = lyricVisible ? 'add' : 'remove';
-        const disabledRangeSlider = !playingSongId || !this.mediaPlayer.src || this.mediaPlayer.src === '';
+        const { currentSrc } = this.mediaMetaInfo;
+        const disabledRangeSlider = !playingSongId || !currentSrc || currentSrc === '';
         document.body.classList[method](styles.dark);
         return (
             <>

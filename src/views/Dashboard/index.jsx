@@ -67,7 +67,7 @@ export default class Dashboard extends React.PureComponent {
                 key={item.id}
                 id={item.id}
                 name={item.name}
-                coverImg={`${item.img1v1Url}?param=100y100&quality=50`}
+                coverImg={`${item.img1v1Url}?param=180y180&quality=60`}
                 size="100x100"
             />
         );

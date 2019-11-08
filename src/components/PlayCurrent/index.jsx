@@ -11,7 +11,7 @@ function PlayCurrent({ data, onClick, lyricModalVisible, isPlaying, toggleVisibl
         size: '44x44',
         alt: name
     };
-    if (album.picUrl) imgProps.src = `${album.picUrl}?param=88y88&quality=60`;
+    if (album.picUrl) imgProps.src = `${album.picUrl}?param=180y180&quality=60`;
     return (
         <div
             className={classNames(styles['play-current'], {
