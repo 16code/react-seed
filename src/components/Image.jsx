@@ -28,6 +28,7 @@ function Img(props) {
     const { size, style, lazyload, src, className } = props;
     const [imgSrc, setImgSrc] = useState(AlbumDefault);
     useEffect(() => {
+        let unmounted = false;
         const imgEl = imgElRef.current;
         const { width, height } = sizeFormat(size);
         imgEl.style.width = width;
@@ -36,7 +37,7 @@ function Img(props) {
             const scrollBox = scrollParent(imgEl);
             const throttled = throttle(
                 loadImg.bind(null, src, imgEl, scrollBox, loaded => {
-                    setImgSrc(loaded);
+                    !unmounted && setImgSrc(loaded);
                     imgEl.classList.remove('lazy');
                     cleanup(throttled, scrollBox);
                 }),
@@ -44,9 +45,15 @@ function Img(props) {
             );
             scrollBox.addEventListener('scroll', throttled, { passive: true });
             throttled();
-            return cleanup.bind(null, throttled, scrollBox);
+            return function() {
+                unmounted = true;
+                cleanup(throttled, scrollBox);
+            };
         }
-        src && setImgSrc(src);
+        if (!unmounted && src) setImgSrc(src);
+        return function() {
+            unmounted = true;
+        };
     }, [imgSrc, lazyload, size, src]);
 
     return (
@@ -59,6 +66,7 @@ function Img(props) {
         />
     );
 }
+Img.displayName = 'Image';
 export default React.memo(Img);
 
 function hasElementInViewport(el) {

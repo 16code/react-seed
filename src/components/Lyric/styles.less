@@ -9,6 +9,14 @@
     width: 100%;
     overflow: hidden;
     z-index: 99;
+    &.nolyric {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .scrollbox {
+            display: none;
+        }
+    }
     .scrollbox {
         line-height: inherit;
         transition: transform 0.5s;
@@ -23,9 +31,9 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        transition: all 0.5s;
     }
     .lrc-on {
-        transition: all 0.5s;
         color: var(--lyric-on-color);
         transform: scale3d(1.1, 1.1, 1);
     }

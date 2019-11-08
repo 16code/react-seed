@@ -35,18 +35,31 @@ export default class Lyric {
                     if (this.prevLrcLine > 0 && this.prevLrcLine === this.currentIndex) return;
                     this.prevLrcLine = i;
                     const pos = this.calcScrollOffset(lrcLen, this.currentIndex, i);
-                    this.updateScrollBox(pos, i);
+                    this.updateScrollBox(pos, i, lrcLen);
                 }
             }
         }
     }
     updateScrollBox(pos, index) {
-        const { container, scrollBox, lrcOnClassName = 'lrc-on' } = this.options;
+        const { container, scrollBox, lrcOnClassName = 'lrc-on', lrcMaxVisibleLine } = this.options;
         const posRem = `translate3d(0, ${px2vw(pos)}, 0)`;
         scrollBox.style.cssText = `; transform: ${posRem}; -webkit-transform: ${posRem};`;
-        if (index) {
-            container.querySelector(`.${lrcOnClassName}`).classList.remove(lrcOnClassName);
-            container.getElementsByTagName('li')[index].classList.add(lrcOnClassName);
+        const half = Math.floor(lrcMaxVisibleLine / 2);
+        const lis = Array.from(container.querySelectorAll('li'));
+
+        const hidenOffset = index <= half ? lrcMaxVisibleLine : half + index;
+        for (let i = 0; i < lis.length; i++) {
+            const element = lis[i];
+            if (index === i) {
+                element.classList.add(lrcOnClassName);
+            } else {
+                element.classList.remove(lrcOnClassName);
+            }
+            if (i > hidenOffset) {
+                element.style.visibility = 'hidden';
+            } else {
+                element.removeAttribute('style');
+            }
         }
     }
     calcScrollOffset(lrcLen, currentIndex, index) {

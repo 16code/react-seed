@@ -18,7 +18,7 @@ export default class LyricBox extends React.PureComponent {
         });
         this.audio = document.getElementById('audio');
         this.addEvents();
-        if (visible && data) {
+        if (visible && (data && data !== '')) {
             this.lrc.setOption({ lrcData: LyricHelper.parseLyric(data.lyric) });
         }
     }
@@ -26,10 +26,12 @@ export default class LyricBox extends React.PureComponent {
         const { data } = this.props;
         const currentLrcId = this.lrc.getCurrentLrcId();
         if (!currentLrcId || currentLrcId !== data.id) {
-            this.lrc.setOption({
-                lrcData: LyricHelper.parseLyric(data.lyric),
-                id: data.id
-            });
+            if (data && data !== '') {
+                this.lrc.setOption({
+                    lrcData: LyricHelper.parseLyric(data.lyric),
+                    id: data.id
+                });
+            }
         }
     }
     componentWillUnmount() {
@@ -52,8 +54,14 @@ export default class LyricBox extends React.PureComponent {
         this.lrc && this.lrc.update(currentTime);
     };
     render() {
+        const noLyric = !this.props.data || this.props.data.lyric === '';
         return (
-            <div className={styles['lyrics-box']}>
+            <div
+                className={classNames(styles['lyrics-box'], {
+                    [styles.nolyric]: noLyric
+                })}
+            >
+                {noLyric && <span>暂无歌词</span>}
                 <ul ref={this.lrcScrollBoxRef} className={styles.scrollbox} />
             </div>
         );
