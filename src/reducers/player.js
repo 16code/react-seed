@@ -6,26 +6,31 @@ export const types = {
     playNextOrPrevSong: 'player/playNextOrPrevSong', // 播放上, 下一首,
     playerChangeVolume: 'player/changeVolume', // 调整音量,
     playerChangeRepeatMode: 'player/changeRepeatMode', // 调整播放器循环模式,
-    changePlayerState: 'player/changeState'
+    changePlayerState: 'player/changeState',
+    updatePlayerInfo: 'player/updateInfo',
+    restorePlayer: 'player/restore'
 };
-const cachedSongs = [];
 
 const initialState = {
     listRepeatMode: window.localStorage.getItem(`${KEY_PREFIX_SETTING}listRepeatMode`) || 'repeat',
     volume: +window.localStorage.getItem(`${KEY_PREFIX_SETTING}volume`) || 65,
     isUnplayed: true,
     playerState: PLAYER_STATE.STOPED, // 当前播放状态
-    playingSongId: undefined, // 正在播放的歌曲ID,
-    playListByMusic: cachedSongs // 歌曲列表
+    playingSongId: undefined // 正在播放的歌曲ID
 };
 
 export const playerReducer = createReducer(initialState, {
     [types.playSong]: handlePlaySong,
     [types.changePlayerState]: handleChangePlayerState,
+    [types.updatePlayerInfo]: handleUpdatePlayerInfo,
+    [types.restorePlayer]: handleRestorePlayer,
     [types.playerChangeVolume]: handleChangeVolume,
     [types.playerChangeRepeatMode]: handleChangeRepeatMode
 });
 
+function handleRestorePlayer(state) {
+    return { ...state, playingSongId: undefined, playerState: PLAYER_STATE.STOPED };
+}
 // 处理歌曲播放状态
 function handlePlaySong(state, action) {
     const { playingSongId, playerState } = state;
@@ -40,9 +45,13 @@ function handlePlaySong(state, action) {
     }
     return { ...state, ...adjustState };
 }
-// 上一曲 下一曲
+
 function handleChangePlayerState(state, action) {
     return { ...state, playerState: action.payload };
+}
+
+function handleUpdatePlayerInfo(state, action) {
+    return { ...state, ...action.payload };
 }
 
 // 添加到播放列表

@@ -1,5 +1,6 @@
 import { Route } from 'react-router-dom';
 const dashboard = React.lazy(() => import('./Dashboard'));
+const Memo = React.lazy(() => import('./Memo'));
 const Recommend = React.lazy(() => import('./Music/Recommend'));
 const Search = React.lazy(() => import('./Music/Search'));
 const Top = React.lazy(() => import('./Music/Top'));
@@ -31,6 +32,13 @@ const routes = [
         strict: false,
         path: '/music/top',
         component: Top
+    },
+    {
+        key: 'memo',
+        exact: true,
+        strict: false,
+        path: '/music/memo',
+        component: Memo
     }
 ];
 

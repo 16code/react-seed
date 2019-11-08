@@ -52,9 +52,12 @@ function PlayControl({
     changePlayerState
 }) {
     const btnPlayState = isCurrentPlay ? playerState : 'stoped';
+    const isPending = playerState === PLAYER_STATE.PENDING;
+    const isFailed = isCurrentPlay && playerState === PLAYER_STATE.FAILED;
+    const disableBtn = disabled || isPending || isFailed;
     const ctrlClass = classNames(styles['play-control'], className, styles[`${theme}`], {
         [styles['in-overlay']]: inOverlay,
-        [styles.disabled]: disabled
+        [styles.disabled]: disableBtn
     });
     React.useEffect(() => {
         const dom = document.getElementById(`music-${songId}`);
@@ -70,7 +73,7 @@ function PlayControl({
     return (
         <button
             className={ctrlClass}
-            disabled={disabled}
+            disabled={disabled || isPending || isFailed}
             onClick={() => {
                 isCurrentPlay ? changePlayerState(nextState) : onPlaySong({ id: songId });
             }}
@@ -80,8 +83,6 @@ function PlayControl({
     );
 }
 
-const areEqual = (prevProps, nextProps) =>
-    nextProps.playerState !== prevProps.playerState && nextProps.currentPlayId !== nextProps.songId;
 export default connect(
     ({ player }, props) => {
         const currentPlayId = player.playingSongId;
@@ -95,4 +96,4 @@ export default connect(
         onPlaySong: playerActions.playSong,
         changePlayerState: playerActions.changePlayerState
     }
-)(React.memo(PlayControl, areEqual));
+)(PlayControl);

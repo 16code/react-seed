@@ -198,6 +198,7 @@ export default class AudioPlayer extends React.PureComponent {
         const repeatModeIonClass = this.getRepeatModeClass(listRepeatMode);
         const btnDisabled = !playHistory.length;
         const method = lyricVisible ? 'add' : 'remove';
+        const disabledRangeSlider = !playingSongId || !this.mediaPlayer.src || this.mediaPlayer.src === '';
         document.body.classList[method](styles.dark);
         return (
             <>
@@ -236,7 +237,7 @@ export default class AudioPlayer extends React.PureComponent {
                             ref={this.playerProgressBarRef}
                             percentage={0}
                             onChange={this.handleProgressMoved}
-                            disabled={!playingSongId}
+                            disabled={disabledRangeSlider}
                         >
                             <span id="audio-preload-bar" className={styles['bar-preload']} />
                         </RangeSlider>
@@ -270,7 +271,7 @@ export default class AudioPlayer extends React.PureComponent {
 }
 
 function calcProgressPos(currentTime, duration) {
-    return `${(currentTime / duration) * 100}%`;
+    return Number.isNaN(duration) ? 0 : `${(currentTime / duration) * 100}%`;
 }
 function updatePreloadBar(buffered, duration, ele) {
     if (!ele) return;

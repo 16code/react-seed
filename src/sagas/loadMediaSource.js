@@ -58,6 +58,18 @@ function* handlePlayNextOrPrev(action) {
         console.log(error);
     }
 }
+
+export function checkCanplay(id) {
+    return new Promise((resolve, reject) => {
+        request(`/media/${id}/check`)
+            .then(({ data }) => {
+                resolve(data.canplay);
+                if (!data.canplay) throw new Error('播放失败, 无版权歌曲!');
+            })
+            .catch(reject);
+    });
+}
+
 export function* loadMediaSourceSaga() {
     try {
         yield all([
