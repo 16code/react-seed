@@ -91,6 +91,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
     }
     .left {
         flex: 0 0 55%;
@@ -101,7 +102,13 @@
         height: 100%;
     }
     canvas {
-        position: relative;
+        background: transparent;
         z-index: 2;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        position: absolute;
     }
 }

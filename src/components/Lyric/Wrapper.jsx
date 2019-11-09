@@ -2,13 +2,14 @@ import { connect } from 'react-redux';
 import { actions } from 'reducers/lyric';
 import useAudioEffect from 'hooks/useAudioEffect';
 import Icon from 'components/Icon';
+import ParticleEffect from 'components/ParticleEffect';
 import LyricBox from './Lyric';
 import styles from './wrapper.less';
 
 const canvasId = `canvas-${Math.random(36)
     .toString(36)
     .substr(2, 7)}`;
-function LyricWrapper({ playingSong, visible, toggleVisible }) {
+function LyricWrapper({ playingSong, visible, isPlaying, toggleVisible }) {
     const { visualizer, setCanvasWrap } = useAudioEffect(canvasId);
     const { name, quality, mv } = playingSong;
     React.useEffect(() => {
@@ -53,7 +54,14 @@ function LyricWrapper({ playingSong, visible, toggleVisible }) {
                 </div>
             </header>
             <div className={classNames(styles.wrapper)}>
-                <div className={styles.left} id="canvasEffectBox" />
+                <div className={styles.left} id="canvasEffectBox">
+                    <ParticleEffect
+                        playing={isPlaying && visible}
+                        option={{
+                            radius: 150
+                        }}
+                    />
+                </div>
                 <div className={styles.right}>
                     <LyricBox visible={visible} data={playingSong} />
                 </div>
@@ -62,11 +70,13 @@ function LyricWrapper({ playingSong, visible, toggleVisible }) {
     );
 }
 
-const areEqual = (prev, next) => prev.visible === next.visible && prev.playingSong.id === next.playingSong.id;
+const areEqual = (prev, next) =>
+    prev.visible === next.visible && prev.playingSong.id === next.playingSong.id && prev.isPlaying === next.isPlaying;
 export default hot(
     connect(
-        ({ playingSong, lyric }) => ({
+        ({ playingSong, lyric, player }) => ({
             visible: lyric.visible,
+            isPlaying: player.playerState === 'playing',
             playingSong
         }),
         {
