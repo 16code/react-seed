@@ -17,7 +17,7 @@ export default class AudioEffect {
         this.coverImg.src = defaultCoverImg;
         this.option = {
             maxParticle: 100,
-            maxHeight: 44,
+            maxHeight: 26,
             minHeight: 2,
             spacing: 1,
             danceBarColor: '#caa',

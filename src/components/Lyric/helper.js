@@ -12,6 +12,8 @@ export default class Lyric {
         this.options = Object.assign({}, this.options, options);
         if (this.options.lrcData) {
             this.renderLrc(this.options.lrcData, this.options.scrollBox);
+            // 为了隐藏行
+            this.update(1);
         }
     }
     renderLrc(lrcData, scrollBox) {
