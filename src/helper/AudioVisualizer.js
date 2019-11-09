@@ -35,8 +35,8 @@ export default class AudioEffect {
     };
     start = () => {
         // listener audio events
+        this.destroy();
         emitter.on('play', this.start);
-
         this.freqByteData = new Uint8Array(this.analyser.frequencyBinCount);
         this.analyser.context.resume();
         this.updateAnimations();
