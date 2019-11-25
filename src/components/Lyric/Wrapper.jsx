@@ -58,7 +58,7 @@ function LyricWrapper({ playingSong, visible, isPlaying, toggleVisible }) {
                     <ParticleEffect
                         playing={isPlaying && visible}
                         option={{
-                            radius: 150
+                            radius: 88 + 26
                         }}
                     />
                 </div>
