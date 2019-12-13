@@ -5,6 +5,7 @@
     "useTabs": false,
     "bracketSpacing": true,
     "eslintIntegration": true,
+    "requirePragma": true,
     "stylelintIntegration": true,
     "singleQuote": true,
     "jsxSingleQuote": false,
