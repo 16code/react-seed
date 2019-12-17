@@ -4,7 +4,7 @@ import { withRequest } from 'hooks/useRequest';
 function theRequest(props) {
     const searchParams = new URLSearchParams(props.location.search);
     const id = searchParams.get('id') || 5;
-    const limit = searchParams.get('size') || 30;
+    const limit = searchParams.get('size') || 100;
     return {
         url: '/api/songs/top',
         requestConfig: {

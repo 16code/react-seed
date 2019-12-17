@@ -29,10 +29,6 @@ export const menuData = [
             {
                 name: '排行榜',
                 path: 'top'
-            },
-            {
-                name: 'Memo',
-                path: 'memo'
             }
         ]
     },

@@ -203,7 +203,7 @@ export default class AudioEffect {
         this.option = Object.assign({}, this.option, o);
     };
     setupAudio = () => {
-        this.audioContext = new window.AudioContext();
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
         // setup audio sources
         this.audioSrc = this.audioContext.createMediaElementSource(this.audio);

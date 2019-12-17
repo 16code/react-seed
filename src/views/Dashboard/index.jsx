@@ -76,8 +76,8 @@ export default class Dashboard extends React.PureComponent {
         const { playlist, djprogram, artists, topboard, latest } = this.props.response.data;
         return (
             <>
-                <Box title="推荐歌单">
-                    <div className={styles['playlist-wraper']}>{playlist.map(this.playlistRender)}</div>
+                <Box title="推荐歌单" scroll>
+                    {playlist.map(this.playlistRender)}
                 </Box>
                 <div className={styles['songs-wraper']}>
                     <Box title="热门歌曲">

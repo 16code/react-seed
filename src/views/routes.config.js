@@ -1,6 +1,5 @@
 import { Route } from 'react-router-dom';
 const dashboard = React.lazy(() => import('./Dashboard'));
-const Memo = React.lazy(() => import('./Memo'));
 const Recommend = React.lazy(() => import('./Music/Recommend'));
 const Search = React.lazy(() => import('./Music/Search'));
 const Top = React.lazy(() => import('./Music/Top'));
@@ -32,37 +31,28 @@ const routes = [
         strict: false,
         path: '/music/top',
         component: Top
-    },
-    {
-        key: 'memo',
-        exact: true,
-        strict: false,
-        path: '/music/memo',
-        component: Memo
     }
 ];
 
-export function renderRoutes(routes, parentPath = '/', extraProps = {}) {
-    return routes
-        ? routes.map((route, i) =>
-            Array.isArray(route.children) ? (
-                renderRoutes(route.children, route.path)
-            ) : (
-                <Route
-                    key={route.key || i}
-                    path={`${parentPath}${route.path}`.replace(/\/\//g, '/')}
-                    exact={route.exact}
-                    strict={route.strict}
-                    render={props =>
-                        route.render ? (
-                            route.render({ ...props, ...extraProps, route })
-                        ) : (
-                            <route.component {...props} {...extraProps} route={route} />
-                        )
-                    }
-                />
-            ))
-        : null;
+export function renderRoutes(routes = [], parentPath = '/', extraProps = {}) {
+    return routes.map((route, i) =>
+        Array.isArray(route.children) ? (
+            renderRoutes(route.children, route.path)
+        ) : (
+            <Route
+                key={route.key || i}
+                path={`${parentPath}${route.path}`.replace(/\/\//g, '/')}
+                exact={route.exact}
+                strict={route.strict}
+                render={props =>
+                    route.render ? (
+                        route.render({ ...props, ...extraProps, route })
+                    ) : (
+                        <route.component {...props} {...extraProps} route={route} />
+                    )
+                }
+            />
+        ));
 }
 
 export default routes;

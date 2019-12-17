@@ -1,0 +1,57 @@
+.scroll-outer {
+    width: 100%;
+    position: relative;
+    display: block;
+    min-height: 130px;
+}
+.scroll-inner {
+    width: 100%;
+    overflow: auto;
+    scroll-behavior: smooth;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-bottom: -18px;
+    > div {
+        flex: 0 0 auto;
+    }
+    > div:not(:last-child) {
+        margin-right: var(--box-padding-base);
+    }
+}
+.scroll-inner::-webkit-scrollbar {
+    width: 0;    
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
+}
+.arrow {
+    cursor: pointer;
+    user-select: none;
+    position: absolute;
+    display: block;
+    height: 28px;
+    line-height: 18px;
+    font-family: 'iconfont', serif;
+    font-size: 28px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; 
+    top: 0;
+    left: -24px;
+    right: auto;
+    bottom: 0;
+    margin: auto;
+    opacity: .76;
+    &:hover {
+        opacity: 1;
+    }
+    &-right {
+        left: auto;
+        right: -24px;
+        text-align: right;
+    }
+    &.disabled {
+        opacity: .3;
+        cursor: not-allowed;
+    }
+}
