@@ -1,4 +1,5 @@
 import SongList from 'components/SongList';
+import Skeleton from 'components/Skeleton';
 import Box from 'components/Box';
 import { withRequest } from 'hooks/useRequest';
 function theRequest(props) {
@@ -45,7 +46,8 @@ export default class Top extends React.PureComponent {
         this.props.onSearch(event.target.value);
     };
     render() {
-        const data = this.props.response.data;
+        const { response, isLoading } = this.props;
+        const data = response.data;
         return (
             <Box title="榜单">
                 <select onChange={this.handleCategoryChange}>
@@ -57,7 +59,9 @@ export default class Top extends React.PureComponent {
                 </select>
                 <br />
                 <br />
-                <SongList dataSource={data} />
+                {isLoading ? (
+                    <Skeleton title size={10} avatar layout="vertical" paragraph={{ rows: 1 }} />
+                ) : <SongList dataSource={data} size="64x64" ordered />}
             </Box>
         );
     }

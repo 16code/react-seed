@@ -23,7 +23,7 @@ export default class Recommend extends React.PureComponent {
             <Box title="热门歌曲">
                 {isLoading ? (
                     <Skeleton title size={10} avatar layout="vertical" paragraph={{ rows: 1 }} />
-                ) : <SongList dataSource={data} />}
+                ) : <SongList dataSource={data} size="64x64" ordered />}
             </Box>
         );
     }

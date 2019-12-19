@@ -11,7 +11,7 @@
         margin: 0;
     }
     .skeleton-avatar {
-        background: linear-gradient(90deg, rgb(242, 242, 242) 25%, rgb(230, 230, 230) 37%, rgb(242, 242, 242) 63%);
+        background: var(--background-item-hover);
         background-size: 400% 100%;
         border-radius: 5px;
         animation: skeleton-loading 1.4s ease infinite;
@@ -62,7 +62,7 @@
 }
 .shine {
     display: block;
-    background: linear-gradient(90deg, rgb(242, 242, 242) 25%, rgb(230, 230, 230) 37%, rgb(242, 242, 242) 63%);
+    background: linear-gradient(90deg, var(--shine-color-1) 25%, var(--shine-color-2) 37%, var(--shine-color-1) 63%);
     animation: skeleton-loading 1.4s ease infinite;
     background-size: 400% 100%;
 }

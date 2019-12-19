@@ -2,16 +2,16 @@
     &:extend(.pos-relative all);
     &:extend(.unselect all);
 
-    color: var(--text-color);
+    color: var(--link-color);
     display: block;
     justify-self: center;
     &:hover {
-        color: var(--color-primary);
+        color: var(--link-color-hover);
         text-decoration: underline;
     }
     &.squared {
         figure {
-            border-radius: 4px;
+            border-radius: 12px;
         }
     }
     &.circled {
@@ -28,11 +28,11 @@
             &:extend(.icon-headset::before);
         }
 
-        font-size: var(--font-size-sm);
+        font-size: var(--font-size-base);
         z-index: 3;
         top: 0;
         right: 0;
-        padding: 4px 8px 0 0;
+        padding: 6px 12px 0 0;
         span {
             padding-left: 4px;
             line-height: 1;
