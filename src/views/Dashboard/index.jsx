@@ -86,6 +86,7 @@ export default class Dashboard extends React.PureComponent {
                         this.skeletonRender({
                             size: 5,
                             avatar: sizeFormat('170x170'),
+                            paragraph: { rows: 1 },
                             layout: 'horizontal'
                         }) :
                         playlist.map(this.playlistRender)}
@@ -96,6 +97,7 @@ export default class Dashboard extends React.PureComponent {
                             this.skeletonRender({
                                 size: 10,
                                 avatar: true,
+                                title: true,
                                 layout: 'vertical',
                                 paragraph: { rows: 1 }
                             }) :

@@ -30,6 +30,7 @@
         }
     }
 }
+.order,
 .song-meta,
 .song-extra,
 .song-thumb {
@@ -37,20 +38,26 @@
 
     z-index: 3;
 }
+.order {
+    text-align: left;
+    width: 32px;
+    color: var(--text-color);
+    font-size: var(--heading-title-secondary);
+}
 .song-thumb {
     border-radius: 4px;
     overflow: hidden;
     width: 52px;
 }
 .song-meta {
-    flex: 1;
+    flex: 1 1 auto;
     padding-left: 10px;
     .name {
         &:extend(.ellipsis);
 
         font-weight: normal;
-        font-size: var(--heading-title-md);
-        margin: 0;
+        font-size: var(--heading-title-secondary);
+        margin: 0 0 4px;
     }
     .singers {
         line-height: 1;

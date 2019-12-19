@@ -3,23 +3,21 @@ import styles from './style.less';
 
 // shape { circled, squared }
 
-function ThumbCard({ name, coverImg, countNum, size, wrapClassName, shape = 'squared' }) {
+function ThumbCard({ id, name, coverImg, countNum, size, wrapClassName, shape = 'squared' }) {
     const cls = classNames(styles['thumb-card'], styles[shape], 'ui-hover-effect');
-    const style = size ? sizeFormat(size) : null;
+    const style = size ? sizeFormat(size) : {};
     const content = (
-        <div className={cls} style={style}>
+        <a className={cls} style={{ width: style.width }} href={`#/${id}`}>
             {countNum && (
                 <small className={styles.count}>
                     <span>{countFormat(countNum)}</span>
                 </small>
             )}
-            <figure className="masked-img">
+            <figure className="masked-img" style={style}>
                 <Image src={coverImg} size={size} lazyload />
-                <figcaption>
-                    <a href="#">{name}</a>
-                </figcaption>
             </figure>
-        </div>
+            <h3>{name}</h3>
+        </a>
     );
     return wrapClassName ? (
         <div className={wrapClassName} style={style}>

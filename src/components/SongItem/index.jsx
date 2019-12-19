@@ -5,12 +5,14 @@ import PlayControl from 'components/PlayControl';
 
 import styles from './styles';
 
-function SongItem({ data, size }) {
+function SongItem({ data, size, index }) {
     const { id: songId, name, dt, duration, ar, artists, al, disable } = data;
     const useDuration = duration ? duration : dt;
     const picUrl = al.picUrl;
+    const order = index < 9 ? `0${index + 1}` : index + 1;
     return (
         <div className={classNames(styles['song-item'], { [styles.disabled]: disable })}>
+            <span className={classNames(styles.order, 'number')}>{order}</span>
             <figure className={styles['song-thumb']}>
                 <Image src={`${picUrl}?param=180y180&quality=60`} size={size} lazyload />
                 <PlayControl disabled={disable} theme="light" songId={songId} inOverlay />

@@ -5,7 +5,7 @@ export default function Box(props) {
     const scroll = props.scroll;
     return (
         <div className={styles.box} style={props.style}>
-            <h2 className={styles.title}>{props.title}</h2>
+            {props.title && <h2 className={styles.title}>{props.title}</h2>}
             <div className={styles.content}>{scroll ? <ScrollBox>{props.children}</ScrollBox> : props.children}</div>
         </div>
     );

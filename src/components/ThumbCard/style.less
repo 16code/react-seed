@@ -2,39 +2,36 @@
     &:extend(.pos-relative all);
     &:extend(.unselect all);
 
-    color: var(--text-color-light);
+    color: var(--text-color);
     display: block;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.14);
-    overflow: hidden;
     justify-self: center;
-    &.squared {
-        border-radius: 4px;
+    &:hover {
+        color: var(--color-primary);
+        text-decoration: underline;
     }
-    &.circled {
-        border-radius: 50%;
-        figcaption {
-            text-align: center;
-            display: inline-block;
-            width: 100%;
-            max-width: 100% !important;
+    &.squared {
+        figure {
+            border-radius: 4px;
         }
     }
-    .count,
-    figcaption {
-        &:extend(.pos-absolute all);
-
-        font-size: var(--font-size-sm);
-        z-index: 3;
+    &.circled {
+        figure {
+            border-radius: 50%;
+        }
     }
+
     .count {
+        color: var(--text-color-light);
+        &:extend(.pos-absolute all);
         &::before {
             &:extend(.iconfont);
             &:extend(.icon-headset::before);
         }
 
+        font-size: var(--font-size-sm);
+        z-index: 3;
         top: 0;
         right: 0;
-        font-size: var(--font-size-sm);
         padding: 4px 8px 0 0;
         span {
             padding-left: 4px;
@@ -43,20 +40,19 @@
     }
     figure {
         &:extend(.pos-relative all);
-    }
-    figcaption {
-        &:extend(.ellipsis);
 
-        bottom: 0;
-        left: 0;
-        padding: 0 8px 8px;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.14);
+        overflow: hidden;
+    }
+    h3 {
+        padding: 0;
         line-height: 1.4;
         width: 100%;
-        a {
-            color: var(--text-color-light);
-            &:hover {
-                text-decoration: underline;
-            }
-        }
+        margin-top: 12px;
+        margin-bottom: 0;
+        font-weight: 400;
+        &:extend(.ellipsis);
+
+        color: inherit;
     }
 }
