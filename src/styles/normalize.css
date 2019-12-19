@@ -14,6 +14,7 @@ body {
     font-family: var(--font-family-base);
     font-size: var(--font-size-base);
     color: var(--text-color);
+    user-select: none;
 }
 *,
 *::after,

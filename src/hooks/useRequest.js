@@ -3,7 +3,7 @@ const useEffect = React.useEffect;
 
 export const useRequest = (requestUrl, initRequestConfig, initialData) => {
     const [data, setData] = useState(initialData);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
     const [requestConfig, setRequestConfig] = useState(initRequestConfig);
     useEffect(() => {

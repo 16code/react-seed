@@ -23,10 +23,6 @@ export const menuData = [
                 path: 'recommend'
             },
             {
-                name: '歌曲搜索',
-                path: 'search'
-            },
-            {
                 name: '排行榜',
                 path: 'top'
             }

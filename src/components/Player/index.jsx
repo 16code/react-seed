@@ -39,7 +39,9 @@ export default class AudioPlayer extends React.PureComponent {
         emitter.on('durationchange', this.onLoadedMetaData);
         emitter.on('timeupdate', this.onPlayerTimeUpdate);
         emitter.on('canplay', this.props.changePlayerState.bind(null, PLAYER_STATE.PLAYING));
-        emitter.on('error', this.props.changePlayerState.bind(null, PLAYER_STATE.FAILED));
+        emitter.on('error', () => {
+            this.props.changePlayerState(PLAYER_STATE.FAILED);
+        });
         emitter.on('ended', this.props.changePlayerState.bind(null, PLAYER_STATE.STOPED));
 
         const playerBox = this.playerBoxRef.current;
@@ -81,7 +83,14 @@ export default class AudioPlayer extends React.PureComponent {
         }
     }
     doPlay() {
-        this.mediaPlayer.play();
+        const promise = this.mediaPlayer.play();
+        if (promise) {
+            promise.then(() => {
+                console.log('Autoplay started!');
+            }).catch(error => {
+                console.log(error);
+            });
+        }
     }
     doPause() {
         this.mediaPlayer.pause();

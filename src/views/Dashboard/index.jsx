@@ -1,5 +1,6 @@
 import ThumbCard from 'components/ThumbCard';
 import SongList from 'components/SongList';
+import Skeleton from 'components/Skeleton';
 import Box from 'components/Box';
 import { withRequest } from 'hooks/useRequest';
 import styles from './styles';
@@ -36,7 +37,7 @@ function theHandles(updateRequestConfig) {
 @withErrorBoundary
 @withRequest(theRequest, theHandles)
 export default class Dashboard extends React.PureComponent {
-    playlistRender(item) {
+    playlistRender(item) {        
         return (
             <ThumbCard
                 key={item.id}
@@ -72,31 +73,62 @@ export default class Dashboard extends React.PureComponent {
             />
         );
     }
+    skeletonRender(props) {
+        return <Skeleton {...props} />;
+    }
     render() {
-        const { playlist, djprogram, artists, topboard, latest } = this.props.response.data;
+        const { isLoading, response } = this.props;
+        const { playlist, djprogram, topboard, latest } = response.data;        
         return (
             <>
                 <Box title="推荐歌单" scroll>
-                    {playlist.map(this.playlistRender)}
+                    {isLoading ?
+                        this.skeletonRender({
+                            size: 5,
+                            avatar: sizeFormat('170x170'),
+                            layout: 'horizontal'
+                        }) :
+                        playlist.map(this.playlistRender)}
                 </Box>
-                <div className={styles['songs-wraper']}>
-                    <Box title="热门歌曲">
-                        <div className={styles['songlist-wraper']}>
-                            <SongList dataSource={topboard} />
-                        </div>
-                    </Box>
-                    <Box title="最新歌曲">
-                        <div className={styles['songlist-wraper']}>
-                            <SongList dataSource={latest} />
-                        </div>
-                    </Box>
-                </div>
+                <Box title="热门歌曲">
+                    <div className={styles['songlist-dashboard']}>
+                        {isLoading ?
+                            this.skeletonRender({
+                                size: 10,
+                                avatar: true,
+                                layout: 'vertical',
+                                paragraph: { rows: 1 }
+                            }) :
+                            <SongList dataSource={topboard} />}
+                    </div>
+                </Box>
                 <Box title="推荐电台">
-                    <div className={styles['djprogram-wraper']}>{djprogram.map(this.djRender)}</div>
+                    <div className={styles['djprogram-wraper']}>
+                        {isLoading ?
+                            this.skeletonRender({
+                                size: 5,
+                                avatar: sizeFormat('170x132'),
+                                layout: 'horizontal',
+                                paragraph: { rows: 1 }
+                            }) :
+                            djprogram.map(this.djRender)}
+                    </div>
                 </Box>
-                <Box title="热门歌手">
+                <Box title="最新歌曲">
+                    <div className={styles['songlist-dashboard']}>
+                        {isLoading ?
+                            this.skeletonRender({
+                                size: 10,
+                                avatar: true,
+                                layout: 'vertical',
+                                paragraph: { rows: 1 }
+                            }) :
+                            <SongList dataSource={latest} />}
+                    </div>
+                </Box>
+                {/* <Box title="热门歌手">
                     <div className={styles['artists-wraper']}>{artists.map(this.artistRender)}</div>
-                </Box>
+                </Box> */}
             </>
         );
     }
