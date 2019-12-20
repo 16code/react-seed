@@ -5,7 +5,7 @@
     width: 100%;
     height: 100%;
     color: var(--player-control-color);
-    background: #252742;
+    background: var(--lyric-effect-background);
     visibility: hidden;
     transform: scale3d(0, 0, 1);
     transform-origin: left bottom;
@@ -21,8 +21,6 @@
         left: 0;
         width: 100%;
         height: 74px;
-        background-color: rgba(0, 0, 0, 0.6);
-        border-bottom: 1px solid var(--color-wangyi);
         padding-left: var(--box-padding-lg);
         padding-right: var(--box-padding-lg);
         z-index: 9;
@@ -30,7 +28,6 @@
         .meta-right {
             float: left;
             display: flex;
-            align-items: center;
             height: 100%;
         }
         .headset i {
@@ -38,11 +35,6 @@
         }
         .meta-right {
             float: right;
-        }
-        .badge {
-            margin-left: 8px;
-            margin-top: 6px;
-            transform: scale(0.88);
         }
         h2 {
             color: inherit;
@@ -64,10 +56,7 @@
         }
     }
     figure {
-        background-position: 100% 100%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        opacity: 0.4;
+        // opacity: 0.1;
         display: block;
         position: absolute;
         left: 0;
@@ -75,7 +64,22 @@
         width: 100%;
         height: 100%;
         z-index: 0;
-        background-image: url('https://rainner.github.io/soma-fm-player/public/img/bg.jpg');
+        > img {
+            width: 100% !important;
+            height: 100% !important;
+            opacity: 0.11;
+        }
+    }
+    .meta {
+        margin: 0 0 30px;
+        h2 {
+            display: inline;
+            font-size: 32px;
+        }
+        .badge {
+            margin-left: 2px;
+            margin-top: 10px;
+        }
     }
 }
 .wrapper {
@@ -89,17 +93,18 @@
     .left,
     .right {
         display: flex;
-        align-items: center;
         justify-content: center;
         position: relative;
     }
     .left {
-        flex: 0 0 55%;
+        flex: 0 0 58%;
         height: 100%;
     }
     .right {
         flex: 1 1 auto;
         height: 100%;
+        display: flex;
+        flex-direction: column;
     }
     canvas {
         background: transparent;

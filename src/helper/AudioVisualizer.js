@@ -1,5 +1,4 @@
 import { emitter } from 'components/AudioEventEmitter';
-import Particle from 'helper/Particle';
 import defaultCoverImg from 'assets/default.jpg';
 const PI = Math.PI;
 const dpr = window.devicePixelRatio || 1;
@@ -17,14 +16,13 @@ export default class AudioEffect {
         this.coverImg.src = defaultCoverImg;
         this.option = {
             maxParticle: 100,
-            maxHeight: 26,
+            maxHeight: 34,
             minHeight: 2,
             spacing: 1,
             danceBarColor: '#caa',
-            particleColor: '#caa',
             progressBarColor: '#caa',
             circleRadius: 88,
-            showProgress: true
+            showProgress: false
         };
         this.init(audio, canvas);
     }
@@ -84,7 +82,6 @@ export default class AudioEffect {
         ctx2d.save();
         ctx2d.translate(this.canvasSize / 2, this.canvasSize / 2);
         this.drawCover(progress, circleRadius);
-        // this.createParticles();
         ctx2d.beginPath();
         freqBytseData.forEach((value, index) => {
             // prettier-ignore
@@ -122,16 +119,17 @@ export default class AudioEffect {
         const img = this.coverImg;
         ctx2d.save();
         ctx2d.beginPath();
-        ctx2d.lineWidth = 4;
-        ctx2d.strokeStyle = this.gradient;
+        // ctx2d.lineWidth = 4;
+        // ctx2d.strokeStyle = this.gradient;
 
         ctx2d.globalCompositeOperation = 'destination-over';
         ctx2d.rotate((PI * 2 * (progress * 10)) / 2);
         // prettier-ignore
-        ctx2d.arc(0, 0, circleRadius - 12, -PI / 2, (PI * 2) - (PI / 2));
+        const amendRadius = this.option.showProgress ? 12 : 4;
+        ctx2d.arc(0, 0, circleRadius - amendRadius, -PI / 2, (PI * 2) - (PI / 2));
 
         ctx2d.closePath();
-        ctx2d.stroke();
+        // ctx2d.stroke();
         ctx2d.clip();
         const drawSize = circleRadius * 2;
         const sx = -circleRadius;
@@ -150,11 +148,11 @@ export default class AudioEffect {
     drawProgress = (progress, circleRadius) => {
         const scaledRadius = circleRadius - 6;
         const ctx2d = this.ctx2d;
-        ctx2d.beginPath();
-        ctx2d.arc(0, 0, scaledRadius, 0, 2 * PI, false);
-        ctx2d.lineWidth = 4;
-        ctx2d.strokeStyle = 'rgba(255,255,255, 0.2)';
-        ctx2d.stroke();
+        // ctx2d.beginPath();
+        // ctx2d.arc(0, 0, scaledRadius, 0, 2 * PI, false);
+        // ctx2d.lineWidth = 4;
+        // ctx2d.strokeStyle = 'rgba(255,255,255, 0.2)';
+        // ctx2d.stroke();
 
         ctx2d.beginPath();
         ctx2d.strokeStyle = this.option.progressBarColor;
@@ -163,26 +161,6 @@ export default class AudioEffect {
         // prettier-ignore
         ctx2d.arc(0, 0, scaledRadius, -PI / 2, (PI * 2 * progress) - (PI / 2));
         ctx2d.stroke();
-    };
-    createParticles = () => {
-        const deg = Math.random() * PI * 2;
-        const { circleRadius, particleColor, maxParticle } = this.option;
-        const particle = new Particle({
-            x: (circleRadius + 20) * Math.sin(deg),
-            y: (circleRadius + 20) * Math.cos(deg),
-            vx: ((0.3 * Math.sin(deg)) + (Math.random() * 0.5)) - 0.3, // prettier-ignore
-            vy: ((0.3 * Math.cos(deg)) + (Math.random() * 0.5)) - 0.3, // prettier-ignore
-            life: Math.random() * 10,
-            color: particleColor
-        });
-        this.particles.push(particle);
-        // should clean dead particle before render.
-        if (this.particles.length > maxParticle) {
-            this.particles.shift();
-        }
-        this.particles.forEach(dot => {
-            dot.update(this.ctx2d);
-        });
     };
     setupGradient = () => {
         this.gradient = this.ctx2d.createLinearGradient(0, this.canvasSize / 2, this.canvasSize / 2, 0);

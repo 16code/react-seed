@@ -197,13 +197,11 @@ export default class AudioPlayer extends React.PureComponent {
         this.mediaPlayer.loop = isLoop;
     };
     render() {
-        const { playingSongId, playerState, volume, listRepeatMode, playHistory, lyricVisible } = this.props;
+        const { playingSongId, playerState, volume, listRepeatMode, playHistory } = this.props;
         const repeatModeIonClass = this.getRepeatModeClass(listRepeatMode);
         const btnDisabled = !playHistory.length;
-        const method = lyricVisible ? 'add' : 'remove';
         const { currentSrc } = this.mediaMetaInfo;
         const disabledRangeSlider = !playingSongId || !currentSrc || currentSrc === '';
-        document.body.classList[method](styles.dark);
         return (
             <>
                 <div className={classNames(styles['audio-player'])} ref={this.playerBoxRef} key="audioPlayerBox">

@@ -1,52 +1,76 @@
+import * as Vibrant from 'node-vibrant';
 import { connect } from 'react-redux';
 import { actions } from 'reducers/lyric';
 import useAudioEffect from 'hooks/useAudioEffect';
-import Icon from 'components/Icon';
 import ParticleEffect from 'components/ParticleEffect';
+import Icon from 'components/Icon';
+import Img from 'components/Image';
 import LyricBox from './Lyric';
 import styles from './wrapper.less';
 
 const canvasId = `canvas-${Math.random(36)
     .toString(36)
     .substr(2, 7)}`;
+
+export function parseColor(src, cb) {
+    const img = document.createElement('img');
+    img.crossOrigin = 'Anonymous';
+    img.onload = () => {
+        Vibrant.from(img.src)
+            .getPalette()
+            .then(palette => {
+                const rgb = palette.LightVibrant.rgb.map(n => parseInt(n, 10)).join(',');                
+                cb({
+                    primary: `rgb(${rgb})`,
+                    secondary: `rgba(${rgb}, .3)`
+                });
+            });
+    };
+    img.src = src;
+}
 function LyricWrapper({ playingSong, visible, isPlaying, toggleVisible }) {
     const { visualizer, setCanvasWrap } = useAudioEffect(canvasId);
+    const [fillColor, setFillColor] = React.useState();
     const { name, quality, mv } = playingSong;
     React.useEffect(() => {
         setCanvasWrap(document.getElementById('canvasEffectBox'));
         const { picUrl } = playingSong.album || {};
+        const coverImg = picUrl ? `${picUrl}?param=180y180&quality=80` : null;        
         visualizer.updateSongInfo(
             {
                 fetching: playingSong.fetching,
-                coverImg: picUrl ? `${picUrl}?param=180y180&quality=60` : null,
+                coverImg,
                 id: playingSong.id
             },
             visible
         );
+        if (coverImg) {
+            parseColor(coverImg, ({ primary, secondary }) => {
+                visualizer.setupOption({
+                    danceBarColor: primary,
+                    progressBarColor: primary
+                });
+                setFillColor(secondary);
+            });
+        }
+
         return function cleanup() {
             visualizer.destroy();
         };
-    }, [playingSong, setCanvasWrap, visible, visualizer]);
+    }, [playingSong, setCanvasWrap, fillColor, visible, visualizer]);
     return (
         <div
+            id="lyric-effect-box"
             className={classNames(styles['lyric-effect-box'], {
                 [styles.visible]: visible
             })}
         >
-            <figure
-                style={{
-                    backgroundImage: playingSong.blur && `url(/media/${playingSong.blur}/blur?param=800y560&quality=50)`
-                }}
-            />
+            {playingSong.blur && (
+                <figure>
+                    <Img src={playingSong.blur && `/media/${playingSong.blur}/blur?param=800y560&quality=50`} />
+                </figure>
+            )}
             <header className={styles['meta-title']}>
-                <div className={styles['meta-left']}>
-                    <span className={styles.headset}>
-                        <Icon type="headset" />
-                    </span>
-                    <h2> {name} </h2>
-                    <span className={classNames('badge badge-primary', styles.badge)}>{quality}K</span>
-                    {mv && <span className={classNames('badge badge-primary', styles.badge)}>MV</span>}
-                </div>
                 <div className={styles['meta-right']}>
                     <button onClick={toggleVisible} role="button">
                         <Icon type="suoxiao" />
@@ -58,11 +82,17 @@ function LyricWrapper({ playingSong, visible, isPlaying, toggleVisible }) {
                     <ParticleEffect
                         playing={isPlaying && visible}
                         option={{
-                            radius: 88 + 26
+                            fillColor,
+                            radius: 88 + 34
                         }}
                     />
                 </div>
                 <div className={styles.right}>
+                    <div className={styles.meta}>
+                        <h2> {name} </h2>
+                        {quality && <span className={classNames('badge badge-primary', styles.badge)}>{quality}K</span>}
+                        {mv && <span className={classNames('badge badge-primary', styles.badge)}>MV</span>}
+                    </div>
                     <LyricBox visible={visible} data={playingSong} />
                 </div>
             </div>
