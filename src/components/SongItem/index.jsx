@@ -15,7 +15,7 @@ function SongItem({ data, size, ordered, index }) {
         <div className={classNames(styles['song-item'], { [styles.disabled]: disable })}>
             {ordered && <span className={classNames(styles.order, 'number')}>{order}</span>}
             <figure className={styles['song-thumb']} style={style}>
-                <Image src={`${picUrl}?param=180y180&quality=60`} size={size} lazyload />
+                <Image src={`${picUrl}?param=180y180&quality=60`} size={size} masked lazyload />
                 <PlayControl disabled={disable} theme="light" songId={songId} inOverlay />
             </figure>
             <div className={styles['song-meta']}>

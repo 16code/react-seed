@@ -1,5 +1,4 @@
 import Particle from 'helper/Particle';
-// import { emitter } from 'components/AudioEventEmitter';
 const useRef = React.useRef;
 const useEffect = React.useEffect;
 const PI = Math.PI;

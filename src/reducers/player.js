@@ -42,6 +42,10 @@ function handlePlaySong(state, action) {
         // 如果要播放的歌曲是当前正在播放的歌曲, 那么就要做播放处理, 并且要添加到播放列表;
         adjustState.playerState = PLAYER_STATE.PENDING;
         adjustState.playingSongId = nextSongId;
+        const audio = document.getElementById('audio');
+        const dataset = audio.dataset;
+        dataset.songid = nextSongId;
+        audio.src = `/media/${nextSongId}/url`;
     }
     return { ...state, ...adjustState };
 }

@@ -13,8 +13,8 @@ export default class LyricBox extends React.PureComponent {
         this.lrc = new LyricHelper({
             container: document.querySelector(`.${styles['lyrics-box']}`),
             scrollBox: this.lrcScrollBoxRef.current,
-            lrcMaxVisibleLine: 13,
-            lrcLineHeight: 32,
+            lrcMaxVisibleLine: 12,
+            lrcLineHeight: 36,
             lrcOnClassName: styles['lrc-on']
         });
         this.audio = document.getElementById('audio');

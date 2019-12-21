@@ -6,7 +6,7 @@ function theRequest() {
     return {
         url: '/api/search',
         requestConfig: {
-            params: { limit: 20, type: 1, keywords: 'friendships' }
+            params: { limit: 20, type: 1, keywords: '王菲' }
         },
         initialData: []
     };
@@ -29,6 +29,7 @@ export default class Search extends React.PureComponent {
         super();
         this.autocompleteSearchThrottled = throttle(this.autocompleteSearch, 1500);
     }
+
     autocompleteSearch = v => {
         this.props.onSearch(v);
     };
@@ -41,7 +42,7 @@ export default class Search extends React.PureComponent {
         return (
             <Box title="搜索歌曲">
                 <input type="text" onChange={this.handleChange} />
-                <SongList dataSource={data} />
+                <SongList dataSource={data} size="64x64" />
             </Box>
         );
     }

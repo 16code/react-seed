@@ -25,7 +25,7 @@ function cleanup(throttled, scrollBox) {
 }
 function Img(props) {
     const imgElRef = useRef(null);
-    const { size, style, lazyload, src, className } = props;
+    const { size, style, lazyload, src, className, masked } = props;
     const [imgSrc, setImgSrc] = useState(AlbumDefault);
     useEffect(() => {
         let unmounted = false;
@@ -55,16 +55,20 @@ function Img(props) {
             unmounted = true;
         };
     }, [imgSrc, lazyload, size, src]);
-
-    return (
+    const content = (
         <img
             ref={imgElRef}
             className={classNames('img', className, { lazy: lazyload })}
             style={style}
             src={imgSrc}
             draggable="false"
-        />
+        /> 
     );
+    return masked ? (
+        <span className="img-wrapper">
+            {content}
+        </span>
+    ) : content;
 }
 Img.displayName = 'Image';
 export default React.memo(Img);

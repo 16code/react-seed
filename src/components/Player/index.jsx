@@ -65,7 +65,7 @@ export default class AudioPlayer extends React.PureComponent {
         if (prevProps.playingSongId !== playingSongId) {
             const isloop = listRepeatMode === 'repeatonce';
             this.setupAudio(playingSongId, isloop);
-            this.doPause();
+            this.doStop();
         }
 
         switch (playerState) {
@@ -189,19 +189,15 @@ export default class AudioPlayer extends React.PureComponent {
         this.props.toggleLrcBoxVisible();
     };
     setupAudio = (nextId, isLoop) => {
-        const dataset = this.mediaPlayer.dataset;
-        if (nextId && +dataset.songid !== nextId) {
-            dataset.songid = nextId;
-            this.mediaPlayer.src = `/media/${nextId}/url`;
-        }
         this.mediaPlayer.loop = isLoop;
     };
     render() {
-        const { playingSongId, playerState, volume, listRepeatMode, playHistory } = this.props;
+        const { playingSongId, playerState, volume, listRepeatMode, playHistory, lyricVisible } = this.props;
         const repeatModeIonClass = this.getRepeatModeClass(listRepeatMode);
         const btnDisabled = !playHistory.length;
         const { currentSrc } = this.mediaMetaInfo;
         const disabledRangeSlider = !playingSongId || !currentSrc || currentSrc === '';
+        document.body.classList[lyricVisible ? 'add' : 'remove']('lyricInVisible');
         return (
             <>
                 <div className={classNames(styles['audio-player'])} ref={this.playerBoxRef} key="audioPlayerBox">

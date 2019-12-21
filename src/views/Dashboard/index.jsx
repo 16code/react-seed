@@ -101,7 +101,7 @@ export default class Dashboard extends React.PureComponent {
                                 layout: 'vertical',
                                 paragraph: { rows: 1 }
                             }) :
-                            <SongList dataSource={topboard} />}
+                            <SongList size="64x64" dataSource={topboard} />}
                     </div>
                 </Box>
                 <Box title="推荐电台">
@@ -125,7 +125,7 @@ export default class Dashboard extends React.PureComponent {
                                 layout: 'vertical',
                                 paragraph: { rows: 1 }
                             }) :
-                            <SongList dataSource={latest} />}
+                            <SongList size="64x64" dataSource={latest} />}
                     </div>
                 </Box>
                 {/* <Box title="热门歌手">
