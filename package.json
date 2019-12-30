@@ -13,6 +13,8 @@
     "Explorer >= 10"
   ],
   "scripts": {
+    "upgrade": "yarn upgrade --latest",
+    "postupgrade": "yarn run postinstall",
     "dev": "cross-env BABEL_ENV=development NODE_ENV=development npx webpack-dev-server --hot",
     "build:prod": "cross-env BABEL_ENV=production NODE_ENV=production npx webpack -p --progress --colors --display minimal",
     "preview": "cross-env NODE_ENV=development node server.js",
@@ -79,7 +81,7 @@
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-if": "^3.0.0",
-    "gulp-inject": "^5.0.4",
+    "gulp-inject": "^5.0.5",
     "gulp-jsmin": "^0.1.5",
     "html-webpack-plugin": "^3.2.0",
     "html-webpack-tags-plugin": "^2.0.17",
