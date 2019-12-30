@@ -14,6 +14,7 @@ function theRequest(props) {
         initialData: []
     };
 }
+@hot
 @withRequest(theRequest)
 export default class Recommend extends React.PureComponent {
     render() {
@@ -22,7 +23,13 @@ export default class Recommend extends React.PureComponent {
         return (
             <Box title="热门歌曲">
                 {isLoading ? (
-                    <Skeleton title size={10} avatar layout="vertical" paragraph={{ rows: 1 }} />
+                    <Skeleton
+                        title
+                        size={10}
+                        layout="vertical"
+                        avatar={sizeFormat('64x64')}
+                        paragraph={{ rows: 1 }}
+                    />
                 ) : <SongList dataSource={data} size="64x64" ordered />}
             </Box>
         );

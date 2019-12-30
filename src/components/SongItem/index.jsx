@@ -34,4 +34,4 @@ function SongItem({ data, size, ordered, index }) {
     );
 }
 
-export default SongItem;
+export default hot(SongItem);
