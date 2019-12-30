@@ -1,7 +1,4 @@
 .lyrics-box {
-    --lyric-color: rgb(160, 170, 180);
-    --lyric-on-color: rgb(204, 219, 249);
-
     font-size: 18px;
     color: var(--lyric-color);
     text-align: left;
@@ -22,6 +19,9 @@
         position: relative;
         width: 100%;
         overflow: hidden;
+        &:empty::before {
+            content: '歌词解析失败';
+        }
     }
     li {
         list-style: none;

@@ -10,6 +10,7 @@ import RangeSlider from 'components/RangeSlider';
 import VolumeControl from './Volume';
 import styles from './styles.less';
 
+@hot
 @connect(
     ({ player, lyric, playHistory }) => ({
         volume: player.volume,
@@ -213,7 +214,7 @@ export default class AudioPlayer extends React.PureComponent {
                         </button>
                         <PlayControl
                             songId={playingSongId}
-                            disabled={playerState === 'pending'}
+                            disabled={btnDisabled || playerState === 'pending'}
                             onClick={this.handlePlayBtnClick}
                             theme="dark"
                         />

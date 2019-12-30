@@ -32,7 +32,7 @@ export function parseColor(src, cb) {
             });
     });
 }
-function LyricWrapper({ playingSong, visible, isPlaying, toggleVisible }) {
+function LyricWrapper({ playingSong, visible, isPlaying, toggleVisible }) {    
     const { visualizer, setCanvasWrap } = useAudioEffect(canvasId);
     const [fillColor, setFillColor] = React.useState();
     const { name, mv } = playingSong;
@@ -56,11 +56,15 @@ function LyricWrapper({ playingSong, visible, isPlaying, toggleVisible }) {
                     progressBarColor: primary
                 });
                 setFillColor(secondary);
+                document.documentElement.style
+                    .setProperty('--lyric-title-color', primary);
+                document.documentElement.style.setProperty('--lyric-on-color', primary);
             });
         }
 
         return function cleanup() {
             visualizer.destroy();
+            document.documentElement.style.removeProperty('--lyric-on-color');
         };
     }, [playingSong, setCanvasWrap, fillColor, visible, visualizer]);
     const coverBlur = playingSong.blur ? `/media/${playingSong.blur}/blur?param=800y560&quality=50` : null;

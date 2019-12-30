@@ -148,8 +148,11 @@ template,
 [hidden] {
     display: none;
 }
-[role='button'] {
+[role='button']:not(:disabled) {
     cursor: pointer;
+}
+[role='button']:disabled {
+    cursor: not-allowed;
 }
 
 /* ::-webkit-scrollbar {

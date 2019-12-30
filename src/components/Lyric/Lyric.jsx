@@ -19,7 +19,7 @@ export default class LyricBox extends React.PureComponent {
         });
         this.audio = document.getElementById('audio');
         if (visible && (data && data !== '')) {
-            this.addEvents();
+            this.addEvents();            
             this.lrc.setOption({ lrcData: LyricHelper.parseLyric(data.lyric) });
         }
     }
