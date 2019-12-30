@@ -1,5 +1,6 @@
 :root {
     --white: 255,255,255;
+    --black: 0,0,0;
     // fonts;
     --font-family-base: Monospaced Number, Chinese Quote, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
         PingFang SC, Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -89,6 +90,7 @@ body {
     --lyric-effect-background: rgb(30, 30, 30);
 
     // border-color;
+    --line-shadow-color: rgba(var(--black), 0);
     --border-color-base: #e8e8e8;
     --shine-color-1: rgb(242, 242, 242);
     --shine-color-2: rgb(230, 230, 230);
@@ -102,8 +104,9 @@ body {
         --shine-color-2: rgb(45, 45, 45);
         --progress-slider-bg: rgba(255, 255, 255, .2);
         --player-preload-bar-color: rgba(255, 255, 255, .18);
+        --line-shadow-color: rgba(var(--black), 1);
     }
-    &.lyricInVisible{
+    &.lyricInVisible {
         --color-sky: rgb(200,200,200);
         --background-base: rgb(30,30,30);
         --border-color-base: rgb(58, 58, 58);
@@ -122,5 +125,6 @@ body {
         --shine-color-2: rgb(45, 45, 45);
         --progress-slider-bg: rgba(255, 255, 255, .2);
         --player-preload-bar-color: rgba(255, 255, 255, .18);
+        --line-shadow-color: rgba(var(--black), 1);
     }
 }

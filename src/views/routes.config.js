@@ -3,6 +3,7 @@ const dashboard = React.lazy(() => import('./Dashboard'));
 const Recommend = React.lazy(() => import('./Music/Recommend'));
 const Search = React.lazy(() => import('./Music/Search'));
 const Top = React.lazy(() => import('./Music/Top'));
+const Playlist = React.lazy(() => import('./Playlist'));
 const routes = [
     {
         key: 'dashboard',
@@ -31,6 +32,13 @@ const routes = [
         strict: false,
         path: '/music/top',
         component: Top
+    },
+    {
+        key: 'playlist',
+        exact: true,
+        strict: false,
+        path: '/playlist/:id',
+        component: Playlist
     }
 ];
 

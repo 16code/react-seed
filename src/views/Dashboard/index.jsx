@@ -37,7 +37,8 @@ function theHandles(updateRequestConfig) {
 @withErrorBoundary
 @withRequest(theRequest, theHandles)
 export default class Dashboard extends React.PureComponent {
-    playlistRender(item) {        
+    playlistRender = item => {      
+        const { history } = this.props;
         return (
             <ThumbCard
                 key={item.id}
@@ -45,7 +46,12 @@ export default class Dashboard extends React.PureComponent {
                 name={item.name}
                 coverImg={`${item.coverImgUrl}?param=150y150&quality=50`}
                 countNum={item.playCount}
-                size="170x170"
+                onClick={() => {
+                    history.push({
+                        pathname: `/playlist/${item.id}`
+                    });
+                }}
+                size="173x173"
             />
         );
     }
@@ -85,7 +91,7 @@ export default class Dashboard extends React.PureComponent {
                     {isLoading ?
                         this.skeletonRender({
                             size: 5,
-                            avatar: sizeFormat('170x170'),
+                            avatar: sizeFormat('173x173'),
                             paragraph: { rows: 1 },
                             layout: 'horizontal'
                         }) :

@@ -44,7 +44,7 @@ export const menuData = [
     },
     {
         name: 'PlayList',
-        path: 'playList',
+        path: 'playlist',
         children: [
             {
                 name: '精品歌单',

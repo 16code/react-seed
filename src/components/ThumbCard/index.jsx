@@ -3,11 +3,11 @@ import styles from './style.less';
 
 // shape { circled, squared }
 
-function ThumbCard({ id, name, coverImg, countNum, size, wrapClassName, shape = 'squared' }) {
+function ThumbCard({ onClick, name, coverImg, countNum, size, wrapClassName, shape = 'squared' }) {
     const cls = classNames(styles['thumb-card'], styles[shape], 'ui-hover-effect');
     const style = size ? sizeFormat(size) : {};
     const content = (
-        <a className={cls} style={{ width: style.width }} href={`#/${id}`}>
+        <a className={cls} style={{ width: style.width }} onClick={onClick || null}>
             {countNum && (
                 <small className={styles.count}>
                     <span>{countFormat(countNum)}</span>

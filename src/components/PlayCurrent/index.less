@@ -1,10 +1,11 @@
 .play-current {
     display: flex;
     align-items: center;
-    width: var(--layout-sider-width);
+    width: calc(var(--layout-sider-width) - 1px);
     height: var(--layout-player-height);
     padding: var(--box-padding-sm) 0 var(--box-padding-sm) var(--box-padding-sm);
     border-top: 1px solid var(--border-color-base);
+    box-shadow: 0 -1px 1px 0 var(--line-shadow-color);
     transform: translate3d(0, 101%, 0);
     transition: transform 0.35s cubic-bezier(0.215, 0.61, 0.355, 1);
     position: absolute;
