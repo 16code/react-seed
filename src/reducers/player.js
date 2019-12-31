@@ -32,9 +32,10 @@ function handleRestorePlayer(state) {
     return { ...state, playingSongId: undefined, playerState: PLAYER_STATE.STOPED };
 }
 // 处理歌曲播放状态
-function handlePlaySong(state, action) {
+function handlePlaySong(state, action) {    
     const { playingSongId, playerState } = state;
     const { id: nextSongId } = action.payload || {};
+    if (!nextSongId) return state;
     // 验证是否当前播放歌曲
     const adjustState = { playerState, playingSongId, isUnplayed: false };
 

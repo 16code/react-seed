@@ -100,13 +100,6 @@ export default class AudioPlayer extends React.PureComponent {
         this.doPause();
         this.mediaPlayer.currentTime = 0;
     }
-    // 播放音乐
-    handlePlayBtnClick = () => {
-        const { playingSongId } = this.props;
-        if (playingSongId) {
-            this.props.playSong({ id: playingSongId });
-        }
-    };
     // 切换播放模式
     handleChangeRepeatMode = () => {
         const { listRepeatMode, changeRepeatMode } = this.props;
@@ -192,8 +185,23 @@ export default class AudioPlayer extends React.PureComponent {
     setupAudio = (nextId, isLoop) => {
         this.mediaPlayer.loop = isLoop;
     };
+    getRepeatTips = mode => {
+        let tip;
+        switch (mode) {
+            case 'repeatonce':
+                tip = '单曲循环';
+                break;
+            case 'shuffle':
+                tip = '随机播放';
+                break;
+            default:
+                tip = '列表循环';
+                break;
+        }
+        return tip;
+    }
     render() {
-        const { playingSongId, playerState, volume, listRepeatMode, playHistory, lyricVisible } = this.props;
+        const { playingSongId, playerState, volume, listRepeatMode, playHistory, lyricVisible } = this.props;        
         const repeatModeIonClass = this.getRepeatModeClass(listRepeatMode);
         const btnDisabled = !playHistory.length;
         const { currentSrc } = this.mediaMetaInfo;
@@ -215,7 +223,6 @@ export default class AudioPlayer extends React.PureComponent {
                         <PlayControl
                             songId={playingSongId}
                             disabled={btnDisabled || playerState === 'pending'}
-                            onClick={this.handlePlayBtnClick}
                             theme="dark"
                         />
                         <button
@@ -248,7 +255,7 @@ export default class AudioPlayer extends React.PureComponent {
                         <VolumeControl onChange={this.handleVolumeChange} volume={volume} />
                         <button
                             className={styles['control-button']}
-                            title="循环模式"
+                            title={this.getRepeatTips(listRepeatMode)}
                             role="button"
                             onClick={this.handleChangeRepeatMode}
                         >

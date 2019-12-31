@@ -11,8 +11,13 @@ export const getPlayHistoryFromState = state => state.playHistory;
 // 获取音乐讯息
 export function* loadSongData(action) {
     try {
-        const { id } = action.payload || {};
-        if (id) {
+        const { id } = action.payload || {};   
+        if (!id) {
+            const { list } = yield select(getPlayHistoryFromState);
+            if (list.length) {
+                yield put({ type: playerTypes.playSong, payload: { id: list[0].id } });
+            }
+        } else {
             yield put({ type: songTypes.getInfo });
             let data = yield call(DB.history.get, id);
             if (!data) {

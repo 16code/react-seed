@@ -41,6 +41,7 @@ function useIcon(state) {
     return icon;
 }
 function PlayControl({
+    currentPlayId,
     songId,
     className,
     theme = 'light',
@@ -74,8 +75,8 @@ function PlayControl({
         <button
             className={ctrlClass}
             disabled={disabled || isPending || isFailed}
-            onClick={() => {
-                isCurrentPlay ? changePlayerState(nextState) : onPlaySong({ id: songId });
+            onClick={() => {                
+                currentPlayId && isCurrentPlay ? changePlayerState(nextState) : onPlaySong({ id: songId });
             }}
         >
             {useIcon(btnPlayState)}
