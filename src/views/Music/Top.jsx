@@ -61,7 +61,7 @@ export default class Top extends React.PureComponent {
                 <br />
                 {isLoading ? (
                     <Skeleton title size={10} avatar layout="vertical" paragraph={{ rows: 1 }} />
-                ) : <SongList dataSource={data} size="64x64" ordered />}
+                ) : <SongList dataSource={data} size="54x54" ordered />}
             </Box>
         );
     }

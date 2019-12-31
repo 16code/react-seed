@@ -31,7 +31,7 @@ function Playlist(props) {
                                     <div>{tags.map(tag =>
                                         (
                                             <span
-                                                className={classNames('badge badge-primary1', s.badge)}
+                                                className={classNames('badge badge-primary', s.badge)}
                                                 key={tag}
                                             >
                                                 {tag}

@@ -42,7 +42,7 @@ export default class Search extends React.PureComponent {
         return (
             <Box title="搜索歌曲">
                 <input type="text" onChange={this.handleChange} />
-                <SongList dataSource={data} size="64x64" />
+                <SongList dataSource={data} size="54x54" />
             </Box>
         );
     }

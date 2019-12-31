@@ -102,12 +102,12 @@ export default class Dashboard extends React.PureComponent {
                         {isLoading ?
                             this.skeletonRender({
                                 size: 10,
-                                avatar: true,
+                                avatar: sizeFormat('54x54'),
                                 title: true,
                                 layout: 'vertical',
                                 paragraph: { rows: 1 }
                             }) :
-                            <SongList size="64x64" dataSource={topboard} />}
+                            <SongList size="54x54" dataSource={topboard} />}
                     </div>
                 </Box>
                 <Box title="推荐电台">
@@ -115,7 +115,7 @@ export default class Dashboard extends React.PureComponent {
                         {isLoading ?
                             this.skeletonRender({
                                 size: 5,
-                                avatar: sizeFormat('170x132'),
+                                avatar: sizeFormat('173x132'),
                                 layout: 'horizontal',
                                 paragraph: { rows: 1 }
                             }) :
@@ -127,11 +127,11 @@ export default class Dashboard extends React.PureComponent {
                         {isLoading ?
                             this.skeletonRender({
                                 size: 10,
-                                avatar: true,
+                                avatar: sizeFormat('54x54'),
                                 layout: 'vertical',
                                 paragraph: { rows: 1 }
                             }) :
-                            <SongList size="64x64" dataSource={latest} />}
+                            <SongList size="54x54" dataSource={latest} />}
                     </div>
                 </Box>
                 {/* <Box title="热门歌手">

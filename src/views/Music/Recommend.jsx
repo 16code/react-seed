@@ -27,10 +27,10 @@ export default class Recommend extends React.PureComponent {
                         title
                         size={10}
                         layout="vertical"
-                        avatar={sizeFormat('64x64')}
+                        avatar={sizeFormat('54x54')}
                         paragraph={{ rows: 1 }}
                     />
-                ) : <SongList dataSource={data} size="64x64" ordered />}
+                ) : <SongList dataSource={data} size="54x54" ordered />}
             </Box>
         );
     }
