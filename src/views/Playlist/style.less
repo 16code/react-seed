@@ -17,9 +17,17 @@
             font-size: var(--heading-title);
             margin: 0 0 12px;
         }
+        .tags {
+            margin-bottom: 12px;
+        }
         p {
             line-height: 1.6;
             font-size: var(--font-size-lg);
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin: 0;
         }
     }
 }

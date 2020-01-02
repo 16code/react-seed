@@ -1,3 +1,37 @@
+import * as Vibrant from 'node-vibrant';
+
+export function preloadImg(src, cb) {
+    if (!src) return;
+    return new Promise((res, rej) => {
+        const img = new Image();
+        if (typeof cb === 'function') {
+            img.onload = event => {
+                cb(event);
+                res(event);
+            };
+        }
+        img.onerror = rej;
+        img.crossOrigin = 'Anonymous';
+        img.src = src;
+    });
+}
+
+export function parseColorFormImg(src, cb) {
+    if (!src) return;
+    preloadImg(src, () => {
+        Vibrant.from(src)
+            .getPalette()
+            .then(palette => {
+                const rgb = palette.LightVibrant.rgb.map(n => parseInt(n, 10)).join(',');                
+                cb({
+                    primary: `rgb(${rgb})`,
+                    secondary: `rgba(${rgb}, .3)`,
+                    palette
+                });
+            });
+    });
+}
+
 export function createReducer(initialState, handlers) {
     return (state = initialState, action) =>
         Object.prototype.hasOwnProperty.call(handlers, action.type) ? handlers[action.type](state, action) : state;

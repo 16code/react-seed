@@ -84,7 +84,7 @@ export default class Dashboard extends React.PureComponent {
     }
     render() {
         const { isLoading, response } = this.props;
-        const { playlist, djprogram, topboard, latest } = response.data;        
+        const { playlist, djprogram, topboard, latest } = response.data;    
         return (
             <>
                 <Box title="推荐歌单" scroll>

@@ -1,8 +1,8 @@
-import * as Vibrant from 'node-vibrant';
 import { connect } from 'react-redux';
 import { actions } from 'reducers/lyric';
 import useAudioEffect from 'hooks/useAudioEffect';
 import ParticleEffect from 'components/ParticleEffect';
+import { preloadImg, parseColorFormImg } from 'helper';
 import Icon from 'components/Icon';
 import Img from 'components/Image';
 import LyricBox from './Lyric';
@@ -12,26 +12,6 @@ const canvasId = `canvas-${Math.random(36)
     .toString(36)
     .substr(2, 7)}`;
 
-function preloadImg(src, cb) {
-    const img = new Image();
-    img.crossOrigin = 'Anonymous';
-    img.onload = cb;
-    img.src = src;
-}
-
-export function parseColor(src, cb) {
-    preloadImg(src, () => {
-        Vibrant.from(src)
-            .getPalette()
-            .then(palette => {
-                const rgb = palette.LightVibrant.rgb.map(n => parseInt(n, 10)).join(',');                
-                cb({
-                    primary: `rgb(${rgb})`,
-                    secondary: `rgba(${rgb}, .3)`
-                });
-            });
-    });
-}
 function LyricWrapper({ playingSong, visible, isPlaying, toggleVisible }) {    
     const { visualizer, setCanvasWrap } = useAudioEffect(canvasId);
     const [fillColor, setFillColor] = React.useState();
@@ -50,7 +30,7 @@ function LyricWrapper({ playingSong, visible, isPlaying, toggleVisible }) {
             visible
         );
         if (coverImg) {
-            parseColor(coverImg, ({ primary, secondary }) => {
+            parseColorFormImg(coverImg, ({ primary, secondary }) => {
                 visualizer.setupOption({
                     danceBarColor: primary,
                     progressBarColor: primary

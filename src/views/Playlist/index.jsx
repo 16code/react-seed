@@ -28,10 +28,10 @@ function Playlist(props) {
                             /> : (
                                 <>
                                     <h2>{name}</h2>
-                                    <div>{tags.map(tag =>
+                                    <div className={s.tags}>{tags.map(tag =>
                                         (
                                             <span
-                                                className={classNames('badge badge-primary', s.badge)}
+                                                className={classNames('badge', s.badge)}
                                                 key={tag}
                                             >
                                                 {tag}
