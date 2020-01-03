@@ -4,6 +4,7 @@ const Recommend = React.lazy(() => import('./Music/Recommend'));
 const Search = React.lazy(() => import('./Music/Search'));
 const Top = React.lazy(() => import('./Music/Top'));
 const Playlist = React.lazy(() => import('./Playlist'));
+const SettingRoute = React.lazy(() => import('./Setting'));
 const routes = [
     {
         key: 'dashboard',
@@ -39,6 +40,13 @@ const routes = [
         strict: false,
         path: '/playlist/:id',
         component: Playlist
+    },
+    {
+        key: 'setting',
+        exact: true,
+        strict: false,
+        path: '/setting',
+        component: SettingRoute
     }
 ];
 

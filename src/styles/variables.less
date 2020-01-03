@@ -98,18 +98,6 @@ body {
     --border-color-base: #e8e8e8;
     --shine-color-1: rgb(242, 242, 242);
     --shine-color-2: rgb(230, 230, 230);
-    &.dark-theme {
-        --color-sky: rgb(200,200,200);
-        --background-base: rgb(30,30,30);
-        --background-item-hover: rgba(var(--hove), 0.1);
-        --text-color-base: 255,255,255;
-        --border-color-base: rgb(58, 58, 58);
-        --shine-color-1: rgb(55, 55, 55);
-        --shine-color-2: rgb(45, 45, 45);
-        --progress-slider-bg: rgba(255, 255, 255, .2);
-        --player-preload-bar-color: rgba(255, 255, 255, .18);
-        --line-shadow-color: rgba(var(--black), 1);
-    }
     &.lyricInVisible {
         --color-sky: rgb(200,200,200);
         --background-base: rgb(30,30,30);
@@ -118,17 +106,32 @@ body {
         --player-preload-bar-color: rgba(255, 255, 255, .18);
     }
 }
-@media (prefers-color-scheme: dark) {
-    body {
-        --color-sky: rgb(200,200,200);
-        --background-base: rgb(30,30,30);
-        --background-item-hover: rgba(var(--hove), 0.1);
-        --text-color-base: 255,255,255;
-        --border-color-base: rgb(58, 58, 58);
-        --shine-color-1: rgb(55, 55, 55);
-        --shine-color-2: rgb(45, 45, 45);
-        --progress-slider-bg: rgba(255, 255, 255, .2);
-        --player-preload-bar-color: rgba(255, 255, 255, .18);
-        --line-shadow-color: rgba(var(--black), 1);
+html[theme="dark"] body {
+    --color-sky: rgb(200,200,200);
+    --background-base: rgb(30,30,30);
+    --background-item-hover: rgba(var(--hove), 0.1);
+    --text-color-base: 255,255,255;
+    --border-color-base: rgb(58, 58, 58);
+    --shine-color-1: rgb(55, 55, 55);
+    --shine-color-2: rgb(45, 45, 45);
+    --progress-slider-bg: rgba(255, 255, 255, .2);
+    --player-preload-bar-color: rgba(255, 255, 255, .18);
+    --line-shadow-color: rgba(var(--black), 1);
+}
+
+html[theme="auto"] {
+    @media (prefers-color-scheme: dark) {
+        body {
+            --color-sky: rgb(200,200,200);
+            --background-base: rgb(30,30,30);
+            --background-item-hover: rgba(var(--hove), 0.1);
+            --text-color-base: 255,255,255;
+            --border-color-base: rgb(58, 58, 58);
+            --shine-color-1: rgb(55, 55, 55);
+            --shine-color-2: rgb(45, 45, 45);
+            --progress-slider-bg: rgba(255, 255, 255, .2);
+            --player-preload-bar-color: rgba(255, 255, 255, .18);
+            --line-shadow-color: rgba(var(--black), 1);
+        }
     }
 }
