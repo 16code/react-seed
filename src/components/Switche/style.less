@@ -1,0 +1,52 @@
+.switche {
+    --label-width: 58px;
+    --label-height: 30px;
+    --control-size: 30px;
+
+    display: inline-block;
+    position: relative;
+    input[type="checkbox"] {
+        position: absolute;
+        top: -5000px;
+        height: 0;
+        width: 0;
+        opacity: 0;
+        border: none;
+        outline: none;
+    }
+    .checkbox-label {
+        position: relative;
+        width: var(--label-width);
+        height: var(--label-height);
+        border-radius: 15px;
+        background: var(--checkbox-shadow-light);
+        box-shadow: inset 0 0 0 0 var(--checkbox-shadow-green), 0 0 0 2px var(--checkbox-shadow-light);
+        cursor: pointer;
+        &,
+        &::before {
+            display: block;
+            transition: .25s ease-in-out;
+        }
+    }
+    .checkbox-label::before {
+        content: '';
+        height: var(--control-size);
+        width: var(--control-size);
+        border-radius: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: auto;
+        z-index: 1;
+        margin: auto;
+        background: var(--checkbox-shadow-ctrl);
+    }
+    input[type="checkbox"]:checked + .checkbox-label {
+        box-shadow: inset 0 0 0 15px var(--checkbox-shadow-green), 0 0 0 2px var(--checkbox-shadow-green);
+        &::before {
+            left: calc(var(--label-width) - var(--control-size));
+            box-shadow: 0 0 0 2px transparent, 0 3px 3px rgba(0,0,0,.3);
+        }
+    }
+}

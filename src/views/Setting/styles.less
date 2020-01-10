@@ -11,19 +11,19 @@
     }
     > label {
         cursor: pointer;
-        margin-right: 24px;
+        margin-right: 32px;
         display: flex;
         flex-direction: column;
         text-align: center;
         position: relative;
-    }
-    input[type="radio"]:checked + .img{
-        box-shadow: 0 0 0 1px var(--primary-color);
     }
     .img {
         box-shadow: 0 0 0 1px var(--border-color-base);
         border-radius: 8px;
         overflow: hidden;
         margin-bottom: 10px;
+    }
+    input[type="radio"]:checked + .img{
+        box-shadow: 0 0 0 2px var(--primary-color);
     }
 }

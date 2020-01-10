@@ -46,7 +46,7 @@ function handlePlaySong(state, action) {
         const audio = document.getElementById('audio');
         const dataset = audio.dataset;
         dataset.songid = nextSongId;
-        audio.src = `/media/${nextSongId}/url`;
+        audio.src = `/media/${nextSongId}/url`;        
     }
     return { ...state, ...adjustState };
 }

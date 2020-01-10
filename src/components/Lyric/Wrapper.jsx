@@ -16,9 +16,9 @@ function LyricWrapper({ playingSong, visible, isPlaying, toggleVisible }) {
     const { visualizer, setCanvasWrap } = useAudioEffect(canvasId);
     const [fillColor, setFillColor] = React.useState();
     const { name, mv } = playingSong;
+    const { picUrl } = playingSong.album || {};
     React.useEffect(() => {
         setCanvasWrap(document.getElementById('canvasEffectBox'));
-        const { picUrl } = playingSong.album || {};
         const coverImg = picUrl ? `${picUrl}?param=180y180&quality=80` : null;   
         document.querySelector(`.${styles['lyric-effect-box']} > figure`).style.opacity = 0;
         visualizer.updateSongInfo(
@@ -46,8 +46,8 @@ function LyricWrapper({ playingSong, visible, isPlaying, toggleVisible }) {
             visualizer.destroy();
             document.documentElement.style.removeProperty('--lyric-on-color');
         };
-    }, [playingSong, setCanvasWrap, fillColor, visible, visualizer]);
-    const coverBlur = playingSong.blur ? `/media/${playingSong.blur}/blur?param=800y560&quality=50` : null;
+    }, [playingSong, setCanvasWrap, fillColor, visible, visualizer, picUrl]);
+    const coverBlur = playingSong.blur ? `/media/blur?url=${picUrl}` : null;
     preloadImg(coverBlur, function () {
         document.querySelector(`.${styles['lyric-effect-box']} > figure`).style.opacity = 1;
     });
