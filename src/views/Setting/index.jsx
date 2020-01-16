@@ -15,15 +15,16 @@ export default class SettingPage extends React.PureComponent {
         };
     }
     componentDidMount() {
-        const permissions = {
-            granted: '已同意',
-            denied: '已拒绝',
-            default: '未询问'
-        };
+        // const permissions = {
+        //     granted: '已同意',
+        //     denied: '已拒绝',
+        //     default: '未询问'
+        // };
         const permission = Notification.permission;
-        console.log(`permission === ${permissions[permission]}`);
+        // console.log(`permission === ${permissions[permission]}`);
         if (permission === 'granted') {
             console.log('用户已同意浏览器通知');
+            this.setState({ notify: true });
         } else if (Notification.permission !== 'denied') {
             Notification.requestPermission().then(result => {
                 console.log(result);
@@ -34,39 +35,49 @@ export default class SettingPage extends React.PureComponent {
         });
     }
     render() {
-        const { themes, theme, changeTheme } = this.context;        
+        const { themes, theme, changeTheme } = this.context;             
         return (
             <>
-                <Box title="风格设置" >
-                    <div className={s.themes}>
-                        {themes.map(item => (
-                            <label key={item.key}>
-                                <input
-                                    type="radio"
-                                    name="theme"
-                                    checked={item.key === theme}
-                                    value={item.key}
-                                    onChange={() => {
-                                        changeTheme(item.key);
+                <Box title="设置">
+                    <ul className={s.list}>
+                        <li>
+                            <div className={s.meta}>
+                                <h4 className={s.title}>主题外观</h4>
+                                <span className={s.description}>设置界面主题外观色彩</span>
+                            </div>
+                            <div className={s.action}>
+                                {themes.map(item => (
+                                    <label key={item.key} title={item.name}>
+                                        <input
+                                            type="radio"
+                                            name="theme"
+                                            checked={item.key === theme}
+                                            value={item.key}
+                                            onChange={() => {
+                                                changeTheme(item.key);
+                                            }}
+                                        />
+                                        <div className={s.img}><Image size="77x52" src={item.src} /></div>
+                                    </label>
+                                ))}
+                            </div>
+                        </li>
+                        <li>
+                            <div className={s.meta}>
+                                <h4 className={s.title}>允许通知</h4>
+                                <span className={s.description}>
+                                    当播放失败时允许通知,  当前{this.state.notify ? '已' : '未'}取得浏览器通知权限.
+                                </span>
+                            </div>
+                            <div className={s.action}>
+                                <Switche
+                                    name="notfiy"
+                                    checked={this.state.notify}
+                                    onChange={v => {
+                                        this.setState({ notify: v });
                                     }}
                                 />
-                                <div className={s.img}><Image size="148x100" src={item.src} /></div>
-                                <span>{item.name}</span>
-                            </label>
-                        ))}
-                    </div>
-                </Box>
-                <Box>
-                    <ul>
-                        <li>
-                            <span>允许通知</span>
-                            <Switche
-                                name="notfiy"
-                                checked={this.state.notify}
-                                onChange={v => {
-                                    this.setState({ notify: v });
-                                }}
-                            />
+                            </div>
                         </li>
                     </ul>
                 </Box>
