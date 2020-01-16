@@ -43,24 +43,9 @@ export default class ScrollBox extends React.PureComponent {
     render() {
         return (
             <section className={styles['scroll-outer']}>
-                <span
-                    onClick={this.handleSLeft}
-                    className={classNames(styles.arrow, classNames({
-                        [styles.disabled]: this.state.disabledLeft
-                    }), styles['arrow-left'])}
-                >
-                    &#xe660;
-                </span>
                 <div className={styles['scroll-inner']} ref={this.scrollBoxRef}>
                     {this.props.children}
                 </div>
-                <span
-                    onClick={this.handleSRight}
-                    className={classNames(styles.arrow, classNames({
-                        [styles.disabled]: this.state.disabledRight
-                    }), styles['arrow-right'])}
-                >&#xe65f;
-                </span>
             </section>
         );
     }
