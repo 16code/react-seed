@@ -22,7 +22,7 @@ export default class Menu extends React.Component {
         items.map(
             item =>
                 !item.hidden && (
-                    <li className="menu-item" key={item.path}>
+                    <li className="menu-item" key={item.keyIndex || item.path}>
                         <NavLink
                             className="menu-link ellipsis"
                             activeClassName="menu-link-selected"
@@ -38,7 +38,7 @@ export default class Menu extends React.Component {
     renderGroup = item => {
         if (item.children) {
             return (
-                <div className="app-menu-item-group" key={item.path}>
+                <div className="app-menu-item-group" key={item.keyIndex}>
                     <div className="app-menu-item-group-title">{item.name}</div>
                     <ul className="app-menu-item-children-list list-unstyled">
                         {item.children && this.renderItem(item.children)}

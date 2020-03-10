@@ -48,7 +48,7 @@ export default class Dashboard extends React.PureComponent {
                 countNum={item.playCount}
                 onClick={() => {
                     history.push({
-                        pathname: `/playlist/${item.id}`
+                        pathname: `/playlists/${item.id}`
                     });
                 }}
                 size="173x173"

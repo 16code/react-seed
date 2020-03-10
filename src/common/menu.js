@@ -44,11 +44,21 @@ export const menuData = [
     },
     {
         name: 'PlayList',
-        path: 'playlist',
+        path: 'playlists',
         children: [
             {
                 name: '精品歌单',
                 path: 'hot'
+            }
+        ]
+    },
+    {
+        name: 'Setting',
+        path: '/',
+        children: [
+            {
+                name: '应用设置',
+                path: 'setting'
             }
         ]
     }
@@ -67,6 +77,7 @@ function formatter(data, parentPath, parentAuthRole) {
         }
         const result = {
             ...item,
+            keyIndex: (Math.random() * Date.now()).toString(36).substr(2),
             path: path.replace(/\/$/, ''),
             authRole: item.role || parentAuthRole
         };

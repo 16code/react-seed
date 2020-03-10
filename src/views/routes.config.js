@@ -38,7 +38,7 @@ const routes = [
         key: 'playlist',
         exact: true,
         strict: false,
-        path: '/playlist/:id',
+        path: '/playlists/:id',
         component: Playlist
     },
     {

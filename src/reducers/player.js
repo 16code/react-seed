@@ -10,10 +10,12 @@ export const types = {
     updatePlayerInfo: 'player/updateInfo',
     restorePlayer: 'player/restore'
 };
+const savedVolume = +localStorage.getItem(`${KEY_PREFIX_SETTING}volume`);
+const volume = (typeof (savedVolume) === 'number' && !Number.isNaN(savedVolume)) ? savedVolume : 65;
 
 const initialState = {
     listRepeatMode: window.localStorage.getItem(`${KEY_PREFIX_SETTING}listRepeatMode`) || 'repeat',
-    volume: +window.localStorage.getItem(`${KEY_PREFIX_SETTING}volume`) || 65,
+    volume,
     isUnplayed: true,
     playerState: PLAYER_STATE.STOPED, // 当前播放状态
     playingSongId: undefined // 正在播放的歌曲ID

@@ -1,4 +1,5 @@
 import { useRequest } from 'hooks/useRequest';
+import { Route, Switch } from 'react-router-dom';
 import Img from 'components/Image';
 import SongList from 'components/SongList';
 import Skeleton from 'components/Skeleton';
@@ -6,7 +7,7 @@ import Box from 'components/Box';
 import s from './style.less';
 
 function Playlist(props) {
-    const { id } = props.match.params;
+    const { id } = props.match.params;    
     const [{ data, isLoading }] = useRequest('/api/playlist/:id', { body: { id } }, { playlist: {} });
     const { name, description, coverImgUrl, tracks, tags = [] } = data.playlist;    
     return (
@@ -63,5 +64,14 @@ function Playlist(props) {
         </>
     );
 }
-
-export default hot(Playlist);
+function app() {
+    return (
+        <Switch>
+            <Route exact path="/playlists/hot">
+                <h3>playlists</h3>
+            </Route>
+            <Route exact path={'/playlists/:id'} component={Playlist} />
+        </Switch>
+    );
+}
+export default hot(app);
